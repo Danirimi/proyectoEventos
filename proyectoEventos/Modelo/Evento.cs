@@ -8,5 +8,11 @@ namespace proyectoEventos.Modelo
 {
     internal class Evento
     {
+        public int Id { get; set; }
+
+        public string NombreEvento { get; set; }
+
+
+
     }
 }
