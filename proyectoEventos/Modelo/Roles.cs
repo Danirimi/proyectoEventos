@@ -8,5 +8,9 @@ namespace proyectoEventos.Modelo
 {
     internal class Roles
     {
+
+
+
+
     }
 }
