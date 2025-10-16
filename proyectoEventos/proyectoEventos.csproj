@@ -137,5 +137,14 @@
   <ItemGroup>
     <None Include="Resources\brayitan wuw.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\foto.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\9849d2e2a60ea7e017d9d4ff07050422.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\raf,360x360,075,t,fafafa_ca443f4786.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

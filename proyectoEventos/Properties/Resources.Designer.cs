@@ -63,9 +63,39 @@ namespace proyectoEventos.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _9849d2e2a60ea7e017d9d4ff07050422 {
+            get {
+                object obj = ResourceManager.GetObject("9849d2e2a60ea7e017d9d4ff07050422", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap brayitan_wuw {
             get {
                 object obj = ResourceManager.GetObject("brayitan wuw", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap foto {
+            get {
+                object obj = ResourceManager.GetObject("foto", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap raf_360x360_075_t_fafafa_ca443f4786 {
+            get {
+                object obj = ResourceManager.GetObject("raf,360x360,075,t,fafafa_ca443f4786", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
