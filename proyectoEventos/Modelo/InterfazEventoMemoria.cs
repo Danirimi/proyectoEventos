@@ -13,6 +13,16 @@ namespace proyectoEventos.Modelo
     {
         private readonly List<Evento> _eventos = new List<Evento>();
         private int _siguenteId = 1;
+        private readonly string _rutaArchivo;
+
+        public InterfazEventoMemoria()
+        {
+            string carpetaDatos = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Datos");
+            _rutaArchivo = Path.Combine(carpetaDatos, "eventos.json");
+
+            _eventos = JsonHelper.Cargar<Evento>(_rutaArchivo);
+            _siguenteId = _eventos.Any() ? _eventos.Max(e => e.Id) + 1 : 1;
+        }
 
         public IEnumerable<Evento> mostrarEventos()
         {
@@ -38,6 +48,48 @@ namespace proyectoEventos.Modelo
 
             return evento;
         }
+        public void agregarEvento(Evento evento)
+        {
+            if (evento == null)
+            {
+               MessageBox.Show("El evento no puede ser nulo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            evento.Id = _siguenteId++;
+            _eventos.Add(evento);
+            JsonHelper.Guardar(_eventos, _rutaArchivo);
+        }
+        public void actualizarEvento(Evento evento)
+        {
+            if (evento == null)
+            {
+                MessageBox.Show("El evento no puede ser nulo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            var eventoExistente = _eventos.FirstOrDefault(e => e.Id == evento.Id);
+            if (eventoExistente == null)
+            {
+                MessageBox.Show($"No se encontró ningún evento con Id = {evento.Id}.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            eventoExistente.NombreEvento = evento.NombreEvento;
+            eventoExistente.FechaEvento = evento.FechaEvento;
+            eventoExistente.LugarEvento = evento.LugarEvento;
+            eventoExistente.DescripcionEvento = evento.DescripcionEvento;
+            eventoExistente.entradastotales = evento.entradastotales;
+            eventoExistente.entradasdisponibles = evento.entradasdisponibles;
+
+            JsonHelper.Guardar(_eventos, _rutaArchivo);
+        }
+        public void eliminarEvento(int id)
+        {
+            var evento = _eventos.FirstOrDefault(e => e.Id == id);
+            if (evento == null)
+            {
+                MessageBox.Show($"No se encontró ningún evento con Id = {id}.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            _eventos.Remove(evento);
+            JsonHelper.Guardar(_eventos, _rutaArchivo);
+        }
+
+
 
 
 
