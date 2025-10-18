@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace proyectoEventos.Modelo
 {
@@ -16,7 +17,7 @@ namespace proyectoEventos.Modelo
             if (!Directory.Exists(carpeta))
                 Directory.CreateDirectory(carpeta);
 
-            string json = JsonSerializer.Serialize(lista, new JsonSerializerOptions { WriteIndented = true });
+            string json = System.Text.Json.JsonSerializer.Serialize(lista, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(rutaArchivo, json);
         }
 
@@ -26,8 +27,10 @@ namespace proyectoEventos.Modelo
                 return new List<T>();
 
             string json = File.ReadAllText(rutaArchivo);
-            List<T> lista = JsonSerializer.Deserialize<List<T>>(json);
+            List<T> lista = System.Text.Json.JsonSerializer.Deserialize<List<T>>(json);
             return lista ?? new List<T>();
         }
+
     }
+
 }
