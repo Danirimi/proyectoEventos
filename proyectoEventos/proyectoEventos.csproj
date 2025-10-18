@@ -92,6 +92,12 @@
     <Compile Include="Modelo\Roles.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="vista\EditarEvento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="vista\EditarEvento.Designer.cs">
+      <DependentUpon>EditarEvento.cs</DependentUpon>
+    </Compile>
     <Compile Include="vista\IEventoVista.cs" />
     <Compile Include="vista\PaginaInicial.cs">
       <SubType>Form</SubType>
@@ -121,6 +127,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="vista\EditarEvento.resx">
+      <DependentUpon>EditarEvento.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="vista\PaginaInicial.resx">
       <DependentUpon>PaginaInicial.cs</DependentUpon>
     </EmbeddedResource>
