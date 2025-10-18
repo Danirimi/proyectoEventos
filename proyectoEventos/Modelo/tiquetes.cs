@@ -40,19 +40,19 @@ namespace proyectoEventos.Modelo
             return JsonSerializer.Deserialize<Tiquete>(json);
         }
 
-        // ==== TUS MÉTODOS ORIGINALES (sin cambios) ====
+
         
         public void EditarCodigo(string nuevoCodigo)
         {
             if (string.IsNullOrWhiteSpace(nuevoCodigo))
             {
-                Console.WriteLine("❌ El nuevo código no puede estar vacío.");
+                Console.WriteLine(" El nuevo código no puede estar vacío.");
                 return;
             }
 
-            Console.WriteLine($"✏️ Código anterior: {CodigoTiquete}");
+           
             CodigoTiquete = nuevoCodigo;
-            Console.WriteLine($"✅ Código actualizado a: {CodigoTiquete}");
+    
         }
 
         public void Eliminar()
