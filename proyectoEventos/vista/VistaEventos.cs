@@ -30,6 +30,8 @@ namespace proyectoEventos.vista
         }
 
 
+
+
         private void VistaEventos_Load(object sender, EventArgs e)
         {
 
