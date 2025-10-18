@@ -29,5 +29,7 @@ namespace proyectoEventos.Modelo
             List<T> lista = JsonSerializer.Deserialize<List<T>>(json);
             return lista ?? new List<T>();
         }
+
     }
+
 }

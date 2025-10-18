@@ -86,7 +86,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::proyectoEventos.Properties.Resources.raf_360x360_075_t_fafafa_ca443f4786;
-            this.pictureBox1.Location = new System.Drawing.Point(348, 120);
+            this.pictureBox1.Location = new System.Drawing.Point(348, 95);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(343, 358);
             this.pictureBox1.TabIndex = 5;
