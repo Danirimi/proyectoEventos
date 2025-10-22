@@ -16,19 +16,18 @@ namespace proyectoEventos
 
         public decimal Precio { get; set; }
 
-        public bool Disponible { get; set; }
+       
 
         public string EventoL { get; set; }
 
         // Constructor
-        public Ticket(int id, string eventoN, int usuarioC, DateTime fechaCompra, decimal precio, bool disponible, string eventoL)
+        public Ticket(int id, string eventoN, int usuarioC, DateTime fechaCompra, decimal precio,  string eventoL)
         {
             this.id = id;
             this.EventoN = eventoN;
             this.UsuarioC = usuarioC;
             this.FechaCompra = fechaCompra;
             this.Precio = precio;
-            this.Disponible = disponible;
             this.EventoL = eventoL;
         }
 
@@ -42,7 +41,6 @@ namespace proyectoEventos
             $"ID del Usuario: {UsuarioC}\n" +
             $"Fecha de Compra: {FechaCompra:dd/MM/yyyy HH:mm:ss}\n" +
             $"Precio: {Precio:C2}\n" +
-            $"Disponible: {(Disponible ? "Sí" : "No")}\n" +
             $"Lugar del Evento: {EventoL}\n" +
             "========================================================";
         }
