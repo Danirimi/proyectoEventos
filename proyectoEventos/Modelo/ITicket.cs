@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace proyectoEventos.Modelo
 {
-    internal class Roles
+    internal interface ITicket
     {
     }
 }
