@@ -9,7 +9,7 @@ using System.Text.Json;
 using System.IO;
 namespace proyectoEventos.Modelo
 {
-    internal class InterfazEventoMemoria : InterfaceEvento
+    public class InterfazEventoMemoria : InterfaceEvento
     {
         private readonly List<Evento> _eventos = new List<Evento>();
         private int _siguenteId = 1;

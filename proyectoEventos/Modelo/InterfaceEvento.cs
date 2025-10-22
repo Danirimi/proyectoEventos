@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace proyectoEventos.Modelo
 {
-    internal interface InterfaceEvento
+    public interface InterfaceEvento
     {
         IEnumerable<Evento> mostrarEventos();
 
