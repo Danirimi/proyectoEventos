@@ -9,8 +9,8 @@ namespace proyectoEventos
     internal class Ticket
     {
         public int id { get; set; }
-        public int EventoId { get; set; }             
-        public int UsuarioId { get; set; }
+        public string EventoN { get; set; }             
+        public int UsuarioC { get; set; }
 
         public DateTime FechaCompra { get; set; }
 
@@ -18,29 +18,33 @@ namespace proyectoEventos
 
         public bool Disponible { get; set; }
 
+        public string EventoL { get; set; }
+
         // Constructor
-        public Ticket(int id, int eventoId, int usuarioId, DateTime fechaCompra, decimal precio, bool disponible)
+        public Ticket(int id, string eventoN, int usuarioC, DateTime fechaCompra, decimal precio, bool disponible, string eventoL)
         {
             this.id = id;
-            this.EventoId = eventoId;
-            this.UsuarioId = usuarioId;
+            this.EventoN = eventoN;
+            this.UsuarioC = usuarioC;
             this.FechaCompra = fechaCompra;
             this.Precio = precio;
             this.Disponible = disponible;
+            this.EventoL = eventoL;
         }
 
         // Método para mostrar información del ticket
         public override string ToString()
         {
             return
-                "================= DETALLES DE LA COMPRA =================\n" +
-                $"ID Interno: {id}\n" +
-                $"ID del Evento: {EventoId}\n" +
-                $"ID del Usuario: {UsuarioId}\n" +
-                $"Fecha de Compra: {FechaCompra:dd/MM/yyyy HH:mm:ss}\n" +
-                $"Precio: {Precio:C2}\n" +
-                $"Disponible: {(Disponible ? "Sí" : "No")}\n" +
-                "==========================================================";
+                "================= DETALLES DEL TICKET =================\n" +
+            $"ID Ticket: {id}\n" +
+            $"Nombre del Evento: {EventoN}\n" +
+            $"ID del Usuario: {UsuarioC}\n" +
+            $"Fecha de Compra: {FechaCompra:dd/MM/yyyy HH:mm:ss}\n" +
+            $"Precio: {Precio:C2}\n" +
+            $"Disponible: {(Disponible ? "Sí" : "No")}\n" +
+            $"Lugar del Evento: {EventoL}\n" +
+            "========================================================";
         }
     }
 }
