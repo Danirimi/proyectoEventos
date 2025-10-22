@@ -96,7 +96,6 @@
     <Compile Include="Modelo\InterfazEventoMemoria.cs" />
     <Compile Include="Modelo\JsonHelper.cs" />
     <Compile Include="Modelo\Roles.cs" />
-    <Compile Include="Modelo\tiquetes.cs" />
     <Compile Include="Modelo\Usarios.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
