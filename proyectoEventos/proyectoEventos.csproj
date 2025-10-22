@@ -94,11 +94,13 @@
     <Compile Include="Modelo\Evento.cs" />
     <Compile Include="Modelo\InterfaceEvento.cs" />
     <Compile Include="Modelo\InterfazEventoMemoria.cs" />
+    <Compile Include="Modelo\IUsuario.cs" />
+    <Compile Include="Modelo\IUsuarioMemoria.cs" />
     <Compile Include="Modelo\JsonHelper.cs" />
     <Compile Include="Modelo\tiquetes.cs" />
-    <Compile Include="Modelo\Usarios.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Modelo\Usuario.cs" />
     <Compile Include="vista\EditarEvento.cs">
       <SubType>Form</SubType>
     </Compile>
