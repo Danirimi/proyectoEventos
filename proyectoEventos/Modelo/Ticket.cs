@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace proyectoEventos
 {
-    internal class Ticket
+    public class Ticket
     {
         public int id { get; set; }
         public string EventoN { get; set; }             
