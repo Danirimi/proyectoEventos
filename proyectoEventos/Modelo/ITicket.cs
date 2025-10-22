@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace proyectoEventos.Modelo
 {
-    internal interface ITicket
+    public interface ITicket
     {
+        void generarTicket(Ticket ticket);
+       
     }
 }
