@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace proyectoEventos.Controlador
+namespace proyectoEventos.Modelo
 {
-    internal class ControladorRoles
+    public interface ITicket
     {
+        void generarTicket(Ticket ticket);
+       
     }
 }

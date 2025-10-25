@@ -11,25 +11,7 @@ namespace proyectoEventos.Modelo
 {
     public static class JsonHelper
     {
-        public static void Guardar<T>(List<T> lista, string rutaArchivo)
-        {
-            string carpeta = Path.GetDirectoryName(rutaArchivo);
-            if (!Directory.Exists(carpeta))
-                Directory.CreateDirectory(carpeta);
-
-            string json = JsonSerializer.Serialize(lista, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(rutaArchivo, json);
-        }
-
-        public static List<T> Cargar<T>(string rutaArchivo)
-        {
-            if (!File.Exists(rutaArchivo))
-                return new List<T>();
-
-            string json = File.ReadAllText(rutaArchivo);
-            List<T> lista = JsonSerializer.Deserialize<List<T>>(json);
-            return lista ?? new List<T>();
-        }
+       
 
     }
 

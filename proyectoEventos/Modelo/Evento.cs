@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace proyectoEventos.Modelo
 {
-    internal class Evento
+    public class Evento
     {
         public int Id { get; set; }
 
@@ -31,6 +31,7 @@ namespace proyectoEventos.Modelo
             DescripcionEvento = descripcionEvento;
             this.entradastotales = entradastotales;
             this.entradasdisponibles = entradasdisponibles;
+
         }
         public override string ToString()
         {
