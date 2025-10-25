@@ -32,7 +32,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textNombre = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textFecha = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtNombre
@@ -71,19 +71,19 @@
             this.label2.Text = "Fecha";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
-            // textBox1
+            // textFecha
             // 
-            this.textBox1.Location = new System.Drawing.Point(27, 198);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(243, 22);
-            this.textBox1.TabIndex = 4;
+            this.textFecha.Location = new System.Drawing.Point(27, 198);
+            this.textFecha.Name = "textFecha";
+            this.textFecha.Size = new System.Drawing.Size(243, 22);
+            this.textFecha.TabIndex = 4;
             // 
             // EditarEvento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(590, 450);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textFecha);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textNombre);
             this.Controls.Add(this.label1);
@@ -101,6 +101,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textNombre;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textFecha;
     }
 }

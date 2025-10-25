@@ -108,6 +108,12 @@
     <Compile Include="vista\EditarEvento.Designer.cs">
       <DependentUpon>EditarEvento.cs</DependentUpon>
     </Compile>
+    <Compile Include="vista\EditarUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="vista\EditarUsuario.Designer.cs">
+      <DependentUpon>EditarUsuario.cs</DependentUpon>
+    </Compile>
     <Compile Include="vista\IEventoVista.cs" />
     <Compile Include="vista\PaginaInicial.cs">
       <SubType>Form</SubType>
@@ -139,6 +145,9 @@
     </Compile>
     <EmbeddedResource Include="vista\EditarEvento.resx">
       <DependentUpon>EditarEvento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="vista\EditarUsuario.resx">
+      <DependentUpon>EditarUsuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="vista\PaginaInicial.resx">
       <DependentUpon>PaginaInicial.cs</DependentUpon>
