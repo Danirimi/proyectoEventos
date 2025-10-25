@@ -93,6 +93,16 @@ namespace proyectoEventos.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Gemini_Generated_Image_dx25dodx25dodx25 {
+            get {
+                object obj = ResourceManager.GetObject("Gemini_Generated_Image_dx25dodx25dodx25", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap raf_360x360_075_t_fafafa_ca443f4786 {
             get {
                 object obj = ResourceManager.GetObject("raf,360x360,075,t,fafafa_ca443f4786", resourceCulture);

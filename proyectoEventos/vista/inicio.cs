@@ -10,26 +10,18 @@ using System.Windows.Forms;
 
 namespace proyectoEventos.vista
 {
-    public partial class PaginaInicial : Form
+    public partial class inicio : Form
     {
-        public PaginaInicial()
+        public inicio()
         {
             InitializeComponent();
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
+            PaginaInicial paginaInicial = new PaginaInicial();
+            paginaInicial.Show();
+            this.Hide();
         }
     }
 }
