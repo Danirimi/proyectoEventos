@@ -20,7 +20,7 @@ namespace proyectoEventos.Modelo
             string carpetaDatos = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Datos");
             _rutaArchivo = Path.Combine(carpetaDatos, "eventos.json");
 
-            _eventos = JsonHelper.Cargar<Evento>(_rutaArchivo);
+            
             _siguenteId = _eventos.Any() ? _eventos.Max(e => e.Id) + 1 : 1;
         }
 
@@ -56,7 +56,7 @@ namespace proyectoEventos.Modelo
             }
             evento.Id = _siguenteId++;
             _eventos.Add(evento);
-            JsonHelper.Guardar(_eventos, _rutaArchivo);
+           
         }
         public void actualizarEvento(Evento evento)
         {
@@ -76,7 +76,7 @@ namespace proyectoEventos.Modelo
             eventoExistente.entradastotales = evento.entradastotales;
             eventoExistente.entradasdisponibles = evento.entradasdisponibles;
 
-            JsonHelper.Guardar(_eventos, _rutaArchivo);
+           
         }
         public void eliminarEvento(int id)
         {
@@ -86,7 +86,7 @@ namespace proyectoEventos.Modelo
                 MessageBox.Show($"No se encontró ningún evento con Id = {id}.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             _eventos.Remove(evento);
-            JsonHelper.Guardar(_eventos, _rutaArchivo);
+           
         }
 
 
