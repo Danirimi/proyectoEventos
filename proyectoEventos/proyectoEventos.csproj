@@ -83,13 +83,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Controlador\ControladorUsuario.cs" />
     <Compile Include="Modelo\Evento.cs" />
     <Compile Include="Modelo\InterfaceEvento.cs" />
     <Compile Include="Modelo\InterfazEventoMemoria.cs" />
@@ -108,7 +102,19 @@
     <Compile Include="vista\EditarEvento.Designer.cs">
       <DependentUpon>EditarEvento.cs</DependentUpon>
     </Compile>
+    <Compile Include="vista\CrearUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="vista\CrearUsuario.Designer.cs">
+      <DependentUpon>CrearUsuario.cs</DependentUpon>
+    </Compile>
     <Compile Include="vista\IEventoVista.cs" />
+    <Compile Include="vista\inicio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="vista\inicio.Designer.cs">
+      <DependentUpon>inicio.cs</DependentUpon>
+    </Compile>
     <Compile Include="vista\PaginaInicial.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -140,6 +146,12 @@
     <EmbeddedResource Include="vista\EditarEvento.resx">
       <DependentUpon>EditarEvento.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="vista\CrearUsuario.resx">
+      <DependentUpon>CrearUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="vista\inicio.resx">
+      <DependentUpon>inicio.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="vista\PaginaInicial.resx">
       <DependentUpon>PaginaInicial.cs</DependentUpon>
     </EmbeddedResource>
@@ -161,7 +173,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controlador\" />
     <Folder Include="Datos\" />
   </ItemGroup>
   <ItemGroup>
@@ -175,6 +186,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\raf,360x360,075,t,fafafa_ca443f4786.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Gemini_Generated_Image_dx25dodx25dodx25.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
