@@ -1,6 +1,6 @@
 ﻿namespace proyectoEventos.vista
 {
-    partial class EditarUsuario
+    partial class CrearUsuario
     {
         /// <summary>
         /// Required designer variable.
@@ -36,11 +36,12 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.txtCorreo = new System.Windows.Forms.TextBox();
-            this.txtContraseña = new System.Windows.Forms.TextBox();
+            this.txtContrasena = new System.Windows.Forms.TextBox();
             this.txtCedula = new System.Windows.Forms.TextBox();
             this.txtEdad = new System.Windows.Forms.TextBox();
             this.boolAdmin = new System.Windows.Forms.CheckBox();
             this.s = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -108,17 +109,17 @@
             // 
             // txtCorreo
             // 
-            this.txtCorreo.Location = new System.Drawing.Point(37, 269);
+            this.txtCorreo.Location = new System.Drawing.Point(37, 248);
             this.txtCorreo.Name = "txtCorreo";
             this.txtCorreo.Size = new System.Drawing.Size(324, 22);
             this.txtCorreo.TabIndex = 8;
             // 
-            // txtContraseña
+            // txtContrasena
             // 
-            this.txtContraseña.Location = new System.Drawing.Point(37, 330);
-            this.txtContraseña.Name = "txtContraseña";
-            this.txtContraseña.Size = new System.Drawing.Size(324, 22);
-            this.txtContraseña.TabIndex = 9;
+            this.txtContrasena.Location = new System.Drawing.Point(37, 330);
+            this.txtContrasena.Name = "txtContrasena";
+            this.txtContrasena.Size = new System.Drawing.Size(324, 22);
+            this.txtContrasena.TabIndex = 9;
             // 
             // txtCedula
             // 
@@ -153,16 +154,28 @@
             this.s.TabIndex = 13;
             this.s.Text = "quieres que tu cuenta sea de Administrador?";
             // 
-            // EditarUsuario
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(674, 436);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(102, 37);
+            this.button1.TabIndex = 14;
+            this.button1.Text = "Confirmar";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // CrearUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 506);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.s);
             this.Controls.Add(this.boolAdmin);
             this.Controls.Add(this.txtEdad);
             this.Controls.Add(this.txtCedula);
-            this.Controls.Add(this.txtContraseña);
+            this.Controls.Add(this.txtContrasena);
             this.Controls.Add(this.txtCorreo);
             this.Controls.Add(this.txtNombre);
             this.Controls.Add(this.label6);
@@ -171,8 +184,9 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "EditarUsuario";
+            this.Name = "CrearUsuario";
             this.Text = "EditarUsuario";
+            this.Load += new System.EventHandler(this.CrearUsuario_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -188,10 +202,11 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.TextBox txtCorreo;
-        private System.Windows.Forms.TextBox txtContraseña;
+        private System.Windows.Forms.TextBox txtContrasena;
         private System.Windows.Forms.TextBox txtCedula;
         private System.Windows.Forms.TextBox txtEdad;
         private System.Windows.Forms.CheckBox boolAdmin;
         private System.Windows.Forms.Label s;
+        private System.Windows.Forms.Button button1;
     }
 }

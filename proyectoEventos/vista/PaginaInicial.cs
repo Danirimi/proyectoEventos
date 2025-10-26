@@ -29,7 +29,9 @@ namespace proyectoEventos.vista
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            CrearUsuario editarUsuario = new CrearUsuario();
+            editarUsuario.Show();
+            this.Hide();
         }
     }
 }

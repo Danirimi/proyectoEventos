@@ -83,6 +83,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controlador\ControladorUsuario.cs" />
     <Compile Include="Modelo\Evento.cs" />
     <Compile Include="Modelo\InterfaceEvento.cs" />
     <Compile Include="Modelo\InterfazEventoMemoria.cs" />
@@ -101,11 +102,11 @@
     <Compile Include="vista\EditarEvento.Designer.cs">
       <DependentUpon>EditarEvento.cs</DependentUpon>
     </Compile>
-    <Compile Include="vista\EditarUsuario.cs">
+    <Compile Include="vista\CrearUsuario.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="vista\EditarUsuario.Designer.cs">
-      <DependentUpon>EditarUsuario.cs</DependentUpon>
+    <Compile Include="vista\CrearUsuario.Designer.cs">
+      <DependentUpon>CrearUsuario.cs</DependentUpon>
     </Compile>
     <Compile Include="vista\IEventoVista.cs" />
     <Compile Include="vista\inicio.cs">
@@ -145,8 +146,8 @@
     <EmbeddedResource Include="vista\EditarEvento.resx">
       <DependentUpon>EditarEvento.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="vista\EditarUsuario.resx">
-      <DependentUpon>EditarUsuario.cs</DependentUpon>
+    <EmbeddedResource Include="vista\CrearUsuario.resx">
+      <DependentUpon>CrearUsuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="vista\inicio.resx">
       <DependentUpon>inicio.cs</DependentUpon>
@@ -172,7 +173,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controlador\" />
     <Folder Include="Datos\" />
   </ItemGroup>
   <ItemGroup>
