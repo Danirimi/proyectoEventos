@@ -21,7 +21,7 @@ namespace proyectoEventos.vista
         {
             PaginaInicial paginaInicial = new PaginaInicial();
             paginaInicial.Show();
-            this.Hide();
+            this.Close();
         }
     }
 }

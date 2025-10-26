@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace proyectoEventos
+namespace proyectoEventos.Modelo
 {
     public class Ticket
     {
-        public int id { get; set; }
+        private static int contadorIds = 0;
+        public int id { get; private set; }
         public string EventoN { get; set; }             
         public int UsuarioC { get; set; }
 
@@ -23,7 +24,8 @@ namespace proyectoEventos
         // Constructor
         public Ticket(int id, string eventoN, int usuarioC, DateTime fechaCompra, decimal precio,  string eventoL)
         {
-            this.id = id;
+            contadorIds++;
+            this.id = contadorIds;
             this.EventoN = eventoN;
             this.UsuarioC = usuarioC;
             this.FechaCompra = fechaCompra;
