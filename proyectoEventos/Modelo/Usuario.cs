@@ -11,7 +11,7 @@ namespace proyectoEventos.Modelo
         private static int contadorIds = 0;
         public string Nombre { get; set; }
         public string Correo { get; set; }
-        public string Cedula { get; set; }
+        public int Cedula { get; set; }
         public int Edad { get; set; }
         public string Contrasena { get; set; }
 
@@ -19,7 +19,7 @@ namespace proyectoEventos.Modelo
 
         public bool esadmin { get; set; }
 
-        public Usuario(string Nombre, string Correo, string Cedula, int Edad,string Contrasena, bool Esadmin) 
+        public Usuario(string Nombre, string Correo, int Cedula, int Edad,string Contrasena, bool Esadmin) 
         {
             contadorIds++;
             this.id = contadorIds;
