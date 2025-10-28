@@ -1,4 +1,5 @@
-﻿using System;
+﻿using proyectoEventos.Controlador;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,16 +13,23 @@ namespace proyectoEventos.vista
 {
     public partial class inicio : Form
     {
+        private ControladorUsuario _controladorUsuario;
         public inicio()
         {
             InitializeComponent();
         }
 
+        public void configurarControlador(ControladorUsuario controlador)
+        {
+            _controladorUsuario = controlador;
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             PaginaInicial paginaInicial = new PaginaInicial();
+            paginaInicial.ConfigurarControlador(_controladorUsuario);
             paginaInicial.Show();
-            this.Close();
+
         }
     }
 }

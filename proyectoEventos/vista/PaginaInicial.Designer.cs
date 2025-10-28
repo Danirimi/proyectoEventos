@@ -98,7 +98,7 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(462, 548);
+            this.button2.Location = new System.Drawing.Point(623, 499);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(170, 36);
             this.button2.TabIndex = 7;
@@ -110,7 +110,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(459, 510);
+            this.label4.Location = new System.Drawing.Point(620, 461);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(226, 20);
             this.label4.TabIndex = 8;
@@ -120,7 +120,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::proyectoEventos.Properties.Resources.raf_360x360_075_t_fafafa_ca443f4786;
-            this.pictureBox1.Location = new System.Drawing.Point(321, 87);
+            this.pictureBox1.Location = new System.Drawing.Point(489, 9);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(389, 358);
             this.pictureBox1.TabIndex = 5;
@@ -143,6 +143,7 @@
             this.Controls.Add(this.label1);
             this.Name = "PaginaInicial";
             this.Text = "PaginaInicial";
+            this.Load += new System.EventHandler(this.PaginaInicial_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
