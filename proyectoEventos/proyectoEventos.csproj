@@ -91,6 +91,7 @@
     <Compile Include="Modelo\ITicketmemoria.cs" />
     <Compile Include="Modelo\IUsuario.cs" />
     <Compile Include="Modelo\IUsuarioMemoria.cs" />
+    <Compile Include="Modelo\JsonDataManager.cs" />
     <Compile Include="Modelo\JsonHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
