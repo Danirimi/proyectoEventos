@@ -35,13 +35,24 @@ namespace proyectoEventos.vista
             // Disparar el evento Usuario
             UsuarioCrearE?.Invoke(this, new UsuarioEventArgs(nombre, correo, cedula, edad, contrasena, esadmin));
             MessageBox.Show("Usuario creado con exito","Exito",MessageBoxButtons.OK,MessageBoxIcon.Information);
-            this.Close();
+            this.Hide();
 
+        }
+
+        public void LimpiarCampos()
+        {
+            txtNombre.Text = "";
+            txtCorreo.Text = "";
+            txtCedula.Text = "";
+            txtEdad.Text = "";
+            txtContrasena.Text = "";
+            boolAdmin.Checked = false;
         }
 
         private void CrearUsuario_Load(object sender, EventArgs e)
         {
 
         }
+
     }
 }
