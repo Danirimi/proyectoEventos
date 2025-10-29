@@ -10,14 +10,11 @@ using System.Windows.Forms;
 
 namespace proyectoEventos.vista
 {
-    public partial class VistaEventos : Form, IEventoVista
+    public partial class VistaEventos : Form
     {
         //Eventos de la interfaz
 
-        public event EventHandler AgregarEvento;
-        public event EventHandler BuscarEvento;
-        public event EventHandler editarEvento;
-        public event EventHandler eliminarEvento;
+      
 
 
         public VistaEventos()

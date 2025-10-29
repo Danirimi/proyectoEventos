@@ -14,6 +14,8 @@ namespace proyectoEventos.Modelo
 
         void verHistorialcompra(string cedula);
 
+        List<Usuario> ObtenerUsuarios();
+
 
 
     }
