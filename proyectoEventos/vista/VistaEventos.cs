@@ -7,7 +7,7 @@ using System.IO;
 
 namespace proyectoEventos.vista
 {
-    public partial class VistaEventos : Form, IEventoVista
+    public partial class VistaEventos : Form
     {
         private readonly string _carpetaImagenes;
         private ToolTip toolTip;
@@ -16,10 +16,7 @@ namespace proyectoEventos.vista
 
         //Eventos de la interfaz
 
-        public event EventHandler AgregarEvento;
-        public event EventHandler BuscarEvento;
-        public event EventHandler editarEvento;
-        public event EventHandler eliminarEvento;
+      
 
 
         public VistaEventos()

@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace proyectoEventos
+namespace proyectoEventos.vista
 {
-    public partial class Form1 : Form
+    public partial class EditarEvento : Form
     {
-        public Form1()
+        public EditarEvento()
         {
             InitializeComponent();
         }
