@@ -96,17 +96,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Modelo\Usuario.cs" />
     <Compile Include="Modelo\Ticket.cs" />
-    <Compile Include="vista\EditarEvento.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="vista\EditarEvento.Designer.cs">
-      <DependentUpon>EditarEvento.cs</DependentUpon>
-    </Compile>
     <Compile Include="vista\CrearUsuario.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="vista\CrearUsuario.Designer.cs">
       <DependentUpon>CrearUsuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="vista\EditarEvento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="vista\EditarEvento.Designer.cs">
+      <DependentUpon>EditarEvento.cs</DependentUpon>
     </Compile>
     <Compile Include="vista\IEventoVista.cs" />
     <Compile Include="vista\inicio.cs">
@@ -115,6 +115,7 @@
     <Compile Include="vista\inicio.Designer.cs">
       <DependentUpon>inicio.cs</DependentUpon>
     </Compile>
+    <Compile Include="vista\IVistaUsuario.cs" />
     <Compile Include="vista\PaginaInicial.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -127,6 +128,7 @@
     <Compile Include="vista\Roles.Designer.cs">
       <DependentUpon>Roles.cs</DependentUpon>
     </Compile>
+    <Compile Include="vista\UsuarioEventArgs.cs" />
     <Compile Include="vista\VistaEventos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -143,11 +145,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="vista\EditarEvento.resx">
-      <DependentUpon>EditarEvento.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="vista\CrearUsuario.resx">
       <DependentUpon>CrearUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="vista\EditarEvento.resx">
+      <DependentUpon>EditarEvento.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="vista\inicio.resx">
       <DependentUpon>inicio.cs</DependentUpon>
@@ -158,6 +160,7 @@
     <EmbeddedResource Include="vista\VistaEventos.resx">
       <DependentUpon>VistaEventos.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="json1.json" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

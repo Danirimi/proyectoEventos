@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using proyectoEventos.Controlador;
+using proyectoEventos.Modelo;
 using proyectoEventos.vista;
 
 namespace proyectoEventos
@@ -17,7 +19,19 @@ namespace proyectoEventos
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new inicio());
+
+            // crear instancia de una sola vez IMPORTANTE!!!!
+            // crear intancia de crearUsuario y de otras vistas
+            CrearUsuario crearUsuarioVista = new CrearUsuario();
+            inicio inicioVista = new inicio();
+            IUsuario repo = new IUsuarioMemoria();
+            //crear intancia de controlador Usuario donde se va pasar como parametro la instancia de crearUsuario
+            ControladorUsuario controladorUsu = new ControladorUsuario(crearUsuarioVista,repo);
+
+            inicioVista.configurarControlador(controladorUsu);
+
+
+            Application.Run(inicioVista);
         }
     }
 }

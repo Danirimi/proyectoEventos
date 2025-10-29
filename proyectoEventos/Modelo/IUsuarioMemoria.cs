@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace proyectoEventos.Modelo
 {
@@ -16,11 +17,13 @@ namespace proyectoEventos.Modelo
             if (usuario.esadmin==false)
             {
              _usuarios.Add(usuario);
+                MessageBox.Show("CONFIRMACION");
             }
             else
             {
                 _administradores.Add(usuario);
             }
+            
         }
         public void EditarUsuario(Usuario usuario)
         {
@@ -53,18 +56,17 @@ namespace proyectoEventos.Modelo
         }
         public void EliminarUsuario(string cedula)
         {
-
-            var usuarioAEliminar = _usuarios.FirstOrDefault(u => u.Cedula == cedula);
-            if (usuarioAEliminar != null)
+            Usuario usuarioExistente = _usuarios.FirstOrDefault(u => u.Cedula.ToString() == cedula);
+            if (usuarioExistente != null)
             {
-                _usuarios.Remove(usuarioAEliminar);
+                _usuarios.Remove(usuarioExistente);
             }
             else
             {
-                var adminAEliminar = _administradores.FirstOrDefault(u => u.Cedula == cedula);
-                if (adminAEliminar != null)
+                Usuario adminExistente = _administradores.FirstOrDefault(u => u.Cedula.ToString() == cedula);
+                if (adminExistente != null)
                 {
-                    _administradores.Remove(adminAEliminar);
+                    _administradores.Remove(adminExistente);
                 }
             }
         }
@@ -73,8 +75,13 @@ namespace proyectoEventos.Modelo
             // Implementación pendiente
             throw new NotImplementedException();
         }
-       
-        
+
+        public List<Usuario> ObtenerUsuarios()
+        {
+            return _usuarios;
+        }
+
+
 
 
     }
