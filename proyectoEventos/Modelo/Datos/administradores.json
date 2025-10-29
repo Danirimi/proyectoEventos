@@ -1,0 +1,20 @@
+[
+  {
+    "Nombre": "Abril",
+    "Correo": "Abril07",
+    "Cedula": 33,
+    "Edad": 33,
+    "Contrasena": "alana",
+    "id": 1,
+    "esadmin": true
+  },
+  {
+    "Nombre": "juan",
+    "Correo": "juan123",
+    "Cedula": 23,
+    "Edad": 23,
+    "Contrasena": "we",
+    "id": 2,
+    "esadmin": true
+  }
+]
