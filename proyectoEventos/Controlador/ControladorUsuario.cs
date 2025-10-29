@@ -63,10 +63,13 @@ namespace proyectoEventos.Controlador
 
             return true; // Retorna true si la creación fue exitosa
         }
-        public void MostrarVentanaCrearUsuario()
-        {
-            _VistaCrearUsuario.Show();
-        }
+
+        
+            public void MostrarVentanaCrearUsuario()
+            {
+                _VistaCrearUsuario.LimpiarCampos();
+                _VistaCrearUsuario.Show();
+            }
 
     }
 }
