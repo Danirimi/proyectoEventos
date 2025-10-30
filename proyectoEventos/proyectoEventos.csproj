@@ -162,7 +162,6 @@
     <EmbeddedResource Include="vista\VistaEventos.resx">
       <DependentUpon>VistaEventos.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="json1.json" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
