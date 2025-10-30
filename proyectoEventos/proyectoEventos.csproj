@@ -179,7 +179,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Datos\" />
-    <Folder Include="Modelo\Datos\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\brayitan wuw.jpg" />
