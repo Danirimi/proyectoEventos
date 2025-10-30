@@ -28,7 +28,17 @@ namespace proyectoEventos.vista
 
         private void button1_Click(object sender, EventArgs e)
         {
+            // Evita que la ventana se muestre más de una vez o que se haya cerrado mal
+            if (_paginaInicialExistente.IsDisposed)
+            {
+                MessageBox.Show("La ventana principal fue cerrada. Reinicie la aplicación para continuar.",
+                                "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Mostrar la instancia existente
             _paginaInicialExistente.Show();
+            _paginaInicialExistente.BringToFront(); // La trae al frente por si ya estaba abierta
         }
     }
 }

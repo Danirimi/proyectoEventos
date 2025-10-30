@@ -29,7 +29,7 @@ namespace proyectoEventos.Controlador
             _PaginaInicial.IniciarSesionE += LogicaSesion;
         }
         private void LogicaSesion(object sender, ArgumentoIniciarSesion e) {
-            bool valido = _repo.ValidarUsuarioDirecto(e.Nombre, e.Contrasena);
+            bool valido = _repo.ValidarUsuarioDirecto(e.Correo, e.Contrasena);
             if (valido) MessageBox.Show("Éxito");
             else MessageBox.Show("Error");
         }
