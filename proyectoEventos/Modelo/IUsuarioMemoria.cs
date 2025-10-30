@@ -18,8 +18,12 @@ namespace proyectoEventos.Modelo
 
         public IUsuarioMemoria()
         {
-            _usuarios = JsonDataManager.CargarDatos<Usuario>("usuarios.json");
-            _administradores = JsonDataManager.CargarDatos<Usuario>("administradores.json");
+            // Construye las rutas dinámicamente
+            rutaUsuarios = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Modelo", "Datos", "usuarios.json");
+            rutaAdministradores = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Modelo", "Datos", "administradores.json");
+            // Carga los datos usando esas rutas
+            _usuarios = JsonDataManager.CargarDatos<Usuario>(rutaUsuarios);
+            _administradores = JsonDataManager.CargarDatos<Usuario>(rutaAdministradores);
         }
 
         public void AgregarUsuario(Usuario usuario)
