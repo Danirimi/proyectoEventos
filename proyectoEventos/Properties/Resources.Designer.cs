@@ -63,6 +63,16 @@ namespace proyectoEventos.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _1 {
+            get {
+                object obj = ResourceManager.GetObject("1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap _9849d2e2a60ea7e017d9d4ff07050422 {
             get {
                 object obj = ResourceManager.GetObject("9849d2e2a60ea7e017d9d4ff07050422", resourceCulture);

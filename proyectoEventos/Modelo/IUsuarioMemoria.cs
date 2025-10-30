@@ -130,6 +130,15 @@ namespace proyectoEventos.Modelo
             {
                 MessageBox.Show($"Error al guardar el archivo JSON ({ruta}): {ex.Message}");
             }
+
+        }
+        public bool ValidarUsuarioDirecto(string nombre, string contrasena)
+        {
+            var usuarios = CargarDesdeJson(rutaUsuarios);
+            var admins = CargarDesdeJson(rutaAdministradores);
+
+            return usuarios.Any(u => u.Nombre == nombre && u.Contrasena == contrasena) ||
+                   admins.Any(a => a.Nombre == nombre && a.Contrasena == contrasena);
         }
     }
 }
