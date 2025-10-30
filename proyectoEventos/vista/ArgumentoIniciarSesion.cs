@@ -8,11 +8,11 @@ namespace proyectoEventos.vista
 {
     public class ArgumentoIniciarSesion : EventArgs
     {
-        public string Nombre { get; }
+        public string Correo { get; }
         public string Contrasena { get; }
-        public ArgumentoIniciarSesion(string nombre, string contrasena)
+        public ArgumentoIniciarSesion(string correo, string contrasena)
         {
-            Nombre = nombre;
+            Correo = correo;
             Contrasena = contrasena;
         }
     }

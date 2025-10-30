@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,13 +18,8 @@ namespace proyectoEventos.Modelo
 
         public IUsuarioMemoria()
         {
-            // Definimos las rutas dentro de bin\Debug\net8.0-windows\
-            rutaUsuarios = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "usuarios.json");
-            rutaAdministradores = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "administradores.json");
-
-            // Cargamos los datos existentes (si los archivos existen)
-            _usuarios = CargarDesdeJson(rutaUsuarios);
-            _administradores = CargarDesdeJson(rutaAdministradores);
+            _usuarios = JsonDataManager.CargarDatos<Usuario>("usuarios.json");
+            _administradores = JsonDataManager.CargarDatos<Usuario>("administradores.json");
         }
 
         public void AgregarUsuario(Usuario usuario)
@@ -31,34 +27,45 @@ namespace proyectoEventos.Modelo
             if (usuario.esadmin)
             {
                 _administradores.Add(usuario);
-                GuardarEnJson(_administradores, rutaAdministradores);
+                MessageBox.Show("Administrador agregado correctamente.", "Éxito",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                JsonDataManager.GuardarDatos(_administradores, "administradores.json");
             }
             else
             {
                 _usuarios.Add(usuario);
-                GuardarEnJson(_usuarios, rutaUsuarios);
+                MessageBox.Show("Usuario agregado correctamente.", "Éxito",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                JsonDataManager.GuardarDatos(_usuarios, "usuarios.json");
             }
-
-            MessageBox.Show("Usuario guardado correctamente en JSON.", "Confirmación",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         public void EditarUsuario(Usuario usuario)
         {
+            // Determinar la lista y el nombre del archivo correspondiente
             List<Usuario> lista = usuario.esadmin ? _administradores : _usuarios;
-            string ruta = usuario.esadmin ? rutaAdministradores : rutaUsuarios;
+            string archivo = usuario.esadmin ? "administradores.json" : "usuarios.json";
 
+            // Buscar el usuario existente
             var existente = lista.FirstOrDefault(u => u.Cedula == usuario.Cedula);
             if (existente != null)
             {
+                // Actualizar los datos del usuario
                 existente.Nombre = usuario.Nombre;
                 existente.Correo = usuario.Correo;
                 existente.Edad = usuario.Edad;
                 existente.Contrasena = usuario.Contrasena;
 
-                GuardarEnJson(lista, ruta);
+                // Guardar toda la lista actualizada usando la clase JsonDataManager
+                JsonDataManager.GuardarDatos(lista, archivo);
+
                 MessageBox.Show("Usuario actualizado correctamente.", "Éxito",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("No se encontró el usuario a editar.", "Aviso",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -66,22 +73,25 @@ namespace proyectoEventos.Modelo
         {
             bool eliminado = false;
 
+            // Buscar en usuarios normales
             var usuario = _usuarios.FirstOrDefault(u => u.Cedula.ToString() == cedula);
             if (usuario != null)
             {
                 _usuarios.Remove(usuario);
-                GuardarEnJson(_usuarios, rutaUsuarios);
+                JsonDataManager.GuardarDatos(_usuarios, "usuarios.json");
                 eliminado = true;
             }
 
+            // Buscar en administradores
             var admin = _administradores.FirstOrDefault(a => a.Cedula.ToString() == cedula);
             if (admin != null)
             {
                 _administradores.Remove(admin);
-                GuardarEnJson(_administradores, rutaAdministradores);
+                JsonDataManager.GuardarDatos(_administradores, "administradores.json");
                 eliminado = true;
             }
 
+            // Mostrar mensaje según corresponda
             if (eliminado)
                 MessageBox.Show("Usuario eliminado correctamente.", "Confirmación",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -99,47 +109,38 @@ namespace proyectoEventos.Modelo
         {
             throw new NotImplementedException();
         }
-
-        // Métodos auxiliares JSON
-        private List<Usuario> CargarDesdeJson(string ruta)
+        public bool ValidarUsuarioDirecto(string correo, string contrasena)
         {
-            try
-            {
-                if (File.Exists(ruta))
-                {
-                    string json = File.ReadAllText(ruta);
-                    var datos = JsonSerializer.Deserialize<List<Usuario>>(json);
-                    return datos ?? new List<Usuario>();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al leer el archivo JSON ({ruta}): {ex.Message}");
-            }
-            return new List<Usuario>();
+            //  Verificar que ambos parámetros no estén vacíos
+            if (string.IsNullOrWhiteSpace(correo) || string.IsNullOrWhiteSpace(contrasena))
+                return false;
+            //  Leer los archivos JSON
+            var listaUsuarios = LeerArchivoJSON(rutaUsuarios);
+            var listaAdmins = LeerArchivoJSON(rutaAdministradores);
+
+            //  Buscar coincidencia en ambos archivos
+            var usuario = listaUsuarios.FirstOrDefault(u =>
+                u.Correo.Equals(correo, StringComparison.OrdinalIgnoreCase) &&
+                u.Contrasena == contrasena);
+
+            var admin = listaAdmins.FirstOrDefault(u =>
+              u.Correo.Equals(correo, StringComparison.OrdinalIgnoreCase) &&
+              u.Contrasena == contrasena);
+
+            //  Si se encuentra en alguno de los dos archivos
+            if (usuario != null || admin != null)
+                return true;
+            return false;
         }
-
-        private void GuardarEnJson(List<Usuario> lista, string ruta)
+        private List<Usuario> LeerArchivoJSON(string ruta)
         {
-            try
-            {
-                string json = JsonSerializer.Serialize(lista, new JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(ruta, json);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al guardar el archivo JSON ({ruta}): {ex.Message}");
-            }
+            if (!File.Exists(ruta))
+                return new List<Usuario>(); // si el archivo no existe, devolver lista vacía
 
-        }
-        public bool ValidarUsuarioDirecto(string nombre, string contrasena)
-        {
-            var usuarios = CargarDesdeJson(rutaUsuarios);
-            var admins = CargarDesdeJson(rutaAdministradores);
-
-            return usuarios.Any(u => u.Nombre == nombre && u.Contrasena == contrasena) ||
-                   admins.Any(a => a.Nombre == nombre && a.Contrasena == contrasena);
+            string contenido = File.ReadAllText(ruta);
+            return JsonConvert.DeserializeObject<List<Usuario>>(contenido) ?? new List<Usuario>();
         }
     }
+
 }
 

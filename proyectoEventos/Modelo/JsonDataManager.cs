@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using System.Windows.Forms;
 
 namespace proyectoEventos.Modelo
 {
@@ -16,6 +17,7 @@ namespace proyectoEventos.Modelo
 
         public static void GuardarDatos<T>(List<T> datos, string nombreArchivo)
         {
+            MessageBox.Show("Guardando datos en " + nombreArchivo);
             string ruta = ObtenerRutaCompleta(nombreArchivo);
             string json = JsonSerializer.Serialize(datos, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(ruta, json);

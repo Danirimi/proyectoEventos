@@ -30,7 +30,7 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.tbUsuario = new System.Windows.Forms.TextBox();
+            this.tbCorreo = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.tbContraseña = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
@@ -57,16 +57,17 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(29, 120);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(165, 20);
+            this.label2.Size = new System.Drawing.Size(154, 20);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Nombre de ususario:";
+            this.label2.Text = "correo de ususario:";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
-            // tbUsuario
+            // tbCorreo
             // 
-            this.tbUsuario.Location = new System.Drawing.Point(32, 148);
-            this.tbUsuario.Name = "tbUsuario";
-            this.tbUsuario.Size = new System.Drawing.Size(236, 22);
-            this.tbUsuario.TabIndex = 2;
+            this.tbCorreo.Location = new System.Drawing.Point(32, 148);
+            this.tbCorreo.Name = "tbCorreo";
+            this.tbCorreo.Size = new System.Drawing.Size(236, 22);
+            this.tbCorreo.TabIndex = 2;
             // 
             // label3
             // 
@@ -82,6 +83,7 @@
             // 
             this.tbContraseña.Location = new System.Drawing.Point(32, 234);
             this.tbContraseña.Name = "tbContraseña";
+            this.tbContraseña.PasswordChar = '*';
             this.tbContraseña.Size = new System.Drawing.Size(236, 22);
             this.tbContraseña.TabIndex = 4;
             // 
@@ -139,7 +141,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.tbContraseña);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.tbUsuario);
+            this.Controls.Add(this.tbCorreo);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "PaginaInicial";
@@ -155,7 +157,7 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tbUsuario;
+        private System.Windows.Forms.TextBox tbCorreo;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbContraseña;
         private System.Windows.Forms.PictureBox pictureBox1;
