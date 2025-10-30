@@ -56,11 +56,13 @@ namespace proyectoEventos.vista
 
         private void button1_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("Evento Creado");
             String Usuario = tbUsuario.Text;
             String Contraseña = tbContraseña.Text;
             // Disparar el evento de iniciar sesión
-
             IniciarSesionE?.Invoke(this, new ArgumentoIniciarSesion(Usuario,Contraseña));
+            
+
         }
     }
 }

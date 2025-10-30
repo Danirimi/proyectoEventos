@@ -13,7 +13,7 @@ namespace proyectoEventos.Modelo
         void EliminarUsuario(string cedula);
 
         void verHistorialcompra(string cedula);
-        public bool ValidarUsuarioDirecto(string nombre, string contrasena);
+        bool ValidarUsuarioDirecto(string nombre, string contrasena);
         List<Usuario> ObtenerUsuarios();
 
 
