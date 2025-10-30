@@ -14,11 +14,13 @@ namespace proyectoEventos.vista
     public partial class inicio : Form
     {
         private ControladorUsuario _controladorUsuario;
-        public inicio()
+        private PaginaInicial _paginaInicialExistente;
+
+        public inicio(PaginaInicial paginaInicial)
         {
             InitializeComponent();
+            _paginaInicialExistente = paginaInicial;
         }
-
         public void configurarControlador(ControladorUsuario controlador)
         {
             _controladorUsuario = controlador;
@@ -26,10 +28,7 @@ namespace proyectoEventos.vista
 
         private void button1_Click(object sender, EventArgs e)
         {
-            PaginaInicial paginaInicial = new PaginaInicial();
-            paginaInicial.ConfigurarControlador(_controladorUsuario);
-            paginaInicial.Show();
-
+            _paginaInicialExistente.Show();
         }
     }
 }
