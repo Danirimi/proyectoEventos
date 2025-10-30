@@ -97,6 +97,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Modelo\Usuario.cs" />
     <Compile Include="Modelo\Ticket.cs" />
+    <Compile Include="vista\ArgumentoIniciarSesion.cs" />
     <Compile Include="vista\CrearUsuario.cs">
       <SubType>Form</SubType>
     </Compile>

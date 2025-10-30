@@ -10,18 +10,28 @@ using proyectoEventos.vista;
 namespace proyectoEventos.Controlador
 {
     public class ControladorUsuario
-    {   
-        private  readonly CrearUsuario _VistaCrearUsuario;
+    {
+        //Creacion de eventos
+        //Evento para crear usuario
+        private readonly CrearUsuario _VistaCrearUsuario;
         private readonly IUsuario _repo;
-        
+        private readonly PaginaInicial _PaginaInicial;
+        //Evento para inicio de sesion
 
-        public ControladorUsuario( CrearUsuario Vista, IUsuario repo)
+
+
+        public ControladorUsuario(CrearUsuario Vista, IUsuario repo, PaginaInicial paginaInicial)
         {
-
             _VistaCrearUsuario = Vista;
             _repo = repo;
+            _PaginaInicial = paginaInicial;
             _VistaCrearUsuario.UsuarioCrearE += OnUsuarioCrear;
-            
+            _PaginaInicial.IniciarSesionE += LogicaSesion;
+        }
+        private void LogicaSesion(object sender, ArgumentoIniciarSesion e) {
+            bool valido = _repo.ValidarUsuarioDirecto(e.Nombre, e.Contrasena);
+            if (valido) MessageBox.Show("Éxito");
+            else MessageBox.Show("Error");
         }
         private void OnUsuarioCrear(object sender, UsuarioEventArgs e)
         {
@@ -45,8 +55,8 @@ namespace proyectoEventos.Controlador
                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             // Lógica para manejar la creación de un usuario
-           
-           
+
+
         }
         public bool crearUsuarioM(string nombre, string correo, int cedula, int edad, string contrasena, bool esadmin)
         {
@@ -57,21 +67,21 @@ namespace proyectoEventos.Controlador
                 throw new ArgumentException("La edad debe ser un número positivo.");
             // Lógica para crear un usuario
             Modelo.Usuario nuevoUsuario = new Modelo.Usuario(nombre, correo, cedula, edad, contrasena, esadmin);
-          
+
             _repo.AgregarUsuario(nuevoUsuario);
-            
+
 
             return true; // Retorna true si la creación fue exitosa
         }
 
-        
-            public void MostrarVentanaCrearUsuario()
-            {
-                _VistaCrearUsuario.LimpiarCampos();
-                _VistaCrearUsuario.Show();
-            }
 
+        public void MostrarVentanaCrearUsuario()
+        {
+            _VistaCrearUsuario.LimpiarCampos();
+            _VistaCrearUsuario.Show();
+        }
     }
-}
+            
+    }
 
           
