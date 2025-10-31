@@ -17,15 +17,20 @@ namespace proyectoEventos.Controlador
         private readonly IUsuario _repo;
         private readonly PaginaInicial _PaginaInicial;
         private VistaEventos _vistaEventos;
+        private VistaEventosUsuario _vistaEventosUsuario;
+        private ControladorEvento _controladorEvento;
+        private ControladorEventoUsuario _controladorEventoUsuario;
+        private readonly InterfaceEvento _repoEventos;
         //Evento para inicio de sesion
 
 
 
-        public ControladorUsuario(CrearUsuario Vista, IUsuario repo, PaginaInicial paginaInicial)
+        public ControladorUsuario(CrearUsuario Vista, IUsuario repo, PaginaInicial paginaInicial, InterfaceEvento repoEventos)
         {
             _VistaCrearUsuario = Vista;
             _repo = repo;
             _PaginaInicial = paginaInicial;
+            _repoEventos = repoEventos;
             _VistaCrearUsuario.UsuarioCrearE += OnUsuarioCrear;
             _PaginaInicial.IniciarSesionE += LogicaSesion;
         }
@@ -35,25 +40,50 @@ namespace proyectoEventos.Controlador
             bool valido = _repo.ValidarUsuarioDirecto(e.Correo, e.Contrasena);
             if (valido) 
             {
-                MessageBox.Show("Inicio de sesión exitoso", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Obtener el usuario completo con su rol
+                Usuario usuarioActual = _repo.ObtenerUsuarioPorCredenciales(e.Correo, e.Contrasena);
                 
-                // Crear nueva instancia de VistaEventos si no existe o fue cerrada
-                if (_vistaEventos == null || _vistaEventos.IsDisposed)
+                if (usuarioActual == null)
                 {
-                    _vistaEventos = new VistaEventos();
+                    MessageBox.Show("Error al obtener información del usuario", "Error", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
+
+                MessageBox.Show($"Bienvenido, {usuarioActual.Nombre}!", "Inicio de sesión exitoso", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 
                 // Ocultar la página inicial
                 _PaginaInicial.Hide();
                 
-                // Mostrar VistaEventos
-                _vistaEventos.Show();
+                // Verificar si es administrador
+                if (usuarioActual.esadmin)
+                {
+                    // Mostrar vista de administrador con todos los permisos
+                    if (_vistaEventos == null || _vistaEventos.IsDisposed)
+                    {
+                        _vistaEventos = new VistaEventos();
+                        _controladorEvento = new ControladorEvento(_vistaEventos, _repoEventos);
+                    }
+                    _vistaEventos.Show();
+                }
+                else
+                {
+                    // Mostrar vista de usuario normal (solo ver y comprar)
+                    if (_vistaEventosUsuario == null || _vistaEventosUsuario.IsDisposed)
+                    {
+                        _vistaEventosUsuario = new VistaEventosUsuario(usuarioActual);
+                        _controladorEventoUsuario = new ControladorEventoUsuario(_vistaEventosUsuario, _repoEventos, usuarioActual);
+                    }
+                    _vistaEventosUsuario.Show();
+                }
             }
             else 
             {
                 MessageBox.Show("Correo o contraseña incorrectos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        
         private void OnUsuarioCrear(object sender, UsuarioEventArgs e)
         {
             try
@@ -107,5 +137,3 @@ namespace proyectoEventos.Controlador
     }
             
     }
-
-          

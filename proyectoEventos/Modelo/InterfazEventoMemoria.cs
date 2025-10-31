@@ -7,20 +7,21 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.Json;
 using System.IO;
+
 namespace proyectoEventos.Modelo
 {
     public class InterfazEventoMemoria : InterfaceEvento
     {
-        private readonly List<Evento> _eventos = new List<Evento>();
+        private List<Evento> _eventos;
         private int _siguenteId = 1;
-        private readonly string _rutaArchivo;
+        private readonly string _nombreArchivoJson = "eventos.json";
 
         public InterfazEventoMemoria()
         {
-            string carpetaDatos = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Datos");
-            _rutaArchivo = Path.Combine(carpetaDatos, "eventos.json");
-
+            // Cargar eventos desde el archivo JSON
+            _eventos = JsonDataManager.CargarDatos<Evento>(_nombreArchivoJson);
             
+            // Calcular el siguiente ID basado en los eventos existentes
             _siguenteId = _eventos.Any() ? _eventos.Max(e => e.Id) + 1 : 1;
         }
 
@@ -32,43 +33,57 @@ namespace proyectoEventos.Modelo
         public Evento buscarEventoId(int id)
         {
             if (_eventos == null)
-
             {
-                MessageBox.Show("La colección de eventos no está inicializada.");
+                MessageBox.Show("La colección de eventos no está inicializada.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
             }
 
             Evento evento = _eventos.FirstOrDefault(e => e.Id == id);
 
             if (evento == null)
             {
-
-                MessageBox.Show($"No se encontró ningún evento con Id = {id}.");
+                return null;
             }
-            MessageBox.Show(evento.ToString(), "Detalles del Evento", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             return evento;
         }
+        
         public void agregarEvento(Evento evento)
         {
             if (evento == null)
             {
-               MessageBox.Show("El evento no puede ser nulo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("El evento no puede ser nulo.", "Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
+            
+            // Asignar ID automáticamente
             evento.Id = _siguenteId++;
             _eventos.Add(evento);
-           
+            
+            // Guardar en JSON
+            JsonDataManager.GuardarDatos(_eventos, _nombreArchivoJson);
         }
+        
         public void actualizarEvento(Evento evento)
         {
             if (evento == null)
             {
-                MessageBox.Show("El evento no puede ser nulo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("El evento no puede ser nulo.", "Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
+            
             var eventoExistente = _eventos.FirstOrDefault(e => e.Id == evento.Id);
             if (eventoExistente == null)
             {
-                MessageBox.Show($"No se encontró ningún evento con Id = {evento.Id}.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"No se encontró ningún evento con Id = {evento.Id}.", "Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
+            
+            // Actualizar propiedades
             eventoExistente.NombreEvento = evento.NombreEvento;
             eventoExistente.FechaEvento = evento.FechaEvento;
             eventoExistente.LugarEvento = evento.LugarEvento;
@@ -76,22 +91,24 @@ namespace proyectoEventos.Modelo
             eventoExistente.entradastotales = evento.entradastotales;
             eventoExistente.entradasdisponibles = evento.entradasdisponibles;
 
-           
+            // Guardar cambios en JSON
+            JsonDataManager.GuardarDatos(_eventos, _nombreArchivoJson);
         }
+        
         public void eliminarEvento(int id)
         {
             var evento = _eventos.FirstOrDefault(e => e.Id == id);
             if (evento == null)
             {
-                MessageBox.Show($"No se encontró ningún evento con Id = {id}.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"No se encontró ningún evento con Id = {id}.", "Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
+            
             _eventos.Remove(evento);
-           
+            
+            // Guardar cambios en JSON (eliminar del archivo)
+            JsonDataManager.GuardarDatos(_eventos, _nombreArchivoJson);
         }
-
-
-
-
-
     }
 }
