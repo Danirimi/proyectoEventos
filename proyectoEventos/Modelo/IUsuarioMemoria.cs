@@ -31,17 +31,16 @@ namespace proyectoEventos.Modelo
             if (usuario.esadmin)
             {
                 _administradores.Add(usuario);
-                MessageBox.Show("Administrador agregado correctamente.", "Éxito",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+              
                 JsonDataManager.GuardarDatos(_administradores, "administradores.json");
             }
             else
             {
                 _usuarios.Add(usuario);
-                MessageBox.Show("Usuario agregado correctamente.", "Éxito",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+               
                 JsonDataManager.GuardarDatos(_usuarios, "usuarios.json");
             }
+            MessageBox.Show("Usuario creado con exito", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         public void EditarUsuario(Usuario usuario)
@@ -113,6 +112,8 @@ namespace proyectoEventos.Modelo
         {
             throw new NotImplementedException();
         }
+
+        //este es para el inicio de sesion y verifica el correo y la contraseña
         public bool ValidarUsuarioDirecto(string correo, string contrasena)
         {
             //  Verificar que ambos parámetros no estén vacíos
@@ -136,6 +137,49 @@ namespace proyectoEventos.Modelo
                 return true;
             return false;
         }
+        // este es para verificar si un usuario ya existe por su correo, usuario y cedula
+
+        public bool Verificar(string correo, string nombre, string cedula)
+        {
+            if (string.IsNullOrWhiteSpace(correo) || string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(cedula))
+            {
+                MessageBox.Show("Todos los campos son obligatorios.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+               return true;
+            }
+
+            var listaUsuarios = LeerArchivoJSON(rutaUsuarios);
+            var listaAdmins = LeerArchivoJSON(rutaAdministradores);
+
+            bool existeCorreo = listaUsuarios.Any(u => u.Correo.Equals(correo, StringComparison.OrdinalIgnoreCase)) ||
+                                listaAdmins.Any(u => u.Correo.Equals(correo, StringComparison.OrdinalIgnoreCase));
+
+            bool existeCedula = listaUsuarios.Any(u => u.Cedula == cedula) ||
+                                listaAdmins.Any(u => u.Cedula == cedula);
+
+            bool existeNombre = listaUsuarios.Any(u => u.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase)) ||
+                                listaAdmins.Any(u => u.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase));
+
+            if (existeCorreo)
+            {
+                MessageBox.Show("El correo ya está en uso.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+            if (existeCedula)
+            {
+                MessageBox.Show("La cédula ya está en uso.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+            if (existeNombre)
+            {
+                MessageBox.Show("El usuario ya está en uso.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+
+            return false;
+        }
+
+
+
         private List<Usuario> LeerArchivoJSON(string ruta)
         {
             if (!File.Exists(ruta))
@@ -143,6 +187,8 @@ namespace proyectoEventos.Modelo
 
             string contenido = File.ReadAllText(ruta);
             return JsonConvert.DeserializeObject<List<Usuario>>(contenido) ?? new List<Usuario>();
+
+
         }
     }
 

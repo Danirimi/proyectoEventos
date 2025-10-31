@@ -14,7 +14,12 @@ namespace proyectoEventos.Modelo
 
         void verHistorialcompra(string cedula);
         bool ValidarUsuarioDirecto(string nombre, string contrasena);
+
+        bool Verificar(string correo, string nombre, string cedula);
         List<Usuario> ObtenerUsuarios();
+
+
+     
 
 
 
