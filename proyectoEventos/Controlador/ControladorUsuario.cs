@@ -16,6 +16,7 @@ namespace proyectoEventos.Controlador
         private readonly CrearUsuario _VistaCrearUsuario;
         private readonly IUsuario _repo;
         private readonly PaginaInicial _PaginaInicial;
+        private VistaEventos _vistaEventos;
         //Evento para inicio de sesion
 
 
@@ -28,10 +29,30 @@ namespace proyectoEventos.Controlador
             _VistaCrearUsuario.UsuarioCrearE += OnUsuarioCrear;
             _PaginaInicial.IniciarSesionE += LogicaSesion;
         }
-        private void LogicaSesion(object sender, ArgumentoIniciarSesion e) {
+        
+        private void LogicaSesion(object sender, ArgumentoIniciarSesion e) 
+        {
             bool valido = _repo.ValidarUsuarioDirecto(e.Correo, e.Contrasena);
-            if (valido) MessageBox.Show("Éxito");
-            else MessageBox.Show("Error");
+            if (valido) 
+            {
+                MessageBox.Show("Inicio de sesión exitoso", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
+                // Crear nueva instancia de VistaEventos si no existe o fue cerrada
+                if (_vistaEventos == null || _vistaEventos.IsDisposed)
+                {
+                    _vistaEventos = new VistaEventos();
+                }
+                
+                // Ocultar la página inicial
+                _PaginaInicial.Hide();
+                
+                // Mostrar VistaEventos
+                _vistaEventos.Show();
+            }
+            else 
+            {
+                MessageBox.Show("Correo o contraseña incorrectos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private void OnUsuarioCrear(object sender, UsuarioEventArgs e)
         {
