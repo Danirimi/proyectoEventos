@@ -17,11 +17,7 @@ namespace proyectoEventos.Modelo
 
         bool Verificar(string correo, string nombre, string cedula);
         List<Usuario> ObtenerUsuarios();
-
-
-     
-
-
-
+        
+        Usuario ObtenerUsuarioPorCredenciales(string correo, string contrasena);
     }
 }

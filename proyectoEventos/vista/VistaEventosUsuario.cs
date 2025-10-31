@@ -1,4 +1,4 @@
-ï»¿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -8,27 +8,30 @@ using System.Linq;
 
 namespace proyectoEventos.vista
 {
-    public partial class VistaEventos : Form
+    public partial class VistaEventosUsuario : Form
     {
         private readonly string _carpetaImagenes;
         private ToolTip toolTip;
         private Dictionary<PictureBox, Evento> eventosAsociados;
         private Form formDetalles = null;
         private Evento _eventoSeleccionado;
+        private Usuario _usuarioActual;
 
         // Eventos de la interfaz
-        public event EventHandler AgregarEventoE;
-        public event EventHandler EditarEventoE;
-        public event EventHandler EliminarEventoE;
+        public event EventHandler<CompraEventoArgs> ComprarEntradaE;
         public event EventHandler<EventoSeleccionadoArgs> EventoSeleccionadoE;
 
-        public VistaEventos()
+        public VistaEventosUsuario(Usuario usuario)
         {
             InitializeComponent();
+            _usuarioActual = usuario;
             _carpetaImagenes = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Imagenes", "Eventos");
             toolTip = new ToolTip();
             eventosAsociados = new Dictionary<PictureBox, Evento>();
             ConfigurarFlowLayout();
+            
+            // Mostrar información del usuario
+            lblBienvenida.Text = $"Bienvenido, {usuario.Nombre}";
         }
 
         private void ConfigurarFlowLayout()
@@ -78,7 +81,6 @@ namespace proyectoEventos.vista
                 BackColor = Color.White
             };
 
-            // Cargar imagen del evento si existe
             string rutaImagen = Path.Combine(_carpetaImagenes, $"evento_{evento.Id}.jpg");
             if (File.Exists(rutaImagen))
             {
@@ -91,17 +93,14 @@ namespace proyectoEventos.vista
                 }
                 catch
                 {
-                    // Si hay error al cargar la imagen, usar un panel con texto
                     pictureBox.Image = CrearImagenPorDefecto(evento.NombreEvento);
                 }
             }
             else
             {
-                // Crear imagen por defecto con el nombre del evento
                 pictureBox.Image = CrearImagenPorDefecto(evento.NombreEvento);
             }
 
-            // Configurar eventos
             pictureBox.MouseEnter += PictureBox_MouseEnter;
             pictureBox.MouseLeave += PictureBox_MouseLeave;
             pictureBox.Click += PictureBox_Click;
@@ -152,52 +151,54 @@ namespace proyectoEventos.vista
             var pictureBox = (PictureBox)sender;
             var evento = (Evento)pictureBox.Tag;
 
-            // Marcar el evento como seleccionado
             _eventoSeleccionado = evento;
             EventoSeleccionadoE?.Invoke(this, new EventoSeleccionadoArgs(evento));
 
-            // Resaltar el evento seleccionado
             foreach (PictureBox pb in flowLayoutPanel1.Controls.OfType<PictureBox>())
             {
                 pb.BackColor = Color.White;
             }
             pictureBox.BackColor = Color.LightBlue;
 
-            // Cerrar el form de detalles anterior si existe
+            MostrarDetallesEvento(evento, pictureBox.Image);
+        }
+
+        private void MostrarDetallesEvento(Evento evento, Image imagen)
+        {
             formDetalles?.Close();
 
-            // Crear y mostrar el nuevo form de detalles
             formDetalles = new Form
             {
-                Width = 600,
-                Height = 400,
+                Width = 700,
+                Height = 500,
                 Text = evento.NombreEvento,
                 StartPosition = FormStartPosition.CenterParent
             };
 
-            var panelDetalles = new TableLayoutPanel
+            var mainPanel = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
                 ColumnCount = 2,
-                RowCount = 1,
+                RowCount = 2,
                 Padding = new Padding(10)
             };
 
-            // Agregar imagen ampliada
+            mainPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
+            mainPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+
             var imagenAmpliada = new PictureBox
             {
-                Image = pictureBox.Image,
+                Image = imagen,
                 SizeMode = PictureBoxSizeMode.Zoom,
                 Dock = DockStyle.Fill
             };
 
-            // Agregar controles con la informaciÃ³n del evento
             var labelInfo = new Label
             {
                 Text = $"Nombre: {evento.NombreEvento}\n\n" +
                        $"Fecha: {evento.FechaEvento}\n\n" +
                        $"Lugar: {evento.LugarEvento}\n\n" +
-                       $"DescripciÃ³n: {evento.DescripcionEvento}\n\n" +
+                       $"Descripción: {evento.DescripcionEvento}\n\n" +
                        $"Entradas totales: {evento.entradastotales}\n\n" +
                        $"Entradas disponibles: {evento.entradasdisponibles}",
                 AutoSize = false,
@@ -205,57 +206,114 @@ namespace proyectoEventos.vista
                 Font = new Font("Microsoft Sans Serif", 10F)
             };
 
-            panelDetalles.Controls.Add(imagenAmpliada, 0, 0);
-            panelDetalles.Controls.Add(labelInfo, 1, 0);
-            formDetalles.Controls.Add(panelDetalles);
+            var btnComprar = new Button
+            {
+                Text = "Comprar Entrada",
+                Dock = DockStyle.Fill,
+                BackColor = Color.Green,
+                ForeColor = Color.White,
+                Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold),
+                Enabled = evento.entradasdisponibles > 0
+            };
+
+            btnComprar.Click += (s, ev) =>
+            {
+                if (evento.entradasdisponibles > 0)
+                {
+                    var cantidad = MostrarDialogoCantidad(evento.entradasdisponibles);
+                    if (cantidad > 0)
+                    {
+                        ComprarEntradaE?.Invoke(this, new CompraEventoArgs(evento, cantidad, _usuarioActual));
+                        formDetalles.Close();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No hay entradas disponibles", "Información", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            };
+
+            mainPanel.Controls.Add(imagenAmpliada, 0, 0);
+            mainPanel.Controls.Add(labelInfo, 1, 0);
+            mainPanel.SetColumnSpan(btnComprar, 2);
+            mainPanel.Controls.Add(btnComprar, 0, 1);
+
+            formDetalles.Controls.Add(mainPanel);
             formDetalles.ShowDialog();
+        }
+
+        private int MostrarDialogoCantidad(int maxDisponibles)
+        {
+            Form prompt = new Form
+            {
+                Width = 350,
+                Height = 150,
+                Text = "Cantidad de Entradas",
+                StartPosition = FormStartPosition.CenterParent
+            };
+
+            Label textLabel = new Label
+            {
+                Left = 20,
+                Top = 20,
+                Text = $"¿Cuántas entradas desea comprar? (Máx: {maxDisponibles})",
+                AutoSize = true
+            };
+
+            NumericUpDown numericUpDown = new NumericUpDown
+            {
+                Left = 20,
+                Top = 50,
+                Width = 100,
+                Minimum = 1,
+                Maximum = maxDisponibles,
+                Value = 1
+            };
+
+            Button confirmation = new Button
+            {
+                Text = "Confirmar",
+                Left = 150,
+                Width = 80,
+                Top = 50,
+                DialogResult = DialogResult.OK
+            };
+
+            Button cancelButton = new Button
+            {
+                Text = "Cancelar",
+                Left = 240,
+                Width = 80,
+                Top = 50,
+                DialogResult = DialogResult.Cancel
+            };
+
+            confirmation.Click += (sender, e) => { prompt.Close(); };
+            cancelButton.Click += (sender, e) => { prompt.Close(); };
+
+            prompt.Controls.Add(textLabel);
+            prompt.Controls.Add(numericUpDown);
+            prompt.Controls.Add(confirmation);
+            prompt.Controls.Add(cancelButton);
+
+            return prompt.ShowDialog() == DialogResult.OK ? (int)numericUpDown.Value : 0;
         }
 
         public void notify(string message)
         {
-            MessageBox.Show(message, "InformaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(message, "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void VistaEventos_Load(object sender, EventArgs e)
+        private void VistaEventosUsuario_Load(object sender, EventArgs e)
         {
             ConfigurarFlowLayout();
         }
 
-        // MÃ©todo para actualizar un evento especÃ­fico
-        public void ActualizarEvento(Evento evento)
+        private void btnActualizar_Click(object sender, EventArgs e)
         {
-            foreach (PictureBox pictureBox in flowLayoutPanel1.Controls.OfType<PictureBox>())
-            {
-                if (pictureBox.Tag is Evento eventoActual && eventoActual.Id == evento.Id)
-                {
-                    pictureBox.Tag = evento;
-                    // Actualizar la imagen si es necesario
-                    string rutaImagen = Path.Combine(_carpetaImagenes, $"evento_{evento.Id}.jpg");
-                    if (File.Exists(rutaImagen))
-                    {
-                        using (var stream = new FileStream(rutaImagen, FileMode.Open, FileAccess.Read))
-                        {
-                            pictureBox.Image = Image.FromStream(stream);
-                        }
-                    }
-                    break;
-                }
-            }
-        }
-
-        private void btnAgregar_Click(object sender, EventArgs e)
-        {
-            AgregarEventoE?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void btnEditar_Click(object sender, EventArgs e)
-        {
-            EditarEventoE?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void btnEliminar_Click(object sender, EventArgs e)
-        {
-            EliminarEventoE?.Invoke(this, EventArgs.Empty);
+            // Este evento será manejado por el controlador para recargar eventos
+            OnLoad(EventArgs.Empty);
         }
     }
 }
