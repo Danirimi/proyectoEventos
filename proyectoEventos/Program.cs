@@ -23,11 +23,13 @@ namespace proyectoEventos
             // crear instancia de una sola vez IMPORTANTE!!!!
             // crear intancia de crearUsuario y de otras vistas
             CrearUsuario crearUsuarioVista = new CrearUsuario();
-            inicio inicioVista = new inicio();
+            PaginaInicial paginaInicial = new PaginaInicial();
+            inicio inicioVista = new inicio(paginaInicial);
             IUsuario repo = new IUsuarioMemoria();
+         
             //crear intancia de controlador Usuario donde se va pasar como parametro la instancia de crearUsuario
-            ControladorUsuario controladorUsu = new ControladorUsuario(crearUsuarioVista,repo);
-
+            ControladorUsuario controladorUsu = new ControladorUsuario(crearUsuarioVista,repo, paginaInicial);
+            paginaInicial.ConfigurarControlador(controladorUsu);
             inicioVista.configurarControlador(controladorUsu);
 
 

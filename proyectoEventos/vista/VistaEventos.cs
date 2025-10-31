@@ -35,7 +35,7 @@ namespace proyectoEventos.vista
             flowLayoutPanel1.FlowDirection = FlowDirection.LeftToRight;
         }
 
-        public void MostrarEventos(IEnumerable<Evento> eventos)
+        /*public void MostrarEventos(IEnumerable<Evento> eventos)
         {
             flowLayoutPanel1.Controls.Clear();
             eventosAsociados.Clear();
@@ -61,7 +61,7 @@ namespace proyectoEventos.vista
             };
 
             // Cargar imagen del evento si existe
-            string rutaImagen = Path.Combine(_carpetaImagenes, $"evento_{evento.Id}.jpg");
+            /string rutaImagen = Path.Combine(_carpetaImagenes, $"evento_{evento.Id}.jpg");
             if (File.Exists(rutaImagen))
             {
                 try
@@ -87,7 +87,7 @@ namespace proyectoEventos.vista
             pictureBox.Click += PictureBox_Click;
 
             return pictureBox;
-        }
+        }*/
 
         private void PictureBox_MouseEnter(object sender, EventArgs e)
         {
@@ -188,6 +188,11 @@ namespace proyectoEventos.vista
                     break;
                 }
             }
+        }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
