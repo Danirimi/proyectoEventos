@@ -37,28 +37,29 @@ namespace proyectoEventos.Controlador
         {
             try
             {
-                bool exito = crearUsuarioM(e.Nombre, e.Correo, e.Cedula, e.Edad, e.Contrasena, e.Esadmin);
-                if (exito)
+                bool verificacion = _repo.Verificar(e.Correo, e.Nombre, e.Cedula); 
+                if (!verificacion)
                 {
-                    MessageBox.Show("Usuario creado con éxito.", "Confirmación",
-                         MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show("No se pudo crear el usuario.", "Error",
-                       MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    bool exito = crearUsuarioM(e.Nombre, e.Correo, e.Cedula, e.Edad, e.Contrasena, e.Esadmin);
+                    if (!exito)
+                    {
+                        MessageBox.Show("No se pudo crear el usuario.", "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ocurrió un error al crear el usuario: {ex.Message}", "Error",
-                   MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
             // Lógica para manejar la creación de un usuario
 
 
-        }
-        public bool crearUsuarioM(string nombre, string correo, int cedula, int edad, string contrasena, bool esadmin)
+      
+        public bool crearUsuarioM(string nombre, string correo, string cedula, int edad, string contrasena, bool esadmin)
         {
             if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(correo))
                 throw new ArgumentException("El nombre y el correo no pueden estar vacíos.");
@@ -80,6 +81,8 @@ namespace proyectoEventos.Controlador
             _VistaCrearUsuario.LimpiarCampos();
             _VistaCrearUsuario.Show();
         }
+
+        
     }
             
     }

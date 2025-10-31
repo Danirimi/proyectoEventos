@@ -60,6 +60,7 @@
             this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "inicio";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "inicio";
             this.ResumeLayout(false);
 

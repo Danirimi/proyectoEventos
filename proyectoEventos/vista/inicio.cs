@@ -39,6 +39,7 @@ namespace proyectoEventos.vista
             // Mostrar la instancia existente
             _paginaInicialExistente.Show();
             _paginaInicialExistente.BringToFront(); // La trae al frente por si ya estaba abierta
+            this.Hide(); // Oculta la ventana actual
         }
     }
 }

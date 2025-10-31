@@ -28,13 +28,12 @@ namespace proyectoEventos.vista
         {
             string nombre = txtNombre.Text;
             string correo = txtCorreo.Text;
-            int cedula = int.Parse(txtCedula.Text);
+            string cedula = txtCedula.Text;
             int edad = int.Parse(txtEdad.Text);
             string contrasena = txtContrasena.Text;
             bool esadmin = boolAdmin.Checked;
             // Disparar el evento Usuario
             UsuarioCrearE?.Invoke(this, new UsuarioEventArgs(nombre, correo, cedula, edad, contrasena, esadmin));
-            MessageBox.Show("Usuario creado con exito","Exito",MessageBoxButtons.OK,MessageBoxIcon.Information);
             this.Hide();
 
         }

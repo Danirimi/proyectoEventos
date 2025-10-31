@@ -9,12 +9,12 @@ namespace proyectoEventos.vista
     public class UsuarioEventArgs : EventArgs   
     {
         public string Nombre { get; }
-        public int Cedula { get; }
+        public string Cedula { get; }
         public int Edad { get; }
         public string Correo { get; }
         public string Contrasena { get; }
         public bool Esadmin { get; }
-        public UsuarioEventArgs(string nombre, string correo, int cedula, int edad, string contrasena, bool esadmin)
+        public UsuarioEventArgs(string nombre, string correo, string cedula, int edad, string contrasena, bool esadmin)
         {
             Nombre = nombre;
             Correo = correo;
