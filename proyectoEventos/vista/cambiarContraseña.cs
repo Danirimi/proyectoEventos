@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace proyectoEventos.vista
 {
-    public partial class Roles : Form
+    public partial class cambiarContraseña : Form
     {
-        public Roles()
+        public cambiarContraseña()
         {
             InitializeComponent();
         }

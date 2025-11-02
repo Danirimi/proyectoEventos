@@ -1,6 +1,6 @@
-﻿namespace proyectoEventos.vista
+namespace proyectoEventos.vista
 {
-    partial class EditarEvento
+    partial class AgregarEvento
     {
         /// <summary>
         /// Required designer variable.
@@ -30,16 +30,14 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.txtnombre = new System.Windows.Forms.TextBox();
-            this.txtfechaevento = new System.Windows.Forms.Label();
-            this.txtevento = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.txtlugar = new System.Windows.Forms.TextBox();
-            this.l = new System.Windows.Forms.Label();
-            this.txtdescripcion = new System.Windows.Forms.TextBox();
+            this.txtfecha = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.txtentradas = new System.Windows.Forms.TextBox();
+            this.txtlugar = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.txtentradasdisponibles = new System.Windows.Forms.TextBox();
+            this.txtdescripcion = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtentradas = new System.Windows.Forms.TextBox();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -50,9 +48,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(33, 33);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(79, 22);
+            this.label1.Size = new System.Drawing.Size(167, 22);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Nombre";
+            this.label1.Text = "Nombre de Evento";
             // 
             // txtnombre
             // 
@@ -61,32 +59,32 @@
             this.txtnombre.Size = new System.Drawing.Size(300, 22);
             this.txtnombre.TabIndex = 1;
             // 
-            // txtfechaevento
-            // 
-            this.txtfechaevento.AutoSize = true;
-            this.txtfechaevento.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtfechaevento.Location = new System.Drawing.Point(33, 112);
-            this.txtfechaevento.Name = "txtfechaevento";
-            this.txtfechaevento.Size = new System.Drawing.Size(159, 22);
-            this.txtfechaevento.TabIndex = 2;
-            this.txtfechaevento.Text = "Fecha de evento";
-            // 
-            // txtevento
-            // 
-            this.txtevento.Location = new System.Drawing.Point(33, 149);
-            this.txtevento.Name = "txtevento";
-            this.txtevento.Size = new System.Drawing.Size(300, 22);
-            this.txtevento.TabIndex = 3;
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(33, 193);
+            this.label2.Location = new System.Drawing.Point(33, 112);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(157, 22);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Lugar de Evento";
+            this.label2.Size = new System.Drawing.Size(159, 22);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Fecha de evento";
+            // 
+            // txtfecha
+            // 
+            this.txtfecha.Location = new System.Drawing.Point(33, 149);
+            this.txtfecha.Name = "txtfecha";
+            this.txtfecha.Size = new System.Drawing.Size(300, 22);
+            this.txtfecha.TabIndex = 3;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(33, 193);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(157, 22);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Lugar de Evento";
             // 
             // txtlugar
             // 
@@ -95,33 +93,33 @@
             this.txtlugar.Size = new System.Drawing.Size(300, 22);
             this.txtlugar.TabIndex = 5;
             // 
-            // l
+            // label4
             // 
-            this.l.AutoSize = true;
-            this.l.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l.Location = new System.Drawing.Point(30, 272);
-            this.l.Name = "l";
-            this.l.Size = new System.Drawing.Size(211, 22);
-            this.l.TabIndex = 6;
-            this.l.Text = "Descripcion de Evento";
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(30, 272);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(211, 22);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Descripcion de Evento";
             // 
             // txtdescripcion
             // 
             this.txtdescripcion.Location = new System.Drawing.Point(33, 307);
             this.txtdescripcion.Multiline = true;
             this.txtdescripcion.Name = "txtdescripcion";
-            this.txtdescripcion.Size = new System.Drawing.Size(300, 60);
+            this.txtdescripcion.Size = new System.Drawing.Size(300, 80);
             this.txtdescripcion.TabIndex = 7;
             // 
-            // label3
+            // label5
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(400, 33);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(156, 22);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "Entradas totales";
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(400, 33);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(156, 22);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Entradas totales";
             // 
             // txtentradas
             // 
@@ -129,23 +127,6 @@
             this.txtentradas.Name = "txtentradas";
             this.txtentradas.Size = new System.Drawing.Size(172, 22);
             this.txtentradas.TabIndex = 9;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(400, 112);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(201, 22);
-            this.label4.TabIndex = 10;
-            this.label4.Text = "Entradas disponibles";
-            // 
-            // txtentradasdisponibles
-            // 
-            this.txtentradasdisponibles.Location = new System.Drawing.Point(404, 149);
-            this.txtentradasdisponibles.Name = "txtentradasdisponibles";
-            this.txtentradasdisponibles.Size = new System.Drawing.Size(172, 22);
-            this.txtentradasdisponibles.TabIndex = 11;
             // 
             // btnGuardar
             // 
@@ -155,7 +136,7 @@
             this.btnGuardar.Location = new System.Drawing.Point(404, 250);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(172, 45);
-            this.btnGuardar.TabIndex = 12;
+            this.btnGuardar.TabIndex = 10;
             this.btnGuardar.Text = "Guardar";
             this.btnGuardar.UseVisualStyleBackColor = false;
             this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
@@ -168,35 +149,31 @@
             this.btnCancelar.Location = new System.Drawing.Point(404, 310);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(172, 45);
-            this.btnCancelar.TabIndex = 13;
+            this.btnCancelar.TabIndex = 11;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = false;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
-            // EditarEvento
+            // AgregarEvento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::proyectoEventos.Properties.Resources.brayitan_wuw;
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(650, 400);
+            this.ClientSize = new System.Drawing.Size(650, 420);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnGuardar);
-            this.Controls.Add(this.txtentradasdisponibles);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.txtentradas);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.txtdescripcion);
-            this.Controls.Add(this.l);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.txtlugar);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.txtfecha);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.txtevento);
-            this.Controls.Add(this.txtfechaevento);
             this.Controls.Add(this.txtnombre);
             this.Controls.Add(this.label1);
-            this.Name = "EditarEvento";
+            this.Name = "AgregarEvento";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Editar Evento";
+            this.Text = "Agregar Nuevo Evento";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -206,16 +183,14 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtnombre;
-        private System.Windows.Forms.Label txtfechaevento;
-        private System.Windows.Forms.TextBox txtevento;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtlugar;
-        private System.Windows.Forms.Label l;
-        private System.Windows.Forms.TextBox txtdescripcion;
+        private System.Windows.Forms.TextBox txtfecha;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtentradas;
+        private System.Windows.Forms.TextBox txtlugar;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtentradasdisponibles;
+        private System.Windows.Forms.TextBox txtdescripcion;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txtentradas;
         private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.Button btnCancelar;
     }

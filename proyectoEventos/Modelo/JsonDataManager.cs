@@ -17,20 +17,67 @@ namespace proyectoEventos.Modelo
 
         public static void GuardarDatos<T>(List<T> datos, string nombreArchivo)
         {
-            MessageBox.Show("Guardando datos en " + nombreArchivo);
             string ruta = ObtenerRutaCompleta(nombreArchivo);
-            string json = JsonSerializer.Serialize(datos, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(ruta, json);
+            
+            try
+            {
+                // Asegurar que el directorio exista
+                string directorio = Path.GetDirectoryName(ruta);
+                if (!Directory.Exists(directorio))
+                {
+                    Directory.CreateDirectory(directorio);
+                }
+                
+                string json = JsonSerializer.Serialize(datos, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(ruta, json);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al guardar datos: {ex.Message}", "Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         public static List<T> CargarDatos<T>(string nombreArchivo)
         {
             string ruta = ObtenerRutaCompleta(nombreArchivo);
-            if (!File.Exists(ruta))
-                return new List<T>();
+            
+            try
+            {
+                if (!File.Exists(ruta))
+                    return new List<T>();
 
-            string json = File.ReadAllText(ruta);
-            return JsonSerializer.Deserialize<List<T>>(json) ?? new List<T>();
+                string json = File.ReadAllText(ruta);
+                return JsonSerializer.Deserialize<List<T>>(json) ?? new List<T>();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar datos: {ex.Message}", "Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new List<T>();
+            }
+        }
+        
+        // Sobrecarga para cargar datos desde una ruta completa
+        public static List<T> CargarDatos<T>(string ruta, bool rutaCompleta)
+        {
+            if (!rutaCompleta)
+                return CargarDatos<T>(ruta);
+                
+            try
+            {
+                if (!File.Exists(ruta))
+                    return new List<T>();
+
+                string json = File.ReadAllText(ruta);
+                return JsonSerializer.Deserialize<List<T>>(json) ?? new List<T>();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar datos: {ex.Message}", "Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new List<T>();
+            }
         }
     }
 }
