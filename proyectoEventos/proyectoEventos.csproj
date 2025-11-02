@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="Controlador\ControladorEvento.cs" />
     <Compile Include="Controlador\ControladorEventoUsuario.cs" />
+    <Compile Include="Controlador\ControladorPrincial.cs" />
     <Compile Include="Controlador\ControladorUsuario.cs" />
     <Compile Include="Modelo\Evento.cs" />
     <Compile Include="Modelo\InterfaceEvento.cs" />
@@ -105,6 +106,14 @@
       <DependentUpon>AgregarEvento.cs</DependentUpon>
     </Compile>
     <Compile Include="vista\Argumentos\ArgumentoIniciarSesion.cs" />
+    <Compile Include="vista\Argumentos\ArgumentosContraseña.cs" />
+    <Compile Include="vista\Argumentos\secioniniciadaArgs.cs" />
+    <Compile Include="vista\cambiarContraseña.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="vista\cambiarContraseña.Designer.cs">
+      <DependentUpon>cambiarContraseña.cs</DependentUpon>
+    </Compile>
     <Compile Include="vista\CrearUsuario.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -157,6 +166,9 @@
     </Compile>
     <EmbeddedResource Include="vista\AgregarEvento.resx">
       <DependentUpon>AgregarEvento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="vista\cambiarContraseña.resx">
+      <DependentUpon>cambiarContraseña.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="vista\CrearUsuario.resx">
       <DependentUpon>CrearUsuario.cs</DependentUpon>

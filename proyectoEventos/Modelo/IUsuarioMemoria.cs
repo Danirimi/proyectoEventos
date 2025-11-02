@@ -213,6 +213,27 @@ namespace proyectoEventos.Modelo
 
 
         }
+
+        public bool CambiarContraseña(string correo, string nuevaContraseña)
+        {
+            // Buscar en usuarios normales
+            var usuario = _usuarios.FirstOrDefault(u => u.Correo.Equals(correo, StringComparison.OrdinalIgnoreCase));
+            if (usuario != null)
+            {
+                usuario.Contrasena = nuevaContraseña;
+                JsonDataManager.GuardarDatos(_usuarios, "usuarios.json");
+                return true;
+            }
+            // Buscar en administradores
+            var admin = _administradores.FirstOrDefault(a => a.Correo.Equals(correo, StringComparison.OrdinalIgnoreCase));
+            if (admin != null)
+            {
+                admin.Contrasena = nuevaContraseña;
+                JsonDataManager.GuardarDatos(_administradores, "administradores.json");
+                return true;
+            }
+            return false; // No se encontró el correo
+        }
     }
 
 }
