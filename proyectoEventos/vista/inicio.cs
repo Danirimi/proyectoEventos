@@ -41,5 +41,10 @@ namespace proyectoEventos.vista
             _paginaInicialExistente.BringToFront(); // La trae al frente por si ya estaba abierta
             this.Hide(); // Oculta la ventana actual
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
