@@ -41,16 +41,16 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel1.AutoScroll = true;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 109);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 138);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1091, 378);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1091, 431);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // btnEditar
             // 
             this.btnEditar.BackColor = System.Drawing.Color.Orange;
-            this.btnEditar.ForeColor = System.Drawing.Color.White;
             this.btnEditar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEditar.ForeColor = System.Drawing.Color.White;
             this.btnEditar.Location = new System.Drawing.Point(150, 60);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(100, 35);
@@ -62,8 +62,8 @@
             // btnEliminar
             // 
             this.btnEliminar.BackColor = System.Drawing.Color.Red;
-            this.btnEliminar.ForeColor = System.Drawing.Color.White;
             this.btnEliminar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEliminar.ForeColor = System.Drawing.Color.White;
             this.btnEliminar.Location = new System.Drawing.Point(270, 60);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(100, 35);
@@ -75,8 +75,8 @@
             // btnAgregar
             // 
             this.btnAgregar.BackColor = System.Drawing.Color.Green;
-            this.btnAgregar.ForeColor = System.Drawing.Color.White;
             this.btnAgregar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAgregar.ForeColor = System.Drawing.Color.White;
             this.btnAgregar.Location = new System.Drawing.Point(30, 60);
             this.btnAgregar.Name = "btnAgregar";
             this.btnAgregar.Size = new System.Drawing.Size(100, 35);
@@ -92,7 +92,7 @@
             this.lblTitulo.ForeColor = System.Drawing.Color.DarkBlue;
             this.lblTitulo.Location = new System.Drawing.Point(25, 15);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(389, 26);
+            this.lblTitulo.Size = new System.Drawing.Size(460, 31);
             this.lblTitulo.TabIndex = 4;
             this.lblTitulo.Text = "Panel de Administración - Eventos";
             // 

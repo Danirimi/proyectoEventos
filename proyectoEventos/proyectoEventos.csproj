@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="Controlador\ControladorEvento.cs" />
     <Compile Include="Controlador\ControladorEventoUsuario.cs" />
+    <Compile Include="Controlador\ControladorPrincial.cs" />
     <Compile Include="Controlador\ControladorUsuario.cs" />
     <Compile Include="Modelo\Evento.cs" />
     <Compile Include="Modelo\InterfaceEvento.cs" />
@@ -94,7 +95,6 @@
     <Compile Include="Modelo\IUsuario.cs" />
     <Compile Include="Modelo\IUsuarioMemoria.cs" />
     <Compile Include="Modelo\JsonDataManager.cs" />
-    <Compile Include="Modelo\JsonHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Modelo\Usuario.cs" />
@@ -105,7 +105,15 @@
     <Compile Include="vista\AgregarEvento.Designer.cs">
       <DependentUpon>AgregarEvento.cs</DependentUpon>
     </Compile>
-    <Compile Include="vista\ArgumentoIniciarSesion.cs" />
+    <Compile Include="vista\Argumentos\ArgumentoIniciarSesion.cs" />
+    <Compile Include="vista\Argumentos\ArgumentosContraseña.cs" />
+    <Compile Include="vista\Argumentos\secioniniciadaArgs.cs" />
+    <Compile Include="vista\cambiarContraseña.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="vista\cambiarContraseña.Designer.cs">
+      <DependentUpon>cambiarContraseña.cs</DependentUpon>
+    </Compile>
     <Compile Include="vista\CrearUsuario.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -118,7 +126,7 @@
     <Compile Include="vista\EditarEvento.Designer.cs">
       <DependentUpon>EditarEvento.cs</DependentUpon>
     </Compile>
-    <Compile Include="vista\EventoEventArgs.cs" />
+    <Compile Include="vista\Argumentos\EventoEventArgs.cs" />
     <Compile Include="vista\IEventoVista.cs" />
     <Compile Include="vista\inicio.cs">
       <SubType>Form</SubType>
@@ -133,13 +141,7 @@
     <Compile Include="vista\PaginaInicial.Designer.cs">
       <DependentUpon>PaginaInicial.cs</DependentUpon>
     </Compile>
-    <Compile Include="vista\Roles.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="vista\Roles.Designer.cs">
-      <DependentUpon>Roles.cs</DependentUpon>
-    </Compile>
-    <Compile Include="vista\UsuarioEventArgs.cs" />
+    <Compile Include="vista\Argumentos\UsuarioEventArgs.cs" />
     <Compile Include="vista\VistaEventos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -164,6 +166,9 @@
     </Compile>
     <EmbeddedResource Include="vista\AgregarEvento.resx">
       <DependentUpon>AgregarEvento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="vista\cambiarContraseña.resx">
+      <DependentUpon>cambiarContraseña.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="vista\CrearUsuario.resx">
       <DependentUpon>CrearUsuario.cs</DependentUpon>

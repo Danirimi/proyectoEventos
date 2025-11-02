@@ -13,7 +13,7 @@ namespace proyectoEventos.vista
 {
     public partial class inicio : Form
     {
-        private ControladorUsuario _controladorUsuario;
+      
         private PaginaInicial _paginaInicialExistente;
 
         public inicio(PaginaInicial paginaInicial)
@@ -23,7 +23,7 @@ namespace proyectoEventos.vista
         }
         public void configurarControlador(ControladorUsuario controlador)
         {
-            _controladorUsuario = controlador;
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -40,6 +40,11 @@ namespace proyectoEventos.vista
             _paginaInicialExistente.Show();
             _paginaInicialExistente.BringToFront(); // La trae al frente por si ya estaba abierta
             this.Hide(); // Oculta la ventana actual
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
