@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="Controlador\ControladorEvento.cs" />
     <Compile Include="Controlador\ControladorEventoUsuario.cs" />
+    <Compile Include="Controlador\ControladorPrincial.cs" />
     <Compile Include="Controlador\ControladorUsuario.cs" />
     <Compile Include="Modelo\Evento.cs" />
     <Compile Include="Modelo\InterfaceEvento.cs" />
@@ -106,6 +107,7 @@
     </Compile>
     <Compile Include="vista\Argumentos\ArgumentoIniciarSesion.cs" />
     <Compile Include="vista\Argumentos\ArgumentosContraseña.cs" />
+    <Compile Include="vista\Argumentos\secioniniciadaArgs.cs" />
     <Compile Include="vista\cambiarContraseña.cs">
       <SubType>Form</SubType>
     </Compile>
