@@ -25,13 +25,14 @@ namespace proyectoEventos
             CrearUsuario crearUsuarioVista = new CrearUsuario();
             PaginaInicial paginaInicial = new PaginaInicial();
             inicio inicioVista = new inicio(paginaInicial);
-            
+            cambiarContraseña cambiarContraseñaVista = new cambiarContraseña();
+
             // Crear repositorios
             IUsuario repo = new IUsuarioMemoria();
             InterfaceEvento repoEventos = new InterfazEventoMemoria();
          
             //crear intancia de controlador Usuario donde se va pasar como parametro la instancia de crearUsuario
-            ControladorUsuario controladorUsu = new ControladorUsuario(crearUsuarioVista, repo, paginaInicial, repoEventos);
+            ControladorUsuario controladorUsu = new ControladorUsuario(crearUsuarioVista, repo, paginaInicial, repoEventos, cambiarContraseñaVista);
             paginaInicial.ConfigurarControlador(controladorUsu);
             inicioVista.configurarControlador(controladorUsu);
 
