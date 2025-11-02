@@ -13,7 +13,7 @@ namespace proyectoEventos.vista
 {
     public partial class inicio : Form
     {
-        private ControladorUsuario _controladorUsuario;
+      
         private PaginaInicial _paginaInicialExistente;
 
         public inicio(PaginaInicial paginaInicial)
@@ -23,7 +23,7 @@ namespace proyectoEventos.vista
         }
         public void configurarControlador(ControladorUsuario controlador)
         {
-            _controladorUsuario = controlador;
+            
         }
 
         private void button1_Click(object sender, EventArgs e)

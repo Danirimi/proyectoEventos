@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using proyectoEventos.Modelo;
 using proyectoEventos.vista;
+using proyectoEventos.vista.Argumentos;
+
+
 
 namespace proyectoEventos.Controlador
 {
@@ -21,69 +24,49 @@ namespace proyectoEventos.Controlador
         private ControladorEvento _controladorEvento;
         private ControladorEventoUsuario _controladorEventoUsuario;
         private readonly InterfaceEvento _repoEventos;
-        //Evento para inicio de sesion
+        private cambiarContraseña _vistaCambiarContraseña;
+        //Evento para secion iniciada
+        public event EventHandler<secioniniciadaArgs> SesionIniciada;
 
 
-
-        public ControladorUsuario(CrearUsuario Vista, IUsuario repo, PaginaInicial paginaInicial, InterfaceEvento repoEventos)
+        public ControladorUsuario(CrearUsuario Vista, IUsuario repo, PaginaInicial paginaInicial, InterfaceEvento repoEventos, cambiarContraseña vistaCambiarContraseña)
         {
             _VistaCrearUsuario = Vista;
             _repo = repo;
             _PaginaInicial = paginaInicial;
             _repoEventos = repoEventos;
+            _vistaCambiarContraseña = vistaCambiarContraseña;
             _VistaCrearUsuario.UsuarioCrearE += OnUsuarioCrear;
             _PaginaInicial.IniciarSesionE += LogicaSesion;
+            _vistaCambiarContraseña.CambiarContraseñaE += OnCambiarContraseña;
+
         }
-        
-        private void LogicaSesion(object sender, ArgumentoIniciarSesion e) 
+
+        private void LogicaSesion(object sender, ArgumentoIniciarSesion e)
         {
             bool valido = _repo.ValidarUsuarioDirecto(e.Correo, e.Contrasena);
-            if (valido) 
-            {
-                // Obtener el usuario completo con su rol
-                Usuario usuarioActual = _repo.ObtenerUsuarioPorCredenciales(e.Correo, e.Contrasena);
-                
-                if (usuarioActual == null)
-                {
-                    MessageBox.Show("Error al obtener información del usuario", "Error", 
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
 
-                MessageBox.Show($"Bienvenido, {usuarioActual.Nombre}!", "Inicio de sesión exitoso", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                
-                // Ocultar la página inicial
-                _PaginaInicial.Hide();
-                
-                // Verificar si es administrador
-                if (usuarioActual.esadmin)
-                {
-                    // Mostrar vista de administrador con todos los permisos
-                    if (_vistaEventos == null || _vistaEventos.IsDisposed)
-                    {
-                        _vistaEventos = new VistaEventos();
-                        _controladorEvento = new ControladorEvento(_vistaEventos, _repoEventos);
-                    }
-                    _vistaEventos.Show();
-                }
-                else
-                {
-                    // Mostrar vista de usuario normal (solo ver y comprar)
-                    if (_vistaEventosUsuario == null || _vistaEventosUsuario.IsDisposed)
-                    {
-                        _vistaEventosUsuario = new VistaEventosUsuario(usuarioActual);
-                        _controladorEventoUsuario = new ControladorEventoUsuario(_vistaEventosUsuario, _repoEventos, usuarioActual);
-                    }
-                    _vistaEventosUsuario.Show();
-                }
-            }
-            else 
+            if (!valido)
             {
                 MessageBox.Show("Correo o contraseña incorrectos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
+
+            Usuario usuarioActual = _repo.ObtenerUsuarioPorCredenciales(e.Correo, e.Contrasena);
+
+            if (usuarioActual == null)
+            {
+                MessageBox.Show("Error al obtener información del usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            MessageBox.Show($"Bienvenido, {usuarioActual.Nombre}!", "Inicio de sesión exitoso",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            // Disparar el evento de sesión iniciada
+            SesionIniciada?.Invoke(this, new secioniniciadaArgs(usuarioActual));
         }
-        
+
         private void OnUsuarioCrear(object sender, UsuarioEventArgs e)
         {
             try
@@ -133,7 +116,37 @@ namespace proyectoEventos.Controlador
             _VistaCrearUsuario.Show();
         }
 
+        public void MostrarVentanaCambiarContraseña()
+        {
+            _vistaCambiarContraseña.LimpiarCampos();
+            _vistaCambiarContraseña.Show();
+        }
+        public void OnCambiarContraseña(object sender, ArgumentosContraseña e)
+        {
+            try
+            {
+                bool exito = _repo.CambiarContraseña(e.Correo, e.Contraseña);
+                if (exito)
+                {
+                    MessageBox.Show("Contraseña cambiada exitosamente.", "Éxito",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo cambiar la contraseña. Verifique los datos ingresados.", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ocurrió un error al cambiar la contraseña: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         
+        }
     }
-            
-    }
+}
+
+
+
