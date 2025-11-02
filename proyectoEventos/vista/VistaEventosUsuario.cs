@@ -6,6 +6,7 @@ using proyectoEventos.Modelo;
 using System.IO;
 using System.Linq;
 
+
 namespace proyectoEventos.vista
 {
     public partial class VistaEventosUsuario : Form
@@ -314,6 +315,11 @@ namespace proyectoEventos.vista
         {
             // Este evento será manejado por el controlador para recargar eventos
             OnLoad(EventArgs.Empty);
+        }
+
+        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
