@@ -63,16 +63,6 @@ namespace proyectoEventos.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1 {
-            get {
-                object obj = ResourceManager.GetObject("1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap _9849d2e2a60ea7e017d9d4ff07050422 {
             get {
                 object obj = ResourceManager.GetObject("9849d2e2a60ea7e017d9d4ff07050422", resourceCulture);
@@ -93,6 +83,46 @@ namespace proyectoEventos.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ChatGPT_Image_28_oct_2025__21_28_38 {
+            get {
+                object obj = ResourceManager.GetObject("ChatGPT Image 28 oct 2025, 21_28_38", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap debc01154982425_634c7fbabf08a {
+            get {
+                object obj = ResourceManager.GetObject("debc01154982425.634c7fbabf08a", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap debc011549824251 {
+            get {
+                object obj = ResourceManager.GetObject("debc011549824251", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap descarga {
+            get {
+                object obj = ResourceManager.GetObject("descarga", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap foto {
             get {
                 object obj = ResourceManager.GetObject("foto", resourceCulture);
@@ -103,9 +133,9 @@ namespace proyectoEventos.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Gemini_Generated_Image_dx25dodx25dodx25 {
+        internal static System.Drawing.Bitmap raf_360x360_075_t_fafafa_ca443f4786 {
             get {
-                object obj = ResourceManager.GetObject("Gemini_Generated_Image_dx25dodx25dodx25", resourceCulture);
+                object obj = ResourceManager.GetObject("raf,360x360,075,t,fafafa_ca443f4786", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +143,9 @@ namespace proyectoEventos.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap raf_360x360_075_t_fafafa_ca443f4786 {
+        internal static System.Drawing.Bitmap stage_with_neon_light_942686_4352 {
             get {
-                object obj = ResourceManager.GetObject("raf,360x360,075,t,fafafa_ca443f4786", resourceCulture);
+                object obj = ResourceManager.GetObject("stage-with-neon-light_942686-4352", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
