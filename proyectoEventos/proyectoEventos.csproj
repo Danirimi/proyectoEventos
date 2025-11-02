@@ -105,6 +105,12 @@
       <DependentUpon>AgregarEvento.cs</DependentUpon>
     </Compile>
     <Compile Include="vista\Argumentos\ArgumentoIniciarSesion.cs" />
+    <Compile Include="vista\cambiarContraseña.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="vista\cambiarContraseña.Designer.cs">
+      <DependentUpon>cambiarContraseña.cs</DependentUpon>
+    </Compile>
     <Compile Include="vista\CrearUsuario.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -157,6 +163,9 @@
     </Compile>
     <EmbeddedResource Include="vista\AgregarEvento.resx">
       <DependentUpon>AgregarEvento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="vista\cambiarContraseña.resx">
+      <DependentUpon>cambiarContraseña.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="vista\CrearUsuario.resx">
       <DependentUpon>CrearUsuario.cs</DependentUpon>

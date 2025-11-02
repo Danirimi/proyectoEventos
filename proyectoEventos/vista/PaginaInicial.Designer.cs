@@ -66,7 +66,7 @@
             // tbCorreo
             // 
             this.tbCorreo.Location = new System.Drawing.Point(60, 260);
-            this.tbCorreo.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.tbCorreo.Margin = new System.Windows.Forms.Padding(5);
             this.tbCorreo.Name = "tbCorreo";
             this.tbCorreo.Size = new System.Drawing.Size(448, 33);
             this.tbCorreo.TabIndex = 2;
@@ -85,7 +85,7 @@
             // tbContraseña
             // 
             this.tbContraseña.Location = new System.Drawing.Point(60, 437);
-            this.tbContraseña.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.tbContraseña.Margin = new System.Windows.Forms.Padding(5);
             this.tbContraseña.Name = "tbContraseña";
             this.tbContraseña.PasswordChar = '*';
             this.tbContraseña.Size = new System.Drawing.Size(459, 33);
@@ -94,8 +94,8 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(60, 596);
-            this.button1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.button1.Location = new System.Drawing.Point(60, 525);
+            this.button1.Margin = new System.Windows.Forms.Padding(5);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(222, 86);
             this.button1.TabIndex = 6;
@@ -106,8 +106,8 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(761, 571);
-            this.button2.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.button2.Location = new System.Drawing.Point(780, 550);
+            this.button2.Margin = new System.Windows.Forms.Padding(5);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(276, 61);
             this.button2.TabIndex = 7;
@@ -119,7 +119,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(785, 491);
+            this.label4.Location = new System.Drawing.Point(785, 502);
             this.label4.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(226, 20);
@@ -145,7 +145,7 @@
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "PaginaInicial";
             this.Text = "PaginaInicial";
             this.Load += new System.EventHandler(this.PaginaInicial_Load);
