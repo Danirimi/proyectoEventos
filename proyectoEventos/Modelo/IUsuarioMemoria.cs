@@ -137,6 +137,29 @@ namespace proyectoEventos.Modelo
                 return true;
             return false;
         }
+        
+        public Usuario ObtenerUsuarioPorCredenciales(string correo, string contrasena)
+        {
+            if (string.IsNullOrWhiteSpace(correo) || string.IsNullOrWhiteSpace(contrasena))
+                return null;
+
+            var listaUsuarios = LeerArchivoJSON(rutaUsuarios);
+            var listaAdmins = LeerArchivoJSON(rutaAdministradores);
+
+            var usuario = listaUsuarios.FirstOrDefault(u =>
+                u.Correo.Equals(correo, StringComparison.OrdinalIgnoreCase) &&
+                u.Contrasena == contrasena);
+
+            if (usuario != null)
+                return usuario;
+
+            var admin = listaAdmins.FirstOrDefault(u =>
+                u.Correo.Equals(correo, StringComparison.OrdinalIgnoreCase) &&
+                u.Contrasena == contrasena);
+
+            return admin;
+        }
+        
         // este es para verificar si un usuario ya existe por su correo, usuario y cedula
 
         public bool Verificar(string correo, string nombre, string cedula)
