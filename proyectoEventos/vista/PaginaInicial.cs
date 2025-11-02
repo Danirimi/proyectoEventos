@@ -14,6 +14,7 @@ namespace proyectoEventos.vista
     public partial class PaginaInicial : Form
     {
         private ControladorUsuario _controladorUsuario;
+        
         //Creo el evento para iniciar sesion
         public event EventHandler <ArgumentoIniciarSesion> IniciarSesionE;
 
@@ -21,9 +22,10 @@ namespace proyectoEventos.vista
         {
             InitializeComponent();
         }
-        public void ConfigurarControlador(ControladorUsuario controlador)
+        public void ConfigurarControlador(ControladorUsuario controlador )
         {
             _controladorUsuario = controlador;
+            
         }
 
 
@@ -73,6 +75,11 @@ namespace proyectoEventos.vista
         private void button4_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            _controladorUsuario.MostrarVentanaCambiarContraseña(); 
         }
     }
 }

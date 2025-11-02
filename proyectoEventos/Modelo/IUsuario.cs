@@ -19,5 +19,7 @@ namespace proyectoEventos.Modelo
         List<Usuario> ObtenerUsuarios();
         
         Usuario ObtenerUsuarioPorCredenciales(string correo, string contrasena);
+
+        bool CambiarContraseña(string correo, string nuevaContraseña);
     }
 }

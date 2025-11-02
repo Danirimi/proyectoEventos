@@ -30,9 +30,10 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtCorreo = new System.Windows.Forms.TextBox();
+            this.btnBuscar = new System.Windows.Forms.Button();
+            this.txtContrseña = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -47,46 +48,58 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 86);
+            this.label2.Location = new System.Drawing.Point(15, 61);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(114, 16);
             this.label2.TabIndex = 1;
             this.label2.Text = "ingrese su correo:";
             // 
-            // label3
+            // txtCorreo
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 164);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(187, 16);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "ingrese su nombre de usuario:";
+            this.txtCorreo.Location = new System.Drawing.Point(15, 80);
+            this.txtCorreo.Name = "txtCorreo";
+            this.txtCorreo.Size = new System.Drawing.Size(272, 22);
+            this.txtCorreo.TabIndex = 3;
             // 
-            // textBox1
+            // btnBuscar
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 119);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(272, 22);
-            this.textBox1.TabIndex = 3;
+            this.btnBuscar.Location = new System.Drawing.Point(77, 185);
+            this.btnBuscar.Name = "btnBuscar";
+            this.btnBuscar.Size = new System.Drawing.Size(117, 37);
+            this.btnBuscar.TabIndex = 5;
+            this.btnBuscar.Text = "Buscar";
+            this.btnBuscar.UseVisualStyleBackColor = true;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
-            // textBox2
+            // txtContrseña
             // 
-            this.textBox2.Location = new System.Drawing.Point(12, 205);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(272, 22);
-            this.textBox2.TabIndex = 4;
+            this.txtContrseña.Location = new System.Drawing.Point(12, 138);
+            this.txtContrseña.Name = "txtContrseña";
+            this.txtContrseña.Size = new System.Drawing.Size(272, 22);
+            this.txtContrseña.TabIndex = 7;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(15, 119);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(179, 16);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "ingrese la nueva contraseña:";
             // 
             // cambiarContraseña
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(628, 259);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.label3);
+            this.ClientSize = new System.Drawing.Size(308, 259);
+            this.Controls.Add(this.txtContrseña);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.btnBuscar);
+            this.Controls.Add(this.txtCorreo);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "cambiarContraseña";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "cambiarContraseña";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -97,8 +110,9 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtCorreo;
+        private System.Windows.Forms.Button btnBuscar;
+        private System.Windows.Forms.TextBox txtContrseña;
+        private System.Windows.Forms.Label label4;
     }
 }
