@@ -14,6 +14,8 @@ namespace proyectoEventos.vista
     public partial class PaginaInicial : Form
     {
         private ControladorUsuario _controladorUsuario;
+        //Creo el evento para iniciar sesion
+        public event EventHandler <ArgumentoIniciarSesion> IniciarSesionE;
 
         public PaginaInicial()
         {
@@ -48,6 +50,22 @@ namespace proyectoEventos.vista
         }
 
         private void PaginaInicial_Load(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+          
+            String Correo = tbCorreo.Text;
+            String Contraseña = tbContraseña.Text;
+            // Disparar el evento de iniciar sesión
+            IniciarSesionE?.Invoke(this, new ArgumentoIniciarSesion(Correo, Contraseña));
+            
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
         {
 
         }
