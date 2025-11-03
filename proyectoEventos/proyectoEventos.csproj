@@ -107,6 +107,7 @@
     </Compile>
     <Compile Include="vista\Argumentos\ArgumentoIniciarSesion.cs" />
     <Compile Include="vista\Argumentos\ArgumentosContraseña.cs" />
+    <Compile Include="vista\Argumentos\FiltrarEventosArgs.cs" />
     <Compile Include="vista\Argumentos\secioniniciadaArgs.cs" />
     <Compile Include="vista\cambiarContraseña.cs">
       <SubType>Form</SubType>
