@@ -234,6 +234,11 @@ namespace proyectoEventos.Modelo
             }
             return false; // No se encontró el correo
         }
+        public List<Ticket> ObtenerHistorialCompras(int usuarioId)
+        {
+            ITicket repositorioTickets = new ITicketmemoria();
+            return repositorioTickets.ObtenerTicketsPorUsuario(usuarioId);
+        }
     }
 
 }
