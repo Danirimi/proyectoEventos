@@ -23,6 +23,7 @@ namespace proyectoEventos.Controlador
 
             // Suscribirse a eventos de la vista
             _vistaEventosUsuario.ComprarEntradaE += OnComprarEntrada;
+            _vistaEventosUsuario.FiltrarEventosE += OnFiltrarEventos;
 
             // Cargar eventos iniciales
             CargarEventos();
@@ -98,6 +99,35 @@ namespace proyectoEventos.Controlador
         {
             var eventos = _repoEventos.mostrarEventos();
             _vistaEventosUsuario.MostrarEventos(eventos);
+        }
+        private List<Evento> FiltrarEventosRecursivo(List<Evento> eventos, int index, string nombre, string fecha, string lugar)
+        {
+            if (index >= eventos.Count)
+                return new List<Evento>();
+
+            var eventoActual = eventos[index];
+
+            bool coincide =
+               (string.IsNullOrEmpty(nombre) || eventoActual.NombreEvento.IndexOf(nombre, StringComparison.OrdinalIgnoreCase) >= 0) &&
+    (string.IsNullOrEmpty(fecha) || eventoActual.FechaEvento.IndexOf(fecha, StringComparison.OrdinalIgnoreCase) >= 0) &&
+    (string.IsNullOrEmpty(lugar) || eventoActual.LugarEvento.IndexOf(lugar, StringComparison.OrdinalIgnoreCase) >= 0);
+
+            var resultado = FiltrarEventosRecursivo(eventos, index + 1, nombre, fecha, lugar);
+
+            if (coincide)
+                resultado.Insert(0, eventoActual);
+
+            return resultado;
+        }
+
+
+
+
+        private void OnFiltrarEventos(object sender, vista.Argumentos.FiltrarEventosArgs e)
+        {
+            var eventos = _repoEventos.mostrarEventos().ToList();
+            var listaFiltrada = FiltrarEventosRecursivo(eventos, 0, e.Nombre, e.Fecha, e.Lugar);
+            _vistaEventosUsuario.MostrarEventos(listaFiltrada);
         }
     }
 }

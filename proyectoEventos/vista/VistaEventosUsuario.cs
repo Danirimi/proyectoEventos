@@ -1,16 +1,22 @@
+using proyectoEventos.Modelo;
+using proyectoEventos.vista.Argumentos;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
-using proyectoEventos.Modelo;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 
 
 namespace proyectoEventos.vista
 {
+
     public partial class VistaEventosUsuario : Form
+
+
     {
+        public event EventHandler<FiltrarEventosArgs> FiltrarEventosE;// Evento para filtrar eventos
+
         private readonly string _carpetaImagenes;
         private ToolTip toolTip;
         private Dictionary<PictureBox, Evento> eventosAsociados;
@@ -44,6 +50,7 @@ namespace proyectoEventos.vista
 
         public void MostrarEventos(IEnumerable<Evento> eventos)
         {
+          
             flowLayoutPanel1.Controls.Clear();
             eventosAsociados.Clear();
 
@@ -320,6 +327,24 @@ namespace proyectoEventos.vista
         private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void lblBienvenida_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            string nombre = txtNombre.Text.Trim();
+            string fecha = txtFecha.Text.Trim();
+            string lugar = txtLugar.Text.Trim();
+            FiltrarEventosE?.Invoke(this, new FiltrarEventosArgs(nombre, fecha, lugar));
         }
     }
 }
