@@ -33,22 +33,42 @@ namespace proyectoEventos.Controlador
             try
             {
                 var evento = _repoEventos.buscarEventoId(e.Evento.Id);
-                
+
                 if (evento == null)
                 {
-                    MessageBox.Show("El evento no existe", "Error", 
+                    MessageBox.Show("El evento no existe", "Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
                 if (evento.entradasdisponibles < e.Cantidad)
                 {
-                    MessageBox.Show($"Solo hay {evento.entradasdisponibles} entradas disponibles", 
+                    MessageBox.Show($"Solo hay {evento.entradasdisponibles} entradas disponibles",
                         "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // Actualizar entradas disponibles
+                // Calcular precio (puedes personalizar esta lógica)
+                decimal precioPorEntrada = 50.00m; // Precio base
+                decimal precioTotal = precioPorEntrada * e.Cantidad;
+
+                // Crear ticket
+                ITicket repositorioTickets = new ITicketmemoria();
+                Ticket nuevoTicket = new Ticket(
+                    evento.Id,
+                    evento.NombreEvento,
+                    _usuarioActual.id,
+                    _usuarioActual.Nombre,
+                    DateTime.Now,
+                    precioTotal,
+                    evento.LugarEvento,
+                    e.Cantidad
+                );
+
+                // Guardar ticket
+                repositorioTickets.GenerarTicket(nuevoTicket);
+
+                // Actualizar entradas disponibles del evento
                 evento.entradasdisponibles -= e.Cantidad;
                 _repoEventos.actualizarEvento(evento);
 
@@ -56,6 +76,7 @@ namespace proyectoEventos.Controlador
                     $"¡Compra exitosa!\n\n" +
                     $"Evento: {evento.NombreEvento}\n" +
                     $"Cantidad de entradas: {e.Cantidad}\n" +
+                    $"Precio total: {precioTotal:C2}\n" +
                     $"Usuario: {e.Usuario.Nombre}\n" +
                     $"Correo: {e.Usuario.Correo}\n\n" +
                     $"Entradas restantes: {evento.entradasdisponibles}",

@@ -188,7 +188,9 @@
     <EmbeddedResource Include="vista\VistaEventosUsuario.resx">
       <DependentUpon>VistaEventosUsuario.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="bin\Debug\Modelo\Datos\administradores.json" />
     <None Include="bin\Debug\Modelo\Datos\eventos.json" />
+    <None Include="bin\Debug\Modelo\Datos\usuarios.json" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
