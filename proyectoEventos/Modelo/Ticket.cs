@@ -8,8 +8,8 @@ namespace proyectoEventos.Modelo
 {
     public class Ticket
     {
-        private static int contadorIds = 0;
-        public int id { get; private set; }
+        
+        public int id { get; set; }
         public string EventoN { get; set; }             
         public int UsuarioC { get; set; }
 
@@ -24,8 +24,8 @@ namespace proyectoEventos.Modelo
         // Constructor
         public Ticket(int id, string eventoN, int usuarioC, DateTime fechaCompra, decimal precio,  string eventoL)
         {
-            contadorIds++;
-            this.id = contadorIds;
+           
+            this.id = id;
             this.EventoN = eventoN;
             this.UsuarioC = usuarioC;
             this.FechaCompra = fechaCompra;
