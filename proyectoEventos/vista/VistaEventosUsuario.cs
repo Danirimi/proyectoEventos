@@ -1,3 +1,4 @@
+using proyectoEventos.Controlador;
 using proyectoEventos.Modelo;
 using proyectoEventos.vista.Argumentos;
 using System;
@@ -16,7 +17,7 @@ namespace proyectoEventos.vista
 
     {
         public event EventHandler<FiltrarEventosArgs> FiltrarEventosE;// Evento para filtrar eventos
-
+        private ControladorEventoUsuario _controladorEventoUsuario;
         private readonly string _carpetaImagenes;
         private ToolTip toolTip;
         private Dictionary<PictureBox, Evento> eventosAsociados;
@@ -36,7 +37,10 @@ namespace proyectoEventos.vista
             toolTip = new ToolTip();
             eventosAsociados = new Dictionary<PictureBox, Evento>();
             ConfigurarFlowLayout();
-            
+
+            InterfaceEvento repoEventos = new InterfazEventoMemoria();
+            _controladorEventoUsuario = new ControladorEventoUsuario(this, repoEventos, _usuarioActual);
+
             // Mostrar información del usuario
             lblBienvenida.Text = $"Bienvenido, {usuario.Nombre}";
         }
@@ -345,6 +349,11 @@ namespace proyectoEventos.vista
             string fecha = txtFecha.Text.Trim();
             string lugar = txtLugar.Text.Trim();
             FiltrarEventosE?.Invoke(this, new FiltrarEventosArgs(nombre, fecha, lugar));
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            _controladorEventoUsuario.MostrarHistorial();
         }
     }
 }
