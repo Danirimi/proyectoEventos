@@ -77,7 +77,76 @@ namespace proyectoEventos.vista
 
         private void button2_Click(object sender, EventArgs e)
         {
-            
+            string idTexto = txtId.Text.Trim();
+
+            if (string.IsNullOrEmpty(idTexto))
+            {
+                MessageBox.Show("Ingrese un ID de ticket para descargar");
+                return;
+            }
+
+            if (!int.TryParse(idTexto, out int idTicket))
+            {
+                MessageBox.Show("El ID debe ser un número válido");
+                return;
+            }
+
+            try
+            {
+                // Ruta del archivo JSON (igual que en el botón Generar)
+                string rutaJSON = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Modelo", "Datos", "tickets.json");
+
+                if (!File.Exists(rutaJSON))
+                {
+                    MessageBox.Show("No se encontró el archivo tickets.json");
+                    return;
+                }
+
+                // Leer y deserializar JSON
+                string json = File.ReadAllText(rutaJSON);
+                var tickets = JsonSerializer.Deserialize<JsonElement>(json);
+
+                bool encontrado = false;
+                string infoTicket = "";
+
+                // Buscar ticket por ID
+                foreach (var ticket in tickets.EnumerateArray())
+                {
+                    if (ticket.GetProperty("id").GetInt32() == idTicket)
+                    {
+                        encontrado = true;
+                        infoTicket += "======= Ticket =======\n";
+                        infoTicket += $"ID: {ticket.GetProperty("id").GetInt32()}\n";
+                        infoTicket += $"Usuario: {ticket.GetProperty("NombreUsuario").GetString()}\n";
+                        infoTicket += $"Evento: {ticket.GetProperty("EventoN").GetString()}\n";
+                        infoTicket += $"Fecha: {ticket.GetProperty("FechaCompra").GetString()}\n";
+                        infoTicket += $"Precio: ${ticket.GetProperty("Precio").GetDouble()}\n";
+                        infoTicket += $"Cantidad: {ticket.GetProperty("CantidadEntradas").GetInt32()}\n";
+                        infoTicket += "======================\n";
+                        break;
+                    }
+                }
+
+                if (!encontrado)
+                {
+                    MessageBox.Show($"No se encontró ningún ticket con el ID {idTicket}");
+                    return;
+                }
+
+                // Obtener la ruta de la carpeta "Descargas" del usuario
+                string carpetaDescargas = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+
+                // Crear el archivo en Descargas
+                string rutaArchivo = Path.Combine(carpetaDescargas, $"Ticket_{idTicket}.txt");
+                File.WriteAllText(rutaArchivo, infoTicket);
+
+                MessageBox.Show($"Ticket guardado correctamente en tu carpeta de Descargas:\n{rutaArchivo}",
+                                "Descarga exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al descargar el ticket: {ex.Message}");
+            }
         }
     }
 }
