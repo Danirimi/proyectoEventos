@@ -42,6 +42,7 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "Generar";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label1
             // 
@@ -51,6 +52,7 @@
             this.label1.Size = new System.Drawing.Size(251, 16);
             this.label1.TabIndex = 1;
             this.label1.Text = "Ingrese el usuario para buscar el historial";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // txtUsuario
             // 
@@ -58,6 +60,7 @@
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(276, 22);
             this.txtUsuario.TabIndex = 2;
+            this.txtUsuario.TextChanged += new System.EventHandler(this.txtUsuario_TextChanged);
             // 
             // richTextBox1
             // 
@@ -66,6 +69,7 @@
             this.richTextBox1.Size = new System.Drawing.Size(328, 417);
             this.richTextBox1.TabIndex = 3;
             this.richTextBox1.Text = "";
+            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
             // VerHistorial
             // 
