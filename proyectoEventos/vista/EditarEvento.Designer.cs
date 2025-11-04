@@ -40,6 +40,8 @@
             this.txtentradas = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txtentradasdisponibles = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtprecio = new System.Windows.Forms.TextBox();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -147,12 +149,29 @@
             this.txtentradasdisponibles.Size = new System.Drawing.Size(172, 22);
             this.txtentradasdisponibles.TabIndex = 11;
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(400, 193);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(173, 22);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "Precio por entrada";
+            // 
+            // txtprecio
+            // 
+            this.txtprecio.Location = new System.Drawing.Point(404, 228);
+            this.txtprecio.Name = "txtprecio";
+            this.txtprecio.Size = new System.Drawing.Size(172, 22);
+            this.txtprecio.TabIndex = 15;
+            // 
             // btnGuardar
             // 
             this.btnGuardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.btnGuardar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGuardar.ForeColor = System.Drawing.Color.White;
-            this.btnGuardar.Location = new System.Drawing.Point(404, 250);
+            this.btnGuardar.Location = new System.Drawing.Point(404, 280);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(172, 45);
             this.btnGuardar.TabIndex = 12;
@@ -165,7 +184,7 @@
             this.btnCancelar.BackColor = System.Drawing.Color.Red;
             this.btnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancelar.ForeColor = System.Drawing.Color.White;
-            this.btnCancelar.Location = new System.Drawing.Point(404, 310);
+            this.btnCancelar.Location = new System.Drawing.Point(404, 340);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(172, 45);
             this.btnCancelar.TabIndex = 13;
@@ -179,7 +198,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::proyectoEventos.Properties.Resources.brayitan_wuw;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(650, 400);
+            this.ClientSize = new System.Drawing.Size(650, 420);
+            this.Controls.Add(this.txtprecio);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.txtentradasdisponibles);
@@ -216,6 +237,8 @@
         private System.Windows.Forms.TextBox txtentradas;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtentradasdisponibles;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txtprecio;
         private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.Button btnCancelar;
     }

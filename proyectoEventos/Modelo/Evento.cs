@@ -21,13 +21,15 @@ namespace proyectoEventos.Modelo
         public int entradastotales { get; set; }
 
         public int entradasdisponibles { get; set; }
+        
+        public decimal PrecioEntrada { get; set; }
 
         // Constructor sin parámetros para la deserialización JSON
         public Evento()
         {
         }
 
-        public Evento(int id, string nombreEvento, string fechaEvento, string lugarEvento, string descripcionEvento, int entradastotales, int entradasdisponibles)
+        public Evento(int id, string nombreEvento, string fechaEvento, string lugarEvento, string descripcionEvento, int entradastotales, int entradasdisponibles, decimal precioEntrada)
         {
             Id = id;
             NombreEvento = nombreEvento;
@@ -36,6 +38,7 @@ namespace proyectoEventos.Modelo
             DescripcionEvento = descripcionEvento;
             this.entradastotales = entradastotales;
             this.entradasdisponibles = entradasdisponibles;
+            this.PrecioEntrada = precioEntrada;
         }
         
         public override string ToString()
@@ -49,6 +52,7 @@ namespace proyectoEventos.Modelo
                 $"Descripción:\n   {DescripcionEvento}\n" +
                 $"Entradas Totales: {entradastotales}\n" +
                 $"Entradas Disponibles: {entradasdisponibles}\n" +
+                $"Precio por Entrada: {PrecioEntrada:C2}\n" +
                 "==========================================\n";
         }
     }

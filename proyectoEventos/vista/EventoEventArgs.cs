@@ -16,9 +16,10 @@ namespace proyectoEventos.vista
         public string DescripcionEvento { get; }
         public int EntradasTotales { get; }
         public int EntradasDisponibles { get; }
+        public decimal PrecioEntrada { get; }
 
         public EventoEventArgs(int id, string nombreEvento, string fechaEvento, string lugarEvento, 
-            string descripcionEvento, int entradasTotales, int entradasDisponibles)
+            string descripcionEvento, int entradasTotales, int entradasDisponibles, decimal precioEntrada)
         {
             Id = id;
             NombreEvento = nombreEvento;
@@ -27,6 +28,7 @@ namespace proyectoEventos.vista
             DescripcionEvento = descripcionEvento;
             EntradasTotales = entradasTotales;
             EntradasDisponibles = entradasDisponibles;
+            PrecioEntrada = precioEntrada;
         }
     }
 
@@ -45,12 +47,14 @@ namespace proyectoEventos.vista
         public Modelo.Evento Evento { get; }
         public int Cantidad { get; }
         public Modelo.Usuario Usuario { get; }
+        public string MetodoPago { get; }
 
-        public CompraEventoArgs(Modelo.Evento evento, int cantidad, Modelo.Usuario usuario)
+        public CompraEventoArgs(Modelo.Evento evento, int cantidad, Modelo.Usuario usuario, string metodoPago)
         {
             Evento = evento;
             Cantidad = cantidad;
             Usuario = usuario;
+            MetodoPago = metodoPago;
         }
     }
 }
