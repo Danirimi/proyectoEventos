@@ -107,6 +107,7 @@
     </Compile>
     <Compile Include="vista\Argumentos\ArgumentoIniciarSesion.cs" />
     <Compile Include="vista\Argumentos\ArgumentosContraseña.cs" />
+    <Compile Include="vista\Argumentos\FiltrarEventosArgs.cs" />
     <Compile Include="vista\Argumentos\secioniniciadaArgs.cs" />
     <Compile Include="vista\cambiarContraseña.cs">
       <SubType>Form</SubType>
@@ -142,6 +143,12 @@
       <DependentUpon>PaginaInicial.cs</DependentUpon>
     </Compile>
     <Compile Include="vista\Argumentos\UsuarioEventArgs.cs" />
+    <Compile Include="vista\VerHistorial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="vista\VerHistorial.Designer.cs">
+      <DependentUpon>VerHistorial.cs</DependentUpon>
+    </Compile>
     <Compile Include="vista\VistaEventos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -182,13 +189,19 @@
     <EmbeddedResource Include="vista\PaginaInicial.resx">
       <DependentUpon>PaginaInicial.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="vista\VerHistorial.resx">
+      <DependentUpon>VerHistorial.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="vista\VistaEventos.resx">
       <DependentUpon>VistaEventos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="vista\VistaEventosUsuario.resx">
       <DependentUpon>VistaEventosUsuario.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="bin\Debug\Modelo\Datos\administradores.json" />
     <None Include="bin\Debug\Modelo\Datos\eventos.json" />
+    <None Include="bin\Debug\Modelo\Datos\tickets.json" />
+    <None Include="bin\Debug\Modelo\Datos\usuarios.json" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
