@@ -60,7 +60,8 @@ namespace proyectoEventos.Controlador
                     e.LugarEvento,
                     e.DescripcionEvento,
                     e.EntradasTotales,
-                    e.EntradasTotales // Al crear, las disponibles son iguales a las totales
+                    e.EntradasTotales, // Al crear, las disponibles son iguales a las totales
+                    e.PrecioEntrada
                 );
 
                 _repoEventos.agregarEvento(nuevoEvento);
@@ -104,7 +105,8 @@ namespace proyectoEventos.Controlador
                     e.LugarEvento,
                     e.DescripcionEvento,
                     e.EntradasTotales,
-                    e.EntradasDisponibles
+                    e.EntradasDisponibles,
+                    e.PrecioEntrada
                 );
 
                 _repoEventos.actualizarEvento(eventoActualizado);

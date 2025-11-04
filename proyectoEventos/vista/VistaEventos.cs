@@ -138,6 +138,7 @@ namespace proyectoEventos.vista
             toolTip.SetToolTip(pictureBox, 
                 $"Nombre: {evento.NombreEvento}\n" +
                 $"Fecha: {evento.FechaEvento}\n" +
+                $"Precio: {evento.PrecioEntrada:C2}\n" +
                 $"Entradas disponibles: {evento.entradasdisponibles}");
         }
 
@@ -198,6 +199,7 @@ namespace proyectoEventos.vista
                        $"Fecha: {evento.FechaEvento}\n\n" +
                        $"Lugar: {evento.LugarEvento}\n\n" +
                        $"Descripción: {evento.DescripcionEvento}\n\n" +
+                       $"Precio por entrada: {evento.PrecioEntrada:C2}\n\n" +
                        $"Entradas totales: {evento.entradastotales}\n\n" +
                        $"Entradas disponibles: {evento.entradasdisponibles}",
                 AutoSize = false,

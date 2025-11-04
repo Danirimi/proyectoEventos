@@ -26,6 +26,7 @@ namespace proyectoEventos.vista
             txtlugar.Text = "";
             txtdescripcion.Text = "";
             txtentradas.Text = "";
+            txtprecio.Text = "";
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
@@ -54,6 +55,13 @@ namespace proyectoEventos.vista
                     return;
                 }
 
+                if (!decimal.TryParse(txtprecio.Text, out decimal precioEntrada) || precioEntrada <= 0)
+                {
+                    MessageBox.Show("El precio por entrada debe ser un número válido mayor a 0", 
+                        "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 // Disparar evento con los datos del nuevo evento
                 EventoGuardadoE?.Invoke(this, new EventoEventArgs(
                     0, // El ID se asignará automáticamente
@@ -62,7 +70,8 @@ namespace proyectoEventos.vista
                     txtlugar.Text.Trim(),
                     txtdescripcion.Text.Trim(),
                     entradasTotales,
-                    entradasTotales // Al crear, las disponibles son iguales a las totales
+                    entradasTotales, // Al crear, las disponibles son iguales a las totales
+                    precioEntrada
                 ));
 
                 this.Close();

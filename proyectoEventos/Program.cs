@@ -20,11 +20,24 @@ namespace proyectoEventos
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // Instanciar solo el Facade (ControladorPrincipal)
-            ControladorPrincipal sistema = new ControladorPrincipal();
+            // crear instancia de una sola vez IMPORTANTE!!!!
+            // crear intancia de crearUsuario y de otras vistas
+            CrearUsuario crearUsuarioVista = new CrearUsuario();
+            PaginaInicial paginaInicial = new PaginaInicial();
+            inicio inicioVista = new inicio(paginaInicial);
+            
+            // Crear repositorios
+            IUsuario repo = new IUsuarioMemoria();
+            InterfaceEvento repoEventos = new InterfazEventoMemoria();
+            ITicket repoTickets = new ITicketmemoria();
+         
+            //crear intancia de controlador Usuario donde se va pasar como parametro la instancia de crearUsuario
+            ControladorUsuario controladorUsu = new ControladorUsuario(crearUsuarioVista, repo, paginaInicial, repoEventos, repoTickets);
+            paginaInicial.ConfigurarControlador(controladorUsu);
+            inicioVista.configurarControlador(controladorUsu);
 
-            // Correr la aplicación con la vista principal
-            Application.Run(sistema.ObtenerVistaInicial());
+
+            Application.Run(inicioVista);
         }
     }
 }

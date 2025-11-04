@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using proyectoEventos.vista.Argumentos;
 
 namespace proyectoEventos.Controlador
 {
@@ -24,6 +23,7 @@ namespace proyectoEventos.Controlador
         // === Repositorios ===
         private IUsuario _repoUsuarios;
         private InterfaceEvento _repoEventos;
+        private ITicket _repoTickets;
 
         // === Controladores ===
         private ControladorUsuario _controladorUsuario;
@@ -43,6 +43,7 @@ namespace proyectoEventos.Controlador
             // 2. Crear repositorios
             _repoUsuarios = new IUsuarioMemoria();
             _repoEventos = new InterfazEventoMemoria();
+            _repoTickets = new ITicketmemoria();
 
             // 3. Crear controladores y pasar dependencias
             _controladorUsuario = new ControladorUsuario(
@@ -50,14 +51,12 @@ namespace proyectoEventos.Controlador
                 _repoUsuarios,
                 _vistaPaginaInicial,
                 _repoEventos,
-                _vistaCambiarContraseña
+                _repoTickets
             );
 
             // 4. Conectar controladores a vistas
             _vistaPaginaInicial.ConfigurarControlador(_controladorUsuario);
             _vistaInicio.configurarControlador(_controladorUsuario);
-
-            SuscribirEventos();
         }
 
         // Método público para iniciar la app
@@ -65,37 +64,5 @@ namespace proyectoEventos.Controlador
         {
             return _vistaInicio;
         }
-        private void SuscribirEventos()
-        {
-            _controladorUsuario.SesionIniciada += OnSesionIniciada;
-        }
-
-        private void OnSesionIniciada(object sender, secioniniciadaArgs e)
-        {
-            Usuario usuarioActual = e.Usuario;
-            _vistaPaginaInicial.Hide();
-
-            if (usuarioActual.esadmin)
-            {
-                if (_vistaEventos == null || _vistaEventos.IsDisposed)
-                {
-                    _vistaEventos = new VistaEventos();
-                    _controladorEvento = new ControladorEvento(_vistaEventos, _repoEventos);
-                }
-
-                _vistaEventos.Show();
-            }
-            else
-            {
-                if (_vistaEventosUsuario == null || _vistaEventosUsuario.IsDisposed)
-                {
-                    _vistaEventosUsuario = new VistaEventosUsuario(usuarioActual);
-                    _controladorEventoUsuario = new ControladorEventoUsuario(_vistaEventosUsuario, _repoEventos, usuarioActual);
-                }
-
-                _vistaEventosUsuario.Show();
-            }
-        }
-
     }
 }

@@ -13,17 +13,18 @@ namespace proyectoEventos.Controlador
     {
         private readonly VistaEventosUsuario _vistaEventosUsuario;
         private readonly InterfaceEvento _repoEventos;
+        private readonly ITicket _repoTickets;
         private readonly Usuario _usuarioActual;
 
-        public ControladorEventoUsuario(VistaEventosUsuario vistaEventosUsuario, InterfaceEvento repoEventos, Usuario usuario)
+        public ControladorEventoUsuario(VistaEventosUsuario vistaEventosUsuario, InterfaceEvento repoEventos, Usuario usuario, ITicket repoTickets)
         {
             _vistaEventosUsuario = vistaEventosUsuario;
             _repoEventos = repoEventos;
             _usuarioActual = usuario;
+            _repoTickets = repoTickets;
 
             // Suscribirse a eventos de la vista
             _vistaEventosUsuario.ComprarEntradaE += OnComprarEntrada;
-            _vistaEventosUsuario.FiltrarEventosE += OnFiltrarEventos;
 
             // Cargar eventos iniciales
             CargarEventos();
@@ -34,27 +35,29 @@ namespace proyectoEventos.Controlador
             try
             {
                 var evento = _repoEventos.buscarEventoId(e.Evento.Id);
-
+                
                 if (evento == null)
                 {
-                    MessageBox.Show("El evento no existe", "Error",
+                    MessageBox.Show("El evento no existe", "Error", 
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
                 if (evento.entradasdisponibles < e.Cantidad)
                 {
-                    MessageBox.Show($"Solo hay {evento.entradasdisponibles} entradas disponibles",
+                    MessageBox.Show($"Solo hay {evento.entradasdisponibles} entradas disponibles", 
                         "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // Calcular precio (puedes personalizar esta lógica)
-                decimal precioPorEntrada = 50.00m; // Precio base
-                decimal precioTotal = precioPorEntrada * e.Cantidad;
+                // Calcular precio total
+                decimal precioTotal = evento.PrecioEntrada * e.Cantidad;
 
-                // Crear ticket
-                ITicket repositorioTickets = new ITicketmemoria();
+                // Actualizar entradas disponibles
+                evento.entradasdisponibles -= e.Cantidad;
+                _repoEventos.actualizarEvento(evento);
+
+                // Crear y guardar el ticket
                 Ticket nuevoTicket = new Ticket(
                     evento.Id,
                     evento.NombreEvento,
@@ -63,21 +66,18 @@ namespace proyectoEventos.Controlador
                     DateTime.Now,
                     precioTotal,
                     evento.LugarEvento,
-                    e.Cantidad
+                    e.Cantidad,
+                    e.MetodoPago
                 );
 
-                // Guardar ticket
-                repositorioTickets.GenerarTicket(nuevoTicket);
-
-                // Actualizar entradas disponibles del evento
-                evento.entradasdisponibles -= e.Cantidad;
-                _repoEventos.actualizarEvento(evento);
+                _repoTickets.GenerarTicket(nuevoTicket);
 
                 MessageBox.Show(
                     $"¡Compra exitosa!\n\n" +
                     $"Evento: {evento.NombreEvento}\n" +
                     $"Cantidad de entradas: {e.Cantidad}\n" +
                     $"Precio total: {precioTotal:C2}\n" +
+                    $"Método de pago: {e.MetodoPago}\n" +
                     $"Usuario: {e.Usuario.Nombre}\n" +
                     $"Correo: {e.Usuario.Correo}\n\n" +
                     $"Entradas restantes: {evento.entradasdisponibles}",
@@ -99,40 +99,6 @@ namespace proyectoEventos.Controlador
         {
             var eventos = _repoEventos.mostrarEventos();
             _vistaEventosUsuario.MostrarEventos(eventos);
-        }
-        private List<Evento> FiltrarEventosRecursivo(List<Evento> eventos, int index, string nombre, string fecha, string lugar)
-        {
-            if (index >= eventos.Count)
-                return new List<Evento>();
-
-            var eventoActual = eventos[index];
-
-            bool coincide =
-               (string.IsNullOrEmpty(nombre) || eventoActual.NombreEvento.IndexOf(nombre, StringComparison.OrdinalIgnoreCase) >= 0) &&
-    (string.IsNullOrEmpty(fecha) || eventoActual.FechaEvento.IndexOf(fecha, StringComparison.OrdinalIgnoreCase) >= 0) &&
-    (string.IsNullOrEmpty(lugar) || eventoActual.LugarEvento.IndexOf(lugar, StringComparison.OrdinalIgnoreCase) >= 0);
-
-            var resultado = FiltrarEventosRecursivo(eventos, index + 1, nombre, fecha, lugar);
-
-            if (coincide)
-                resultado.Insert(0, eventoActual);
-
-            return resultado;
-        }
-
-
-
-
-        private void OnFiltrarEventos(object sender, vista.Argumentos.FiltrarEventosArgs e)
-        {
-            var eventos = _repoEventos.mostrarEventos().ToList();
-            var listaFiltrada = FiltrarEventosRecursivo(eventos, 0, e.Nombre, e.Fecha, e.Lugar);
-            _vistaEventosUsuario.MostrarEventos(listaFiltrada);
-        }
-
-        public void MostrarHistorial()
-        {
-            _vistaEventosUsuario.Show();
         }
     }
 }
