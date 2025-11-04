@@ -353,7 +353,8 @@ namespace proyectoEventos.vista
 
         private void button1_Click(object sender, EventArgs e)
         {
-            _controladorEventoUsuario.MostrarHistorial();
+            VerHistorial Historial = new VerHistorial();
+            Historial.Show();
         }
     }
 }

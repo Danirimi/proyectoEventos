@@ -154,7 +154,7 @@ namespace proyectoEventos.vista
             // 
             this.btnHistorial.Location = new System.Drawing.Point(1081, 490);
             this.btnHistorial.Name = "btnHistorial";
-            this.btnHistorial.Size = new System.Drawing.Size(102, 21);
+            this.btnHistorial.Size = new System.Drawing.Size(102, 22);
             this.btnHistorial.TabIndex = 11;
             this.btnHistorial.Text = "Ver Historial";
             this.btnHistorial.UseVisualStyleBackColor = true;
