@@ -21,5 +21,6 @@ namespace proyectoEventos.Modelo
         Usuario ObtenerUsuarioPorCredenciales(string correo, string contrasena);
 
         bool CambiarContraseña(string correo, string nuevaContraseña);
+        List<Ticket> ObtenerHistorialCompras(int usuarioId);
     }
 }
