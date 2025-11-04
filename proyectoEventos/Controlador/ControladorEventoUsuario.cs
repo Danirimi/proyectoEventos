@@ -129,5 +129,10 @@ namespace proyectoEventos.Controlador
             var listaFiltrada = FiltrarEventosRecursivo(eventos, 0, e.Nombre, e.Fecha, e.Lugar);
             _vistaEventosUsuario.MostrarEventos(listaFiltrada);
         }
+
+        public void MostrarHistorial()
+        {
+            _vistaEventosUsuario.Show();
+        }
     }
 }

@@ -19,6 +19,7 @@ namespace proyectoEventos.Controlador
         private cambiarContraseña _vistaCambiarContraseña;
         private VistaEventos _vistaEventos;
         private VistaEventosUsuario _vistaEventosUsuario;
+        private vista.VerHistorial _vistaVerHistorial;
 
         // === Repositorios ===
         private IUsuario _repoUsuarios;
@@ -37,6 +38,7 @@ namespace proyectoEventos.Controlador
             _vistaPaginaInicial = new PaginaInicial();
             _vistaInicio = new inicio(_vistaPaginaInicial);
             _vistaCambiarContraseña = new cambiarContraseña();
+            _vistaVerHistorial = new vista.VerHistorial();
 
             // 2. Crear repositorios
             _repoUsuarios = new IUsuarioMemoria();
