@@ -19,6 +19,7 @@ namespace proyectoEventos.Controlador
         private readonly CrearUsuario _VistaCrearUsuario;
         private readonly IUsuario _repo;
         private readonly PaginaInicial _PaginaInicial;
+        private readonly cambiarContraseña _vistaCambiarContraseña;
         private VistaEventos _vistaEventos;
         private VistaEventosUsuario _vistaEventosUsuario;
         private ControladorEvento _controladorEvento;
@@ -29,15 +30,17 @@ namespace proyectoEventos.Controlador
 
 
 
-        public ControladorUsuario(CrearUsuario Vista, IUsuario repo, PaginaInicial paginaInicial, InterfaceEvento repoEventos, ITicket repoTickets)
+        public ControladorUsuario(CrearUsuario Vista, IUsuario repo, PaginaInicial paginaInicial, InterfaceEvento repoEventos, ITicket repoTickets, cambiarContraseña cambiarContraseña)
         {
             _VistaCrearUsuario = Vista;
             _repo = repo;
             _PaginaInicial = paginaInicial;
             _repoEventos = repoEventos;
             _repoTickets = repoTickets;
+            _vistaCambiarContraseña = cambiarContraseña;
             _VistaCrearUsuario.UsuarioCrearE += OnUsuarioCrear;
             _PaginaInicial.IniciarSesionE += LogicaSesion;
+            _vistaCambiarContraseña.CambiarContraseñaE += OnCambiarContraseña;
         }
         
         private void LogicaSesion(object sender, ArgumentoIniciarSesion e) 
@@ -110,11 +113,34 @@ namespace proyectoEventos.Controlador
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private void OnCambiarContraseña(object sender, ArgumentosContraseña e)
+        {
+            try
+            {
+                bool exito = _repo.CambiarContraseña(e.Correo, e.Contraseña);
+                if (exito)
+                {
+                    MessageBox.Show("Contraseña cambiada exitosamente.", "Éxito",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo cambiar la contraseña. Verifique el correo.", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ocurrió un error al cambiar la contraseña: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
 
             // Lógica para manejar la creación de un usuario
 
 
-      
+
         public bool crearUsuarioM(string nombre, string correo, string cedula, int edad, string contrasena, bool esadmin)
         {
             if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(correo))
@@ -138,10 +164,18 @@ namespace proyectoEventos.Controlador
             _VistaCrearUsuario.Show();
         }
 
-        
+        public void MostrarPaginaInicial()
+        {
+            _PaginaInicial.Show();
+        }
+        public void MostrarVentanaCambiarContraseña()
+        {
+            _vistaCambiarContraseña.LimpiarCampos();
+            _vistaCambiarContraseña.Show();
+        }
+
     }
-            
-    }
+}
 
 
 

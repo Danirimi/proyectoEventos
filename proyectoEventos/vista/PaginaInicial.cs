@@ -79,8 +79,8 @@ namespace proyectoEventos.vista
 
         private void button3_Click_1(object sender, EventArgs e)
         {
-            // _controladorUsuario.MostrarVentanaCambiarContraseña(); 
-            // Función temporal desactivada
+             _controladorUsuario.MostrarVentanaCambiarContraseña(); 
+             
         }
     }
 }
