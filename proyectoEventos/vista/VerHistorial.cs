@@ -16,7 +16,6 @@ namespace proyectoEventos.vista
             // Configuración básica del RichTextBox
             richTextBox1.Font = new System.Drawing.Font("Consolas", 10);
         }
-
         private void button1_Click(object sender, EventArgs e) // Botón "Generar"
         {
             string usuario = txtUsuario.Text.Trim();
@@ -43,6 +42,7 @@ namespace proyectoEventos.vista
                     if (ticket.GetProperty("NombreUsuario").GetString() == usuario)
                     {
                         encontrado = true;
+                        richTextBox1.Text += $"ID: {ticket.GetProperty("id").GetInt32()}\n";
                         richTextBox1.Text += $"Evento: {ticket.GetProperty("EventoN").GetString()}\n";
                         richTextBox1.Text += $"Fecha: {ticket.GetProperty("FechaCompra").GetString()}\n";
                         richTextBox1.Text += $"Precio: ${ticket.GetProperty("Precio").GetDouble()}\n";
@@ -50,6 +50,7 @@ namespace proyectoEventos.vista
                         richTextBox1.Text += "------------------------\n";
                     }
                 }
+
                 if (!encontrado)
                 {
                     richTextBox1.Text = $"No se encontraron tickets para el usuario: {usuario}";
@@ -60,9 +61,10 @@ namespace proyectoEventos.vista
                 MessageBox.Show($"Error: {ex.Message}");
             }
         }
+
         // Estos métodos deben existir aunque estén vacíos
         private void richTextBox1_TextChanged(object sender, EventArgs e)
-        {   
+        {
         }
 
         private void txtUsuario_TextChanged(object sender, EventArgs e)
