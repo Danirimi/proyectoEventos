@@ -49,9 +49,10 @@ namespace proyectoEventos.vista
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel1.AutoScroll = true;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 80);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(9, 65);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(829, 557);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(622, 453);
             this.flowLayoutPanel1.TabIndex = 0;
             this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
             // 
@@ -59,9 +60,10 @@ namespace proyectoEventos.vista
             // 
             this.lblBienvenida.AutoSize = true;
             this.lblBienvenida.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBienvenida.Location = new System.Drawing.Point(12, 20);
+            this.lblBienvenida.Location = new System.Drawing.Point(9, 16);
+            this.lblBienvenida.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblBienvenida.Name = "lblBienvenida";
-            this.lblBienvenida.Size = new System.Drawing.Size(410, 29);
+            this.lblBienvenida.Size = new System.Drawing.Size(328, 24);
             this.lblBienvenida.TabIndex = 1;
             this.lblBienvenida.Text = "Bienvenido a la  venta de ticketes ";
             this.lblBienvenida.Click += new System.EventHandler(this.lblBienvenida_Click);
@@ -71,9 +73,10 @@ namespace proyectoEventos.vista
             this.btnActualizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnActualizar.BackColor = System.Drawing.Color.DodgerBlue;
             this.btnActualizar.ForeColor = System.Drawing.Color.White;
-            this.btnActualizar.Location = new System.Drawing.Point(505, 20);
+            this.btnActualizar.Location = new System.Drawing.Point(379, 16);
+            this.btnActualizar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnActualizar.Name = "btnActualizar";
-            this.btnActualizar.Size = new System.Drawing.Size(133, 35);
+            this.btnActualizar.Size = new System.Drawing.Size(100, 28);
             this.btnActualizar.TabIndex = 2;
             this.btnActualizar.Text = "Actualizar Eventos";
             this.btnActualizar.UseVisualStyleBackColor = false;
@@ -81,32 +84,36 @@ namespace proyectoEventos.vista
             // 
             // txtNombre
             // 
-            this.txtNombre.Location = new System.Drawing.Point(873, 239);
+            this.txtNombre.Location = new System.Drawing.Point(655, 194);
+            this.txtNombre.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(375, 22);
+            this.txtNombre.Size = new System.Drawing.Size(282, 20);
             this.txtNombre.TabIndex = 3;
             // 
             // txtLugar
             // 
-            this.txtLugar.Location = new System.Drawing.Point(868, 393);
+            this.txtLugar.Location = new System.Drawing.Point(651, 319);
+            this.txtLugar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtLugar.Name = "txtLugar";
-            this.txtLugar.Size = new System.Drawing.Size(380, 22);
+            this.txtLugar.Size = new System.Drawing.Size(286, 20);
             this.txtLugar.TabIndex = 4;
             // 
             // txtFecha
             // 
-            this.txtFecha.Location = new System.Drawing.Point(873, 321);
+            this.txtFecha.Location = new System.Drawing.Point(655, 261);
+            this.txtFecha.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtFecha.Name = "txtFecha";
-            this.txtFecha.Size = new System.Drawing.Size(375, 22);
+            this.txtFecha.Size = new System.Drawing.Size(282, 20);
             this.txtFecha.TabIndex = 5;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(869, 134);
+            this.label1.Location = new System.Drawing.Point(652, 109);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(156, 20);
+            this.label1.Size = new System.Drawing.Size(133, 17);
             this.label1.TabIndex = 6;
             this.label1.Text = "Filtros de busqueda";
             // 
@@ -114,9 +121,10 @@ namespace proyectoEventos.vista
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(869, 216);
+            this.label2.Location = new System.Drawing.Point(652, 176);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(99, 20);
+            this.label2.Size = new System.Drawing.Size(85, 17);
             this.label2.TabIndex = 7;
             this.label2.Text = "por nombre:";
             this.label2.Click += new System.EventHandler(this.label2_Click);
@@ -125,9 +133,10 @@ namespace proyectoEventos.vista
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(869, 286);
+            this.label3.Location = new System.Drawing.Point(652, 232);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(84, 20);
+            this.label3.Size = new System.Drawing.Size(72, 17);
             this.label3.TabIndex = 8;
             this.label3.Text = "por fecha:";
             // 
@@ -135,17 +144,19 @@ namespace proyectoEventos.vista
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(869, 370);
+            this.label4.Location = new System.Drawing.Point(652, 301);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(80, 20);
+            this.label4.Size = new System.Drawing.Size(69, 17);
             this.label4.TabIndex = 9;
             this.label4.Text = "por lugar:";
             // 
             // btnHistorial
             // 
-            this.btnHistorial.Location = new System.Drawing.Point(1081, 490);
+            this.btnHistorial.Location = new System.Drawing.Point(811, 398);
+            this.btnHistorial.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnHistorial.Name = "btnHistorial";
-            this.btnHistorial.Size = new System.Drawing.Size(102, 22);
+            this.btnHistorial.Size = new System.Drawing.Size(76, 18);
             this.btnHistorial.TabIndex = 11;
             this.btnHistorial.Text = "Ver Historial";
             this.btnHistorial.UseVisualStyleBackColor = true;
@@ -153,9 +164,10 @@ namespace proyectoEventos.vista
             // 
             // btnBuscar
             // 
-            this.btnBuscar.Location = new System.Drawing.Point(991, 489);
+            this.btnBuscar.Location = new System.Drawing.Point(743, 397);
+            this.btnBuscar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(75, 23);
+            this.btnBuscar.Size = new System.Drawing.Size(56, 19);
             this.btnBuscar.TabIndex = 10;
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.UseVisualStyleBackColor = true;
@@ -163,9 +175,10 @@ namespace proyectoEventos.vista
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(868, 614);
+            this.button1.Location = new System.Drawing.Point(649, 398);
+            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(118, 23);
+            this.button1.Size = new System.Drawing.Size(88, 19);
             this.button1.TabIndex = 12;
             this.button1.Text = "cerrar secion";
             this.button1.UseVisualStyleBackColor = true;
@@ -173,9 +186,9 @@ namespace proyectoEventos.vista
             // 
             // VistaEventosUsuario
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1527, 649);
+            this.ClientSize = new System.Drawing.Size(1145, 527);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnHistorial);
             this.Controls.Add(this.btnBuscar);
@@ -189,6 +202,7 @@ namespace proyectoEventos.vista
             this.Controls.Add(this.btnActualizar);
             this.Controls.Add(this.lblBienvenida);
             this.Controls.Add(this.flowLayoutPanel1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "VistaEventosUsuario";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Eventos Disponibles";

@@ -79,7 +79,7 @@ namespace proyectoEventos.vista
             };
 
             // Cargar imagen del evento si existe
-            string rutaImagen = Path.Combine(carpetaImagenes, $"evento{evento.Id}.jpg");
+            string rutaImagen = Path.Combine(_carpetaImagenes, $"evento_{evento.Id}.jpg");
             if (File.Exists(rutaImagen))
             {
                 try
@@ -232,7 +232,7 @@ namespace proyectoEventos.vista
                 {
                     pictureBox.Tag = evento;
                     // Actualizar la imagen si es necesario
-                    string rutaImagen = Path.Combine(carpetaImagenes, $"evento{evento.Id}.jpg");
+                    string rutaImagen = Path.Combine(_carpetaImagenes, $"evento_{evento.Id}.jpg");
                     if (File.Exists(rutaImagen))
                     {
                         using (var stream = new FileStream(rutaImagen, FileMode.Open, FileAccess.Read))

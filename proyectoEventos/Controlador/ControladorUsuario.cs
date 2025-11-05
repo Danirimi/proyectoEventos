@@ -8,14 +8,11 @@ using proyectoEventos.Modelo;
 using proyectoEventos.vista;
 using proyectoEventos.vista.Argumentos;
 
-
-
 namespace proyectoEventos.Controlador
 {
     public class ControladorUsuario
     {
         //Creacion de eventos
-        //Evento para crear usuario
         private readonly CrearUsuario _VistaCrearUsuario;
         private readonly IUsuario _repo;
         private readonly PaginaInicial _PaginaInicial;
@@ -26,45 +23,49 @@ namespace proyectoEventos.Controlador
         private ControladorEventoUsuario _controladorEventoUsuario;
         private readonly InterfaceEvento _repoEventos;
         private readonly ITicket _repoTickets;
-        //Evento para inicio de sesion
 
-
-
-        public ControladorUsuario(CrearUsuario Vista, IUsuario repo, PaginaInicial paginaInicial, InterfaceEvento repoEventos, ITicket repoTickets, cambiarContraseña cambiarContraseña)
+        public ControladorUsuario(CrearUsuario Vista, IUsuario repo, PaginaInicial paginaInicial, InterfaceEvento repoEventos, ITicket repoTickets, cambiarContraseña vistaCambiarContrasena)
         {
             _VistaCrearUsuario = Vista;
             _repo = repo;
             _PaginaInicial = paginaInicial;
             _repoEventos = repoEventos;
             _repoTickets = repoTickets;
-            _vistaCambiarContraseña = cambiarContraseña;
+            _vistaCambiarContraseña = vistaCambiarContrasena;
+
             _VistaCrearUsuario.UsuarioCrearE += OnUsuarioCrear;
             _PaginaInicial.IniciarSesionE += LogicaSesion;
-            _vistaCambiarContraseña.CambiarContraseñaE += OnCambiarContraseña;
-        }
 
-        private void LogicaSesion(object sender, ArgumentoIniciarSesion e)
+            if (_vistaCambiarContraseña != null)
+            {
+                _vistaCambiarContraseña.CambiarContraseñaE += OnCambiarContraseña;
+            }
+        }
+        
+        private void LogicaSesion(object sender, ArgumentoIniciarSesion e) 
         {
             bool valido = _repo.ValidarUsuarioDirecto(e.Correo, e.Contrasena);
-            if (valido)
+            if (valido) 
             {
+                // Obtener el usuario completo con su rol
                 Usuario usuarioActual = _repo.ObtenerUsuarioPorCredenciales(e.Correo, e.Contrasena);
-
+                
                 if (usuarioActual == null)
                 {
-                    MessageBox.Show("Error al obtener información del usuario", "Error",
+                    MessageBox.Show("Error al obtener información del usuario", "Error", 
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                MessageBox.Show($"Bienvenido, {usuarioActual.Nombre}!", "Inicio de sesión exitoso",
+                MessageBox.Show($"Bienvenido, {usuarioActual.Nombre}!", "Inicio de sesión exitoso", 
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                
+                // Ocultar la página inicial
                 _PaginaInicial.Hide();
-
+                
+                // Verificar si es administrador
                 if (usuarioActual.esadmin)
                 {
-                    // Admin - sin cierre de sesión por ahora
                     if (_vistaEventos == null || _vistaEventos.IsDisposed)
                     {
                         _vistaEventos = new VistaEventos();
@@ -74,48 +75,57 @@ namespace proyectoEventos.Controlador
                 }
                 else
                 {
-                    // Usuario normal - CON cierre de sesión
                     if (_vistaEventosUsuario == null || _vistaEventosUsuario.IsDisposed)
                     {
                         _vistaEventosUsuario = new VistaEventosUsuario(usuarioActual);
                         _controladorEventoUsuario = new ControladorEventoUsuario(_vistaEventosUsuario, _repoEventos, usuarioActual, _repoTickets);
 
-                        // ✅ SUSCRIBIR EVENTO DE CERRAR SESIÓN SOLO PARA USUARIOS NORMALES
-                        _vistaEventosUsuario.CerrarSesionE += onCerrarSesionE;
+                        // Suscribirse al evento de cerrar sesión
+                        _vistaEventosUsuario.CerrarSesionE += OnCerrarSesion;
                     }
                     _vistaEventosUsuario.Show();
                 }
             }
-            else
+            else 
             {
                 MessageBox.Show("Correo o contraseña incorrectos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        public void onCerrarSesionE(object sender, EventArgs e)
+        private void OnCerrarSesion(object sender, EventArgs e)
         {
-            if (_vistaEventosUsuario != null && !_vistaEventosUsuario.IsDisposed)
+            try
             {
-                _vistaEventosUsuario.Hide();
-            }
+                // Ocultar vista de usuario si está abierta
+                if (_vistaEventosUsuario != null && !_vistaEventosUsuario.IsDisposed)
+                {
+                    _vistaEventosUsuario.Hide();
+                    _vistaEventosUsuario = null;
+                }
 
-            if (_PaginaInicial != null && !_PaginaInicial.IsDisposed)
+                // Limpiar campos de login y mostrar inicio
+                _PaginaInicial.LimpiarCamposLogin();
+                if (_PaginaInicial != null && !_PaginaInicial.IsDisposed)
+                {
+                    _PaginaInicial.Show();
+                    _PaginaInicial.BringToFront();
+                }
+
+                MessageBox.Show("Sesión cerrada exitosamente", "Cerrar Sesión", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
             {
-                // ✅ USA EL MÉTODO PÚBLICO QUE YA CREASTE
-                _PaginaInicial.LimpiarCamposLogin();  // Este método SÍ es público
-
-                _PaginaInicial.Show();
-                _PaginaInicial.BringToFront();
+                MessageBox.Show($"Error al cerrar sesión: {ex.Message}", "Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            _vistaEventosUsuario = null;
         }
 
         private void OnUsuarioCrear(object sender, UsuarioEventArgs e)
         {
             try
             {
-                bool verificacion = _repo.Verificar(e.Correo, e.Nombre, e.Cedula);
+                bool verificacion = _repo.Verificar(e.Correo, e.Nombre, e.Cedula); 
                 if (!verificacion)
                 {
                     bool exito = crearUsuarioM(e.Nombre, e.Correo, e.Cedula, e.Edad, e.Contrasena, e.Esadmin);
@@ -132,6 +142,7 @@ namespace proyectoEventos.Controlador
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private void OnCambiarContraseña(object sender, ArgumentosContraseña e)
         {
             try
@@ -153,12 +164,7 @@ namespace proyectoEventos.Controlador
                 MessageBox.Show($"Ocurrió un error al cambiar la contraseña: {ex.Message}", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
-
-        // Lógica para manejar la creación de un usuario
-
-
 
         public bool crearUsuarioM(string nombre, string correo, string cedula, int edad, string contrasena, bool esadmin)
         {
@@ -167,15 +173,11 @@ namespace proyectoEventos.Controlador
 
             if (edad <= 0)
                 throw new ArgumentException("La edad debe ser un número positivo.");
-            // Lógica para crear un usuario
+
             Modelo.Usuario nuevoUsuario = new Modelo.Usuario(nombre, correo, cedula, edad, contrasena, esadmin);
-
             _repo.AgregarUsuario(nuevoUsuario);
-
-
-            return true; // Retorna true si la creación fue exitosa
+            return true;
         }
-
 
         public void MostrarVentanaCrearUsuario()
         {
@@ -183,15 +185,14 @@ namespace proyectoEventos.Controlador
             _VistaCrearUsuario.Show();
         }
 
-        public void MostrarPaginaInicial()
-        {
-            _PaginaInicial.Show();
-        }
         public void MostrarVentanaCambiarContraseña()
         {
+            if (_vistaCambiarContraseña == null || _vistaCambiarContraseña.IsDisposed)
+                return;
+
             _vistaCambiarContraseña.LimpiarCampos();
             _vistaCambiarContraseña.Show();
+            _vistaCambiarContraseña.BringToFront();
         }
-
     }
 }
