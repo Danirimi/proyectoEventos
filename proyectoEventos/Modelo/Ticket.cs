@@ -17,6 +17,7 @@ namespace proyectoEventos.Modelo
         public string EventoL { get; set; }
         public int CantidadEntradas { get; set; }
         public int EventoId { get; set; }
+        public string MetodoPago { get; set; } // "Efectivo" o "Tarjeta"
 
         // Constructor sin parámetros para JSON
         public Ticket()
@@ -25,7 +26,7 @@ namespace proyectoEventos.Modelo
 
         // Constructor completo
         public Ticket(int eventoId, string eventoN, int usuarioC, string nombreUsuario,
-                     DateTime fechaCompra, decimal precio, string eventoL, int cantidadEntradas)
+                     DateTime fechaCompra, decimal precio, string eventoL, int cantidadEntradas, string metodoPago)
         {
             EventoId = eventoId;
             EventoN = eventoN;
@@ -35,6 +36,7 @@ namespace proyectoEventos.Modelo
             Precio = precio;
             EventoL = eventoL;
             CantidadEntradas = cantidadEntradas;
+            MetodoPago = metodoPago;
         }
 
         // Método para mostrar información del ticket
@@ -50,6 +52,7 @@ namespace proyectoEventos.Modelo
                 $"Fecha de Compra: {FechaCompra:dd/MM/yyyy HH:mm:ss}\n" +
                 $"Cantidad de Entradas: {CantidadEntradas}\n" +
                 $"Precio Total: {Precio:C2}\n" +
+                $"Método de Pago: {MetodoPago}\n" +
                 "========================================================";
         }
     }

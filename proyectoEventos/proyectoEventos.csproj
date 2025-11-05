@@ -127,7 +127,7 @@
     <Compile Include="vista\EditarEvento.Designer.cs">
       <DependentUpon>EditarEvento.cs</DependentUpon>
     </Compile>
-    <Compile Include="vista\Argumentos\EventoEventArgs.cs" />
+    <Compile Include="vista\EventoEventArgs.cs" />
     <Compile Include="vista\IEventoVista.cs" />
     <Compile Include="vista\inicio.cs">
       <SubType>Form</SubType>
