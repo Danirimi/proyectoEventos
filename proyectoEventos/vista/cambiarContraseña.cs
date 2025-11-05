@@ -29,7 +29,8 @@ namespace proyectoEventos.vista
             string correo = txtCorreo.Text;
             string contrasena = txtContrseña.Text;
             CambiarContraseñaE?.Invoke(this, new ArgumentosContraseña(correo,  contrasena));
-
+            this.LimpiarCampos();
+            this.Hide();
         }
     }
 }

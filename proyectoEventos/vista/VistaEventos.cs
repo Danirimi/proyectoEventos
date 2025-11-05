@@ -79,7 +79,7 @@ namespace proyectoEventos.vista
             };
 
             // Cargar imagen del evento si existe
-            string rutaImagen = Path.Combine(_carpetaImagenes, $"evento_{evento.Id}.jpg");
+            string rutaImagen = Path.Combine(carpetaImagenes, $"evento{evento.Id}.jpg");
             if (File.Exists(rutaImagen))
             {
                 try
@@ -122,7 +122,7 @@ namespace proyectoEventos.vista
                         Alignment = StringAlignment.Center,
                         LineAlignment = StringAlignment.Center
                     };
-                    g.DrawString(nombreEvento, font, Brushes.Black, 
+                    g.DrawString(nombreEvento, font, Brushes.Black,
                         new RectangleF(0, 0, 200, 150), sf);
                 }
             }
@@ -133,11 +133,12 @@ namespace proyectoEventos.vista
         {
             var pictureBox = (PictureBox)sender;
             var evento = (Evento)pictureBox.Tag;
-            
+
             pictureBox.BorderStyle = BorderStyle.Fixed3D;
-            toolTip.SetToolTip(pictureBox, 
+            toolTip.SetToolTip(pictureBox,
                 $"Nombre: {evento.NombreEvento}\n" +
                 $"Fecha: {evento.FechaEvento}\n" +
+                $"Precio: {evento.PrecioEntrada:C2}\n" +
                 $"Entradas disponibles: {evento.entradasdisponibles}");
         }
 
@@ -198,6 +199,7 @@ namespace proyectoEventos.vista
                        $"Fecha: {evento.FechaEvento}\n\n" +
                        $"Lugar: {evento.LugarEvento}\n\n" +
                        $"Descripción: {evento.DescripcionEvento}\n\n" +
+                       $"Precio por entrada: {evento.PrecioEntrada:C2}\n\n" +
                        $"Entradas totales: {evento.entradastotales}\n\n" +
                        $"Entradas disponibles: {evento.entradasdisponibles}",
                 AutoSize = false,
@@ -230,7 +232,7 @@ namespace proyectoEventos.vista
                 {
                     pictureBox.Tag = evento;
                     // Actualizar la imagen si es necesario
-                    string rutaImagen = Path.Combine(_carpetaImagenes, $"evento_{evento.Id}.jpg");
+                    string rutaImagen = Path.Combine(carpetaImagenes, $"evento{evento.Id}.jpg");
                     if (File.Exists(rutaImagen))
                     {
                         using (var stream = new FileStream(rutaImagen, FileMode.Open, FileAccess.Read))

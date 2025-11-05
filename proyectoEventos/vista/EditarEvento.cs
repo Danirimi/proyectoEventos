@@ -32,6 +32,7 @@ namespace proyectoEventos.vista
             txtdescripcion.Text = evento.DescripcionEvento;
             txtentradas.Text = evento.entradastotales.ToString();
             txtentradasdisponibles.Text = evento.entradasdisponibles.ToString();
+            txtprecio.Text = evento.PrecioEntrada.ToString();
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
@@ -74,6 +75,13 @@ namespace proyectoEventos.vista
                     return;
                 }
 
+                if (!decimal.TryParse(txtprecio.Text, out decimal precioEntrada) || precioEntrada <= 0)
+                {
+                    MessageBox.Show("El precio por entrada debe ser un número válido mayor a 0", 
+                        "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 // Disparar evento con los datos actualizados
                 EventoActualizadoE?.Invoke(this, new EventoEventArgs(
                     _eventoId,
@@ -82,7 +90,8 @@ namespace proyectoEventos.vista
                     txtlugar.Text.Trim(),
                     txtdescripcion.Text.Trim(),
                     entradasTotales,
-                    entradasDisponibles
+                    entradasDisponibles,
+                    precioEntrada
                 ));
 
                 this.Close();

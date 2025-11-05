@@ -16,6 +16,7 @@ namespace proyectoEventos.vista
 
 
     {
+        public event EventHandler CerrarSesionE;
         public event EventHandler<FiltrarEventosArgs> FiltrarEventosE;// Evento para filtrar eventos
         private ControladorEventoUsuario _controladorEventoUsuario;
         private readonly string _carpetaImagenes;
@@ -38,8 +39,9 @@ namespace proyectoEventos.vista
             eventosAsociados = new Dictionary<PictureBox, Evento>();
             ConfigurarFlowLayout();
 
-            InterfaceEvento repoEventos = new InterfazEventoMemoria();
-            _controladorEventoUsuario = new ControladorEventoUsuario(this, repoEventos, _usuarioActual);
+            // El controlador será asignado desde ControladorUsuario
+            // InterfaceEvento repoEventos = new InterfazEventoMemoria();
+            // _controladorEventoUsuario = new ControladorEventoUsuario(this, repoEventos, _usuarioActual);
 
             // Mostrar información del usuario
             lblBienvenida.Text = $"Bienvenido, {usuario.Nombre}";
@@ -149,6 +151,7 @@ namespace proyectoEventos.vista
             toolTip.SetToolTip(pictureBox, 
                 $"Nombre: {evento.NombreEvento}\n" +
                 $"Fecha: {evento.FechaEvento}\n" +
+                $"Precio: {evento.PrecioEntrada:C2}\n" +
                 $"Entradas disponibles: {evento.entradasdisponibles}");
         }
 
@@ -211,8 +214,8 @@ namespace proyectoEventos.vista
                        $"Fecha: {evento.FechaEvento}\n\n" +
                        $"Lugar: {evento.LugarEvento}\n\n" +
                        $"Descripción: {evento.DescripcionEvento}\n\n" +
-                       $"Entradas totales: {evento.entradastotales}\n\n" +
-                       $"Entradas disponibles: {evento.entradasdisponibles}",
+                       $"Precio por entrada: {evento.PrecioEntrada:C2}\n\n" +
+                       $"Entradas disponibles: {evento.entradasdisponibles} / {evento.entradastotales}",
                 AutoSize = false,
                 Dock = DockStyle.Fill,
                 Font = new Font("Microsoft Sans Serif", 10F)
@@ -232,10 +235,10 @@ namespace proyectoEventos.vista
             {
                 if (evento.entradasdisponibles > 0)
                 {
-                    var cantidad = MostrarDialogoCantidad(evento.entradasdisponibles);
-                    if (cantidad > 0)
+                    var (cantidad, metodoPago) = MostrarDialogoCompra(evento);
+                    if (cantidad > 0 && !string.IsNullOrEmpty(metodoPago))
                     {
-                        ComprarEntradaE?.Invoke(this, new CompraEventoArgs(evento, cantidad, _usuarioActual));
+                        ComprarEntradaE?.Invoke(this, new CompraEventoArgs(evento, cantidad, _usuarioActual, metodoPago));
                         formDetalles.Close();
                     }
                 }
@@ -255,61 +258,119 @@ namespace proyectoEventos.vista
             formDetalles.ShowDialog();
         }
 
-        private int MostrarDialogoCantidad(int maxDisponibles)
+        private (int cantidad, string metodoPago) MostrarDialogoCompra(Evento evento)
         {
             Form prompt = new Form
             {
-                Width = 350,
-                Height = 150,
-                Text = "Cantidad de Entradas",
-                StartPosition = FormStartPosition.CenterParent
+                Width = 400,
+                Height = 250,
+                Text = "Comprar Entradas",
+                StartPosition = FormStartPosition.CenterParent,
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                MaximizeBox = false,
+                MinimizeBox = false
             };
 
-            Label textLabel = new Label
+            Label lblCantidad = new Label
             {
                 Left = 20,
                 Top = 20,
-                Text = $"¿Cuántas entradas desea comprar? (Máx: {maxDisponibles})",
-                AutoSize = true
+                Width = 350,
+                Text = $"¿Cuántas entradas desea comprar? (Máx: {evento.entradasdisponibles})"
             };
 
-            NumericUpDown numericUpDown = new NumericUpDown
+            NumericUpDown numCantidad = new NumericUpDown
             {
                 Left = 20,
                 Top = 50,
                 Width = 100,
                 Minimum = 1,
-                Maximum = maxDisponibles,
+                Maximum = evento.entradasdisponibles,
                 Value = 1
             };
 
-            Button confirmation = new Button
+            Label lblPrecioTotal = new Label
+            {
+                Left = 140,
+                Top = 50,
+                Width = 230,
+                Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Bold),
+                Text = $"Total: {evento.PrecioEntrada:C2}"
+            };
+
+            // Actualizar precio total al cambiar cantidad
+            numCantidad.ValueChanged += (s, e) =>
+            {
+                decimal total = evento.PrecioEntrada * numCantidad.Value;
+                lblPrecioTotal.Text = $"Total: {total:C2}";
+            };
+
+            Label lblMetodoPago = new Label
+            {
+                Left = 20,
+                Top = 90,
+                Width = 200,
+                Text = "Método de Pago:"
+            };
+
+            RadioButton rbEfectivo = new RadioButton
+            {
+                Left = 20,
+                Top = 120,
+                Width = 150,
+                Text = "Efectivo",
+                Checked = true
+            };
+
+            RadioButton rbTarjeta = new RadioButton
+            {
+                Left = 20,
+                Top = 150,
+                Width = 150,
+                Text = "Tarjeta"
+            };
+
+            Button btnConfirmar = new Button
             {
                 Text = "Confirmar",
-                Left = 150,
+                Left = 200,
                 Width = 80,
-                Top = 50,
-                DialogResult = DialogResult.OK
+                Top = 180,
+                DialogResult = DialogResult.OK,
+                BackColor = Color.Green,
+                ForeColor = Color.White
             };
 
-            Button cancelButton = new Button
+            Button btnCancelar = new Button
             {
                 Text = "Cancelar",
-                Left = 240,
+                Left = 290,
                 Width = 80,
-                Top = 50,
-                DialogResult = DialogResult.Cancel
+                Top = 180,
+                DialogResult = DialogResult.Cancel,
+                BackColor = Color.Red,
+                ForeColor = Color.White
             };
 
-            confirmation.Click += (sender, e) => { prompt.Close(); };
-            cancelButton.Click += (sender, e) => { prompt.Close(); };
+            prompt.Controls.Add(lblCantidad);
+            prompt.Controls.Add(numCantidad);
+            prompt.Controls.Add(lblPrecioTotal);
+            prompt.Controls.Add(lblMetodoPago);
+            prompt.Controls.Add(rbEfectivo);
+            prompt.Controls.Add(rbTarjeta);
+            prompt.Controls.Add(btnConfirmar);
+            prompt.Controls.Add(btnCancelar);
 
-            prompt.Controls.Add(textLabel);
-            prompt.Controls.Add(numericUpDown);
-            prompt.Controls.Add(confirmation);
-            prompt.Controls.Add(cancelButton);
+            prompt.AcceptButton = btnConfirmar;
+            prompt.CancelButton = btnCancelar;
 
-            return prompt.ShowDialog() == DialogResult.OK ? (int)numericUpDown.Value : 0;
+            if (prompt.ShowDialog() == DialogResult.OK)
+            {
+                string metodoPago = rbEfectivo.Checked ? "Efectivo" : "Tarjeta";
+                return ((int)numCantidad.Value, metodoPago);
+            }
+
+            return (0, null);
         }
 
         public void notify(string message)
@@ -355,6 +416,12 @@ namespace proyectoEventos.vista
         {
             VerHistorial Historial = new VerHistorial();
             Historial.Show();
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            CerrarSesionE?.Invoke(this, EventArgs.Empty);
+
         }
     }
 }
