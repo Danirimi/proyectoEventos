@@ -42,32 +42,29 @@ namespace proyectoEventos.Controlador
             _PaginaInicial.IniciarSesionE += LogicaSesion;
             _vistaCambiarContraseña.CambiarContraseñaE += OnCambiarContraseña;
         }
-        
-        private void LogicaSesion(object sender, ArgumentoIniciarSesion e) 
+
+        private void LogicaSesion(object sender, ArgumentoIniciarSesion e)
         {
             bool valido = _repo.ValidarUsuarioDirecto(e.Correo, e.Contrasena);
-            if (valido) 
+            if (valido)
             {
-                // Obtener el usuario completo con su rol
                 Usuario usuarioActual = _repo.ObtenerUsuarioPorCredenciales(e.Correo, e.Contrasena);
-                
+
                 if (usuarioActual == null)
                 {
-                    MessageBox.Show("Error al obtener información del usuario", "Error", 
+                    MessageBox.Show("Error al obtener información del usuario", "Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                MessageBox.Show($"Bienvenido, {usuarioActual.Nombre}!", "Inicio de sesión exitoso", 
+                MessageBox.Show($"Bienvenido, {usuarioActual.Nombre}!", "Inicio de sesión exitoso",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
-                
-                // Ocultar la página inicial
+
                 _PaginaInicial.Hide();
-                
-                // Verificar si es administrador
+
                 if (usuarioActual.esadmin)
                 {
-                    // Mostrar vista de administrador con todos los permisos
+                    // Admin - sin cierre de sesión por ahora
                     if (_vistaEventos == null || _vistaEventos.IsDisposed)
                     {
                         _vistaEventos = new VistaEventos();
@@ -77,21 +74,44 @@ namespace proyectoEventos.Controlador
                 }
                 else
                 {
-                    // Mostrar vista de usuario normal (solo ver y comprar)
+                    // Usuario normal - CON cierre de sesión
                     if (_vistaEventosUsuario == null || _vistaEventosUsuario.IsDisposed)
                     {
                         _vistaEventosUsuario = new VistaEventosUsuario(usuarioActual);
                         _controladorEventoUsuario = new ControladorEventoUsuario(_vistaEventosUsuario, _repoEventos, usuarioActual, _repoTickets);
+
+                        // ✅ SUSCRIBIR EVENTO DE CERRAR SESIÓN SOLO PARA USUARIOS NORMALES
+                        _vistaEventosUsuario.CerrarSesionE += onCerrarSesionE;
                     }
                     _vistaEventosUsuario.Show();
                 }
             }
-            else 
+            else
             {
                 MessageBox.Show("Correo o contraseña incorrectos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        
+
+        public void onCerrarSesionE(object sender, EventArgs e)
+        {
+            // Cerrar vista de usuario normal
+            if (_vistaEventosUsuario != null && !_vistaEventosUsuario.IsDisposed)
+            {
+                _vistaEventosUsuario.Hide();
+            }
+
+            // Mostrar página de login
+            if (_PaginaInicial != null && !_PaginaInicial.IsDisposed)
+            {
+                _PaginaInicial.Show();
+                _PaginaInicial.BringToFront();
+
+                // Opcional: limpiar campos
+                // _PaginaInicial.tbCorreo.Text = "";
+                // _PaginaInicial.tbContraseña.Text = "";
+            }
+        }
+
         private void OnUsuarioCrear(object sender, UsuarioEventArgs e)
         {
             try
