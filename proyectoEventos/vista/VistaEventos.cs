@@ -79,7 +79,7 @@ namespace proyectoEventos.vista
             };
 
             // Cargar imagen del evento si existe
-            string rutaImagen = Path.Combine(_carpetaImagenes, $"evento_{evento.Id}.jpg");
+            string rutaImagen = Path.Combine(carpetaImagenes, $"evento{evento.Id}.jpg");
             if (File.Exists(rutaImagen))
             {
                 try
@@ -232,7 +232,7 @@ namespace proyectoEventos.vista
                 {
                     pictureBox.Tag = evento;
                     // Actualizar la imagen si es necesario
-                    string rutaImagen = Path.Combine(_carpetaImagenes, $"evento_{evento.Id}.jpg");
+                    string rutaImagen = Path.Combine(carpetaImagenes, $"evento{evento.Id}.jpg");
                     if (File.Exists(rutaImagen))
                     {
                         using (var stream = new FileStream(rutaImagen, FileMode.Open, FileAccess.Read))
@@ -258,11 +258,6 @@ namespace proyectoEventos.vista
         private void btnEliminar_Click(object sender, EventArgs e)
         {
             EliminarEventoE?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            // Este es el botón que usarás para cerrar sesión
         }
     }
 }
