@@ -94,22 +94,21 @@ namespace proyectoEventos.Controlador
 
         public void onCerrarSesionE(object sender, EventArgs e)
         {
-            // Cerrar vista de usuario normal
             if (_vistaEventosUsuario != null && !_vistaEventosUsuario.IsDisposed)
             {
                 _vistaEventosUsuario.Hide();
             }
 
-            // Mostrar página de login
             if (_PaginaInicial != null && !_PaginaInicial.IsDisposed)
             {
+                // ✅ USA EL MÉTODO PÚBLICO QUE YA CREASTE
+                _PaginaInicial.LimpiarCamposLogin();  // Este método SÍ es público
+
                 _PaginaInicial.Show();
                 _PaginaInicial.BringToFront();
-
-                // Opcional: limpiar campos
-                // _PaginaInicial.tbCorreo.Text = "";
-                // _PaginaInicial.tbContraseña.Text = "";
             }
+
+            _vistaEventosUsuario = null;
         }
 
         private void OnUsuarioCrear(object sender, UsuarioEventArgs e)
