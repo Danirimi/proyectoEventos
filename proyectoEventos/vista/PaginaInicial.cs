@@ -82,5 +82,10 @@ namespace proyectoEventos.vista
              _controladorUsuario.MostrarVentanaCambiarContraseña(); 
              
         }
+        public void LimpiarCamposLogin()
+        {
+            tbCorreo.Text = "";
+            tbContraseña.Text = "";
+        }
     }
 }
