@@ -88,6 +88,26 @@ namespace proyectoEventos.Controlador
             }
         }
 
+        public void onCerrarSesionE(object sender, EventArgs e)
+        {
+            // Cerrar vista de usuario normal
+            if (_vistaEventosUsuario != null && !_vistaEventosUsuario.IsDisposed)
+            {
+                _vistaEventosUsuario.Hide();
+            }
+
+            // Mostrar página de login
+            if (_PaginaInicial != null && !_PaginaInicial.IsDisposed)
+            {
+                _PaginaInicial.Show();
+                _PaginaInicial.BringToFront();
+
+                // Opcional: limpiar campos
+                // _PaginaInicial.tbCorreo.Text = "";
+                // _PaginaInicial.tbContraseña.Text = "";
+            }
+        }
+
         private void OnUsuarioCrear(object sender, UsuarioEventArgs e)
         {
             try
