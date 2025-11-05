@@ -51,7 +51,8 @@ namespace proyectoEventos.Controlador
                 _repoUsuarios,
                 _vistaPaginaInicial,
                 _repoEventos,
-                _repoTickets
+                _repoTickets,
+                _vistaCambiarContraseña
             );
 
             // 4. Conectar controladores a vistas

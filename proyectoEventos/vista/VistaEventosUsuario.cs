@@ -16,6 +16,7 @@ namespace proyectoEventos.vista
 
 
     {
+        public event EventHandler CerrarSesionE;
         public event EventHandler<FiltrarEventosArgs> FiltrarEventosE;// Evento para filtrar eventos
         private ControladorEventoUsuario _controladorEventoUsuario;
         private readonly string _carpetaImagenes;
@@ -415,6 +416,12 @@ namespace proyectoEventos.vista
         {
             VerHistorial Historial = new VerHistorial();
             Historial.Show();
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            CerrarSesionE?.Invoke(this, EventArgs.Empty);
+
         }
     }
 }
