@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using proyectoEventos.Modelo;
 using proyectoEventos.vista;
 using proyectoEventos.vista.Argumentos;
-
-
 
 namespace proyectoEventos.Controlador
 {
@@ -26,9 +25,6 @@ namespace proyectoEventos.Controlador
         private ControladorEventoUsuario _controladorEventoUsuario;
         private readonly InterfaceEvento _repoEventos;
         private readonly ITicket _repoTickets;
-        //Evento para inicio de sesion
-
-
 
         public ControladorUsuario(CrearUsuario Vista, IUsuario repo, PaginaInicial paginaInicial, InterfaceEvento repoEventos, ITicket repoTickets, cambiarContraseña cambiarContraseña)
         {
@@ -116,7 +112,7 @@ namespace proyectoEventos.Controlador
         {
             try
             {
-                bool verificacion = _repo.Verificar(e.Correo, e.Nombre, e.Cedula); 
+                bool verificacion = _repo.Verificar(e.Correo, e.Nombre, e.Cedula);
                 if (!verificacion)
                 {
                     bool exito = crearUsuarioM(e.Nombre, e.Correo, e.Cedula, e.Edad, e.Contrasena, e.Esadmin);
@@ -133,6 +129,7 @@ namespace proyectoEventos.Controlador
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private void OnCambiarContraseña(object sender, ArgumentosContraseña e)
         {
             try
@@ -154,12 +151,27 @@ namespace proyectoEventos.Controlador
                 MessageBox.Show($"Ocurrió un error al cambiar la contraseña: {ex.Message}", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
 
-            // Lógica para manejar la creación de un usuario
+        public void onCerrarSesionE(object sender, EventArgs e)
+        {
+            // Cerrar vista de usuario normal
+            if (_vistaEventosUsuario != null && !_vistaEventosUsuario.IsDisposed)
+            {
+                _vistaEventosUsuario.Hide();
+            }
 
+            // Mostrar página de login
+            if (_PaginaInicial != null && !_PaginaInicial.IsDisposed)
+            {
+                _PaginaInicial.Show();
+                _PaginaInicial.BringToFront();
 
+                // Opcional: limpiar campos
+                // _PaginaInicial.tbCorreo.Text = "";
+                // _PaginaInicial.tbContraseña.Text = "";
+            }
+        }
 
         public bool crearUsuarioM(string nombre, string correo, string cedula, int edad, string contrasena, bool esadmin)
         {
@@ -168,15 +180,11 @@ namespace proyectoEventos.Controlador
 
             if (edad <= 0)
                 throw new ArgumentException("La edad debe ser un número positivo.");
-            // Lógica para crear un usuario
+
             Modelo.Usuario nuevoUsuario = new Modelo.Usuario(nombre, correo, cedula, edad, contrasena, esadmin);
-
             _repo.AgregarUsuario(nuevoUsuario);
-
-
-            return true; // Retorna true si la creación fue exitosa
+            return true;
         }
-
 
         public void MostrarVentanaCrearUsuario()
         {
@@ -188,14 +196,11 @@ namespace proyectoEventos.Controlador
         {
             _PaginaInicial.Show();
         }
+
         public void MostrarVentanaCambiarContraseña()
         {
             _vistaCambiarContraseña.LimpiarCampos();
             _vistaCambiarContraseña.Show();
         }
-
     }
 }
-
-
-

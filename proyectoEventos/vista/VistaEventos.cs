@@ -122,7 +122,7 @@ namespace proyectoEventos.vista
                         Alignment = StringAlignment.Center,
                         LineAlignment = StringAlignment.Center
                     };
-                    g.DrawString(nombreEvento, font, Brushes.Black, 
+                    g.DrawString(nombreEvento, font, Brushes.Black,
                         new RectangleF(0, 0, 200, 150), sf);
                 }
             }
@@ -133,9 +133,9 @@ namespace proyectoEventos.vista
         {
             var pictureBox = (PictureBox)sender;
             var evento = (Evento)pictureBox.Tag;
-            
+
             pictureBox.BorderStyle = BorderStyle.Fixed3D;
-            toolTip.SetToolTip(pictureBox, 
+            toolTip.SetToolTip(pictureBox,
                 $"Nombre: {evento.NombreEvento}\n" +
                 $"Fecha: {evento.FechaEvento}\n" +
                 $"Precio: {evento.PrecioEntrada:C2}\n" +
@@ -258,6 +258,11 @@ namespace proyectoEventos.vista
         private void btnEliminar_Click(object sender, EventArgs e)
         {
             EliminarEventoE?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // Este es el botón que usarás para cerrar sesión
         }
     }
 }
