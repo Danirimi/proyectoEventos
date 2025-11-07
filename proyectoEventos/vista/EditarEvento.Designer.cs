@@ -138,7 +138,7 @@
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(400, 112);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(201, 22);
+            this.label4.Size = new System.Drawing.Size(197, 22);
             this.label4.TabIndex = 10;
             this.label4.Text = "Entradas disponibles";
             // 
@@ -155,7 +155,7 @@
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(400, 193);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(173, 22);
+            this.label5.Size = new System.Drawing.Size(176, 22);
             this.label5.TabIndex = 14;
             this.label5.Text = "Precio por entrada";
             // 
@@ -196,7 +196,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::proyectoEventos.Properties.Resources.brayitan_wuw;
+            this.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(650, 420);
             this.Controls.Add(this.txtprecio);

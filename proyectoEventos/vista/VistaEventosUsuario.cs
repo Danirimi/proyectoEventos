@@ -406,10 +406,10 @@ namespace proyectoEventos.vista
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            string nombre = txtNombre.Text.Trim();
+           /* string nombre = txtNombre.Text.Trim();
             string fecha = txtFecha.Text.Trim();
             string lugar = txtLugar.Text.Trim();
-            FiltrarEventosE?.Invoke(this, new FiltrarEventosArgs(nombre, fecha, lugar));
+            FiltrarEventosE?.Invoke(this, new FiltrarEventosArgs(nombre, fecha, lugar));*/
         }
 
         private void button1_Click(object sender, EventArgs e)

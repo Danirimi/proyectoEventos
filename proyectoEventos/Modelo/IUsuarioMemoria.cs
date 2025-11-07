@@ -120,8 +120,8 @@ namespace proyectoEventos.Modelo
             if (string.IsNullOrWhiteSpace(correo) || string.IsNullOrWhiteSpace(contrasena))
                 return false;
             //  Leer los archivos JSON
-            var listaUsuarios = LeerArchivoJSON(rutaUsuarios);
-            var listaAdmins = LeerArchivoJSON(rutaAdministradores);
+            var listaUsuarios = JsonDataManager.CargarDatos<Usuario>("usuarios.json");
+            var listaAdmins = JsonDataManager.CargarDatos<Usuario>("administradores.json");
 
             //  Buscar coincidencia en ambos archivos
             var usuario = listaUsuarios.FirstOrDefault(u =>
@@ -143,8 +143,8 @@ namespace proyectoEventos.Modelo
             if (string.IsNullOrWhiteSpace(correo) || string.IsNullOrWhiteSpace(contrasena))
                 return null;
 
-            var listaUsuarios = LeerArchivoJSON(rutaUsuarios);
-            var listaAdmins = LeerArchivoJSON(rutaAdministradores);
+            var listaUsuarios = JsonDataManager.CargarDatos<Usuario>("usuarios.json");
+            var listaAdmins = JsonDataManager.CargarDatos<Usuario>("administradores.json");
 
             var usuario = listaUsuarios.FirstOrDefault(u =>
                 u.Correo.Equals(correo, StringComparison.OrdinalIgnoreCase) &&
@@ -170,8 +170,8 @@ namespace proyectoEventos.Modelo
                return true;
             }
 
-            var listaUsuarios = LeerArchivoJSON(rutaUsuarios);
-            var listaAdmins = LeerArchivoJSON(rutaAdministradores);
+            var listaUsuarios = JsonDataManager.CargarDatos<Usuario>("usuarios.json");
+            var listaAdmins = JsonDataManager.CargarDatos<Usuario>("administradores.json");
 
             bool existeCorreo = listaUsuarios.Any(u => u.Correo.Equals(correo, StringComparison.OrdinalIgnoreCase)) ||
                                 listaAdmins.Any(u => u.Correo.Equals(correo, StringComparison.OrdinalIgnoreCase));
@@ -203,16 +203,7 @@ namespace proyectoEventos.Modelo
 
 
 
-        private List<Usuario> LeerArchivoJSON(string ruta)
-        {
-            if (!File.Exists(ruta))
-                return new List<Usuario>(); // si el archivo no existe, devolver lista vacía
-
-            string contenido = File.ReadAllText(ruta);
-            return JsonConvert.DeserializeObject<List<Usuario>>(contenido) ?? new List<Usuario>();
-
-
-        }
+       
 
         public bool CambiarContraseña(string correo, string nuevaContraseña)
         {
