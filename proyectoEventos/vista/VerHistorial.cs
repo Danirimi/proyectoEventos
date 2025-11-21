@@ -1,7 +1,8 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.IO;
-using System.Text.Json;
 using System.Windows.Forms;
+using proyectoEventos.Modelo;
 
 namespace proyectoEventos.vista
 {
@@ -11,11 +12,12 @@ namespace proyectoEventos.vista
         {
             InitializeComponent();
         }
+
         private void VerHistorial_Load(object sender, EventArgs e)
         {
-            // Configuración básica del RichTextBox
             richTextBox1.Font = new System.Drawing.Font("Consolas", 10);
         }
+
         private void button1_Click(object sender, EventArgs e) // Botón "Generar"
         {
             string usuario = txtUsuario.Text.Trim();
@@ -28,32 +30,44 @@ namespace proyectoEventos.vista
 
             try
             {
-                // Cargar tickets desde JSON
-                string rutaJSON = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Modelo", "Datos", "tickets.json");
-                string json = File.ReadAllText(rutaJSON);
-                var tickets = JsonSerializer.Deserialize<JsonElement>(json);
-
-                richTextBox1.Text = $"Historial de: {usuario}\n\n";
-
-                bool encontrado = false;
-
-                foreach (var ticket in tickets.EnumerateArray())
+                using (var conexion = MySQLConexion.ObtenerConexion())
                 {
-                    if (ticket.GetProperty("NombreUsuario").GetString() == usuario)
+                    if (conexion == null) return;
+
+                    string query = @"SELECT t.id, t.fechacompra, t.precio, t.cantidadentradas, 
+                                    e.nombreevento 
+                                    FROM tickets t
+                                    INNER JOIN eventos e ON t.eventoid = e.id
+                                    INNER JOIN usuarios u ON t.usuarioid = u.id
+                                    WHERE u.nombre = @usuario
+                                    ORDER BY t.fechacompra DESC";
+
+                    using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        encontrado = true;
-                        richTextBox1.Text += $"ID: {ticket.GetProperty("id").GetInt32()}\n";
-                        richTextBox1.Text += $"Evento: {ticket.GetProperty("EventoN").GetString()}\n";
-                        richTextBox1.Text += $"Fecha: {ticket.GetProperty("FechaCompra").GetString()}\n";
-                        richTextBox1.Text += $"Precio: ${ticket.GetProperty("Precio").GetDouble()}\n";
-                        richTextBox1.Text += $"Cantidad: {ticket.GetProperty("CantidadEntradas").GetInt32()}\n";
-                        richTextBox1.Text += "------------------------\n";
-                    }
-                }
+                        cmd.Parameters.AddWithValue("@usuario", usuario);
 
-                if (!encontrado)
-                {
-                    richTextBox1.Text = $"No se encontraron tickets para el usuario: {usuario}";
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            richTextBox1.Text = $"Historial de: {usuario}\n\n";
+                            bool encontrado = false;
+
+                            while (reader.Read())
+                            {
+                                encontrado = true;
+                                richTextBox1.Text += $"ID: {reader.GetInt32("id")}\n";
+                                richTextBox1.Text += $"Evento: {reader.GetString("nombreevento")}\n";
+                                richTextBox1.Text += $"Fecha: {reader.GetDateTime("fechacompra"):yyyy-MM-dd HH:mm:ss}\n";
+                                richTextBox1.Text += $"Precio: ${reader.GetDecimal("precio")}\n";
+                                richTextBox1.Text += $"Cantidad: {reader.GetInt32("cantidadentradas")}\n";
+                                richTextBox1.Text += "------------------------\n";
+                            }
+
+                            if (!encontrado)
+                            {
+                                richTextBox1.Text = $"No se encontraron tickets para el usuario: {usuario}";
+                            }
+                        }
+                    }
                 }
             }
             catch (Exception ex)
@@ -62,20 +76,7 @@ namespace proyectoEventos.vista
             }
         }
 
-        // Estos métodos deben existir aunque estén vacíos
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void txtUsuario_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e) // Botón "Descargar"
         {
             string idTexto = txtId.Text.Trim();
 
@@ -93,60 +94,59 @@ namespace proyectoEventos.vista
 
             try
             {
-                // Ruta del archivo JSON (igual que en el botón Generar)
-                string rutaJSON = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Modelo", "Datos", "tickets.json");
-
-                if (!File.Exists(rutaJSON))
+                using (var conexion = MySQLConexion.ObtenerConexion())
                 {
-                    MessageBox.Show("No se encontró el archivo tickets.json");
-                    return;
-                }
+                    if (conexion == null) return;
 
-                // Leer y deserializar JSON
-                string json = File.ReadAllText(rutaJSON);
-                var tickets = JsonSerializer.Deserialize<JsonElement>(json);
+                    string query = @"SELECT t.id, t.fechacompra, t.precio, t.cantidadentradas, 
+                                    e.nombreevento, u.nombre as nombreusuario
+                                    FROM tickets t
+                                    INNER JOIN eventos e ON t.eventoid = e.id
+                                    INNER JOIN usuarios u ON t.usuarioid = u.id
+                                    WHERE t.id = @id";
 
-                bool encontrado = false;
-                string infoTicket = "";
-
-                // Buscar ticket por ID
-                foreach (var ticket in tickets.EnumerateArray())
-                {
-                    if (ticket.GetProperty("id").GetInt32() == idTicket)
+                    using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        encontrado = true;
-                        infoTicket += "======= Ticket =======\n";
-                        infoTicket += $"ID: {ticket.GetProperty("id").GetInt32()}\n";
-                        infoTicket += $"Usuario: {ticket.GetProperty("NombreUsuario").GetString()}\n";
-                        infoTicket += $"Evento: {ticket.GetProperty("EventoN").GetString()}\n";
-                        infoTicket += $"Fecha: {ticket.GetProperty("FechaCompra").GetString()}\n";
-                        infoTicket += $"Precio: ${ticket.GetProperty("Precio").GetDouble()}\n";
-                        infoTicket += $"Cantidad: {ticket.GetProperty("CantidadEntradas").GetInt32()}\n";
-                        infoTicket += "======================\n";
-                        break;
+                        cmd.Parameters.AddWithValue("@id", idTicket);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                string infoTicket = "";
+                                infoTicket += "======= Ticket =======\n";
+                                infoTicket += $"ID: {reader.GetInt32("id")}\n";
+                                infoTicket += $"Usuario: {reader.GetString("nombreusuario")}\n";
+                                infoTicket += $"Evento: {reader.GetString("nombreevento")}\n";
+                                infoTicket += $"Fecha: {reader.GetDateTime("fechacompra"):yyyy-MM-dd HH:mm:ss}\n";
+                                infoTicket += $"Precio: ${reader.GetDecimal("precio")}\n";
+                                infoTicket += $"Cantidad: {reader.GetInt32("cantidadentradas")}\n";
+                                infoTicket += "======================\n";
+
+                                string carpetaDescargas = Path.Combine(
+                                    Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+                                string rutaArchivo = Path.Combine(carpetaDescargas, $"Ticket_{idTicket}.txt");
+                                File.WriteAllText(rutaArchivo, infoTicket);
+
+                                MessageBox.Show($"Ticket guardado correctamente en tu carpeta de Descargas:\n{rutaArchivo}",
+                                    "Descarga exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else
+                            {
+                                MessageBox.Show($"No se encontró ningún ticket con el ID {idTicket}");
+                            }
+                        }
                     }
                 }
-
-                if (!encontrado)
-                {
-                    MessageBox.Show($"No se encontró ningún ticket con el ID {idTicket}");
-                    return;
-                }
-
-                // Obtener la ruta de la carpeta "Descargas" del usuario
-                string carpetaDescargas = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
-
-                // Crear el archivo en Descargas
-                string rutaArchivo = Path.Combine(carpetaDescargas, $"Ticket_{idTicket}.txt");
-                File.WriteAllText(rutaArchivo, infoTicket);
-
-                MessageBox.Show($"Ticket guardado correctamente en tu carpeta de Descargas:\n{rutaArchivo}",
-                                "Descarga exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error al descargar el ticket: {ex.Message}");
             }
         }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e) { }
+        private void txtUsuario_TextChanged(object sender, EventArgs e) { }
+        private void label1_Click(object sender, EventArgs e) { }
     }
 }
