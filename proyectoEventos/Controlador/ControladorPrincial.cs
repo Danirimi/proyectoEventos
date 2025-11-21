@@ -33,6 +33,23 @@ namespace proyectoEventos.Controlador
 
         public ControladorPrincipal()
         {
+            // Verificar conexión a MySQL al iniciar
+            if (!MySQLConexion.ProbarConexion())
+            {
+                MessageBox.Show(
+                    "No se pudo conectar a la base de datos MySQL.\n\n" +
+                    "Verifique que:\n" +
+                    "1. MySQL esté ejecutándose\n" +
+                    "2. La base de datos 'Eventos' exista\n" +
+                    "3. Las credenciales en MySQLConexion.cs sean correctas",
+                    "Error de Conexión",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                
+                Application.Exit();
+                return;
+            }
+
             // 1. Crear vistas
             _vistaCrearUsuario = new CrearUsuario();
             _vistaPaginaInicial = new PaginaInicial();
@@ -40,10 +57,10 @@ namespace proyectoEventos.Controlador
             _vistaCambiarContraseña = new cambiarContraseña();
             _vistaVerHistorial = new vista.VerHistorial();
 
-            // 2. Crear repositorios
-            _repoUsuarios = new IUsuarioMemoria();
-            _repoEventos = new InterfazEventoMemoria();
-            _repoTickets = new ITicketmemoria();
+            // 2. Crear repositorios MySQL (CAMBIO AQUÍ)
+            _repoUsuarios = new IUsuarioMySQL();
+            _repoEventos = new IEventoMySQL();
+            _repoTickets = new ITicketMySQL();
 
             // 3. Crear controladores y pasar dependencias
             _controladorUsuario = new ControladorUsuario(
