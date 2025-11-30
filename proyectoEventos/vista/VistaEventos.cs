@@ -244,7 +244,7 @@ namespace proyectoEventos.vista
                 }
             }
         }
-
+        //sirve
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             AgregarEventoE?.Invoke(this, EventArgs.Empty);

@@ -95,6 +95,12 @@
     <Compile Include="Modelo\IUsuario.cs" />
     <Compile Include="Modelo\IUsuarioMemoria.cs" />
     <Compile Include="Modelo\JsonDataManager.cs" />
+<<<<<<< Updated upstream
+=======
+    <Compile Include="Modelo\MigradorDatos.cs" />
+    <Compile Include="Modelo\MySQLConexion.cs" />
+    <Compile Include="Modelo\PasswordSecurity.cs" />
+>>>>>>> Stashed changes
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Modelo\Usuario.cs" />
