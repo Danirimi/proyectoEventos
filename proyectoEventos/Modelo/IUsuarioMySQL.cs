@@ -1,4 +1,4 @@
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -320,8 +320,8 @@ namespace proyectoEventos.Modelo
 
         public List<Ticket> ObtenerHistorialCompras(int usuarioId)
         {
-            ITicket repositorioTickets = new ITicketMySQL();
-            return repositorioTickets.ObtenerTicketsPorUsuario(usuarioId);
+
+            return new List<Ticket>();
         }
 
         public void verHistorialcompra(string cedula)

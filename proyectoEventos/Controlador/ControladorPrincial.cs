@@ -60,7 +60,7 @@ namespace proyectoEventos.Controlador
             // 2. Crear repositorios MySQL (CAMBIO AQUÍ)
             _repoUsuarios = new IUsuarioMySQL();
             _repoEventos = new IEventoMySQL();
-            _repoTickets = new ITicketMySQL();
+            
 
             // 3. Crear controladores y pasar dependencias
             _controladorUsuario = new ControladorUsuario(

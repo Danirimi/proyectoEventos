@@ -1,4 +1,4 @@
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 using System;
 using System.Windows.Forms;
 
@@ -7,8 +7,8 @@ namespace proyectoEventos.Modelo
     public static class MySQLConexion
     {
         // Cadena de conexión - ajusta según tu configuración
-        private static readonly string connectionString = 
-            "server=localhost;port=3306;database=eventos;user=root;password=1234;";
+        private static readonly string connectionString =
+            "server=localhost;port=3306;database=eventos;user=root;password=admin;";
 
         public static MySqlConnection ObtenerConexion()
         {
@@ -20,7 +20,7 @@ namespace proyectoEventos.Modelo
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al conectar con la base de datos: {ex.Message}", 
+                MessageBox.Show($"Error al conectar con la base de datos: {ex.Message}",
                     "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }

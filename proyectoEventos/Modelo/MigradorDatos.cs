@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,29 +12,30 @@ namespace proyectoEventos.Modelo
         {
             try
             {
-                // Verificar conexi�n a MySQL
+                // Verificar conexión a MySQL
                 if (!MySQLConexion.ProbarConexion())
                 {
-                    MessageBox.Show("No se pudo conectar a MySQL. Verifique la configuraci�n.", 
+                    MessageBox.Show("No se pudo conectar a MySQL. Verifique la configuración.",
                         "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
                 int usuariosMigrados = MigrarUsuarios();
                 int eventosMigrados = MigrarEventos();
-                int ticketsMigrados = MigrarTickets();
+                // int ticketsMigrados = MigrarTickets(); // ← COMENTAR TEMPORALMENTE
 
-                string mensaje = $"Migraci�n completada:\n" +
+                string mensaje = $"Migración completada:\n" +
                                 $"- Usuarios migrados: {usuariosMigrados}\n" +
                                 $"- Eventos migrados: {eventosMigrados}\n" +
-                                $"- Tickets migrados: {ticketsMigrados}";
+                                // $"- Tickets migrados: {ticketsMigrados}\n" + // ← COMENTAR
+                                $"- Tickets: Migración temporalmente deshabilitada";
 
-                MessageBox.Show(mensaje, "Migraci�n Exitosa", 
+                MessageBox.Show(mensaje, "Migración Exitosa",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error durante la migraci�n: {ex.Message}", 
+                MessageBox.Show($"Error durante la migración: {ex.Message}",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -147,23 +148,26 @@ namespace proyectoEventos.Modelo
 
                 if (tickets != null)
                 {
-                    ITicket repo = new ITicketMySQL();
-                    foreach (var t in tickets)
-                    {
-                        try
-                        {
-                            repo.GenerarTicket(t);
-                            totalMigrados++;
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error al migrar ticket {t.id}: {ex.Message}");
-                        }
-                    }
+                    // COMENTAR TEMPORALMENTE TODO EL BLOQUE:
+                    // ITicket repo = new TicketMySQL();
+                    // foreach (var t in tickets)
+                    // {
+                    //     try
+                    //     {
+                    //         repo.GenerarTicket(t);
+                    //         totalMigrados++;
+                    //     }
+                    //     catch (Exception ex)
+                    //     {
+                    //         Console.WriteLine($"Error al migrar ticket {t.id}: {ex.Message}");
+                    //     }
+                    // }
+
+                    Console.WriteLine("Migración de tickets deshabilitada temporalmente - Clase TicketMySQL no existe");
                 }
             }
 
-            return totalMigrados;
+            return totalMigrados; // ← Esto retornará 0 temporalmente
         }
 
         // Clase auxiliar para deserializar usuarios desde JSON
