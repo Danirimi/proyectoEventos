@@ -126,6 +126,7 @@
     <Compile Include="Controlador\ControladorEventoUsuario.cs" />
     <Compile Include="Controlador\ControladorPrincial.cs" />
     <Compile Include="Controlador\ControladorUsuario.cs" />
+    <Compile Include="Modelo\ErrorLogger.cs" />
     <Compile Include="Modelo\Evento.cs" />
     <Compile Include="Modelo\IEventoMySQL.cs" />
     <Compile Include="Modelo\InterfaceEvento.cs" />

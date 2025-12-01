@@ -208,13 +208,7 @@ namespace proyectoEventos.Controlador
         {
             try
             {
-                // ✅ NUEVO: Validar sesión usando SesionManager
-                if (!SesionManager.SesionActiva)
-                {
-                    MessageBox.Show("Sesión expirada. Por favor, inicie sesión nuevamente.", "Sesión Expirada",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                // NOTA: No validar sesión aquí para permitir registro de nuevos usuarios sin iniciar sesión
 
                 bool verificacion = _repo.Verificar(e.Correo, e.Nombre, e.Cedula);
                 if (!verificacion)
@@ -269,13 +263,7 @@ namespace proyectoEventos.Controlador
         {
             try
             {
-                // ✅ VALIDAR sesión antes de continuar
-                if (!SesionManager.SesionActiva)
-                {
-                    MessageBox.Show("Sesión expirada. Por favor, inicie sesión nuevamente.", "Sesión Expirada",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return false;
-                }
+                // Nota: El registro de nuevos usuarios no requiere sesión activa.
 
                 // ✅ VALIDAR que el repositorio esté inicializado
                 if (_repo == null)
