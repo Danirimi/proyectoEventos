@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
 using System.Windows.Forms;
+using proyectoEventos.Modelo.Seguridad;
+
 
 namespace proyectoEventos.Modelo
 {
@@ -18,29 +18,34 @@ namespace proyectoEventos.Modelo
 
         public IUsuarioMemoria()
         {
-            // Construye las rutas dinámicamente
+            // Construye las rutas dinámicamente (no se usan para leer/escribir ahora)
             rutaUsuarios = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Modelo", "Datos", "usuarios.json");
             rutaAdministradores = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Modelo", "Datos", "administradores.json");
-            // Carga los datos usando esas rutas
-            _usuarios = JsonDataManager.CargarDatos<Usuario>(rutaUsuarios);
-            _administradores = JsonDataManager.CargarDatos<Usuario>(rutaAdministradores);
+            // Inicialización en memoria (sin JSON)
+            _usuarios = new List<Usuario>();
+            _administradores = new List<Usuario>();
         }
 
         public void AgregarUsuario(Usuario usuario)
         {
+            // HASHEAR CONTRASEÑA ANTES DE GUARDAR
+            string contrasenaHash = PasswordHasher.HashPassword(usuario.Contrasena);
+
+            // Crear nuevo usuario con contraseña hasheada
+            var usuarioConHash = new Usuario(usuario.Nombre, usuario.Correo, usuario.Cedula,
+                                           usuario.Edad, contrasenaHash, usuario.esadmin);
+
             if (usuario.esadmin)
             {
-                _administradores.Add(usuario);
-              
-                JsonDataManager.GuardarDatos(_administradores, "administradores.json");
+                _administradores.Add(usuarioConHash);
+                // Persistencia deshabilitada: almacenamiento en memoria
             }
             else
             {
-                _usuarios.Add(usuario);
-               
-                JsonDataManager.GuardarDatos(_usuarios, "usuarios.json");
+                _usuarios.Add(usuarioConHash);
+                // Persistencia deshabilitada: almacenamiento en memoria
             }
-            MessageBox.Show("Usuario creado con exito", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Usuario creado con éxito", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         public void EditarUsuario(Usuario usuario)
@@ -59,8 +64,7 @@ namespace proyectoEventos.Modelo
                 existente.Edad = usuario.Edad;
                 existente.Contrasena = usuario.Contrasena;
 
-                // Guardar toda la lista actualizada usando la clase JsonDataManager
-                JsonDataManager.GuardarDatos(lista, archivo);
+                // Persistencia deshabilitada: almacenamiento en memoria
 
                 MessageBox.Show("Usuario actualizado correctamente.", "Éxito",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -81,7 +85,7 @@ namespace proyectoEventos.Modelo
             if (usuario != null)
             {
                 _usuarios.Remove(usuario);
-                JsonDataManager.GuardarDatos(_usuarios, "usuarios.json");
+                // Persistencia deshabilitada
                 eliminado = true;
             }
 
@@ -90,7 +94,7 @@ namespace proyectoEventos.Modelo
             if (admin != null)
             {
                 _administradores.Remove(admin);
-                JsonDataManager.GuardarDatos(_administradores, "administradores.json");
+                // Persistencia deshabilitada
                 eliminado = true;
             }
 
@@ -116,35 +120,42 @@ namespace proyectoEventos.Modelo
         //este es para el inicio de sesion y verifica el correo y la contraseña
         public bool ValidarUsuarioDirecto(string correo, string contrasena)
         {
-            //  Verificar que ambos parámetros no estén vacíos
             if (string.IsNullOrWhiteSpace(correo) || string.IsNullOrWhiteSpace(contrasena))
                 return false;
-            //  Leer los archivos JSON
-            var listaUsuarios = JsonDataManager.CargarDatos<Usuario>("usuarios.json");
-            var listaAdmins = JsonDataManager.CargarDatos<Usuario>("administradores.json");
 
-            //  Buscar coincidencia en ambos archivos
+            var listaUsuarios = _usuarios;
+            var listaAdmins = _administradores;
+
+            // Buscar en usuarios normales
             var usuario = listaUsuarios.FirstOrDefault(u =>
-                u.Correo.Equals(correo, StringComparison.OrdinalIgnoreCase) &&
-                u.Contrasena == contrasena);
+                u.Correo.Equals(correo, StringComparison.OrdinalIgnoreCase));
 
+            if (usuario != null)
+            {
+                // VERIFICAR CON HASH
+                return PasswordHasher.VerifyPassword(contrasena, usuario.Contrasena);
+            }
+
+            // Buscar en administradores
             var admin = listaAdmins.FirstOrDefault(u =>
-              u.Correo.Equals(correo, StringComparison.OrdinalIgnoreCase) &&
-              u.Contrasena == contrasena);
+                u.Correo.Equals(correo, StringComparison.OrdinalIgnoreCase));
 
-            //  Si se encuentra en alguno de los dos archivos
-            if (usuario != null || admin != null)
-                return true;
+            if (admin != null)
+            {
+                // VERIFICAR CON HASH
+                return PasswordHasher.VerifyPassword(contrasena, admin.Contrasena);
+            }
+
             return false;
         }
-        
+
         public Usuario ObtenerUsuarioPorCredenciales(string correo, string contrasena)
         {
             if (string.IsNullOrWhiteSpace(correo) || string.IsNullOrWhiteSpace(contrasena))
                 return null;
 
-            var listaUsuarios = JsonDataManager.CargarDatos<Usuario>("usuarios.json");
-            var listaAdmins = JsonDataManager.CargarDatos<Usuario>("administradores.json");
+            var listaUsuarios = _usuarios;
+            var listaAdmins = _administradores;
 
             var usuario = listaUsuarios.FirstOrDefault(u =>
                 u.Correo.Equals(correo, StringComparison.OrdinalIgnoreCase) &&
@@ -170,8 +181,8 @@ namespace proyectoEventos.Modelo
                return true;
             }
 
-            var listaUsuarios = JsonDataManager.CargarDatos<Usuario>("usuarios.json");
-            var listaAdmins = JsonDataManager.CargarDatos<Usuario>("administradores.json");
+            var listaUsuarios = _usuarios;
+            var listaAdmins = _administradores;
 
             bool existeCorreo = listaUsuarios.Any(u => u.Correo.Equals(correo, StringComparison.OrdinalIgnoreCase)) ||
                                 listaAdmins.Any(u => u.Correo.Equals(correo, StringComparison.OrdinalIgnoreCase));
@@ -201,29 +212,30 @@ namespace proyectoEventos.Modelo
             return false;
         }
 
-
-
-       
-
         public bool CambiarContraseña(string correo, string nuevaContraseña)
         {
+            // HASHEAR NUEVA CONTRASEÑA
+            string nuevaContrasenaHash = PasswordHasher.HashPassword(nuevaContraseña);
+
             // Buscar en usuarios normales
             var usuario = _usuarios.FirstOrDefault(u => u.Correo.Equals(correo, StringComparison.OrdinalIgnoreCase));
             if (usuario != null)
             {
-                usuario.Contrasena = nuevaContraseña;
-                JsonDataManager.GuardarDatos(_usuarios, "usuarios.json");
+                usuario.Contrasena = nuevaContrasenaHash;
+                // Persistencia deshabilitada
                 return true;
             }
+
             // Buscar en administradores
             var admin = _administradores.FirstOrDefault(a => a.Correo.Equals(correo, StringComparison.OrdinalIgnoreCase));
             if (admin != null)
             {
-                admin.Contrasena = nuevaContraseña;
-                JsonDataManager.GuardarDatos(_administradores, "administradores.json");
+                admin.Contrasena = nuevaContrasenaHash;
+                // Persistencia deshabilitada
                 return true;
             }
-            return false; // No se encontró el correo
+
+            return false;
         }
         public List<Ticket> ObtenerHistorialCompras(int usuarioId)
         {
