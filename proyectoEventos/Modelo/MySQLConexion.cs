@@ -8,7 +8,7 @@ namespace proyectoEventos.Modelo
     {
         // Cadena de conexión - ajusta según tu configuración
         private static readonly string connectionString = 
-            "server=localhost;port=3306;database=eventos;user=root;password=admin;";
+            "server=localhost;port=3306;database=eventos;user=root;password=1234;";
 
         public static MySqlConnection ObtenerConexion()
         {
