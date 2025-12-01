@@ -136,6 +136,9 @@
     <Compile Include="Modelo\IUsuarioMemoria.cs" />
     <Compile Include="Modelo\MySQLConexion.cs" />
     <Compile Include="Modelo\PasswordHasher.cs" />
+    <Compile Include="Modelo\SesionManager.cs" />
+    <Compile Include="Modelo\SesionService.cs" />
+    <Compile Include="Modelo\SesionUsuario.cs" />
     <Compile Include="Modelo\UsuarioMySQL.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -9,7 +9,7 @@ namespace proyectoEventos.Modelo
 {
     public class UsuarioMySQL : IUsuario
     {
-        // MÉTODO AGREGAR USUARIO (YA EXISTENTE)
+        // MÉTODO AGREGAR USUARIO
         public void AgregarUsuario(Usuario usuario)
         {
             try
@@ -22,18 +22,26 @@ namespace proyectoEventos.Modelo
                     string contrasenaHash = PasswordHasher.HashPassword(usuario.Contrasena);
 
                     string query = @"INSERT INTO usuarios (nombre, correo, cedula, edad, contrasena, esadmin) 
-                                   VALUES (@nombre, @correo, @cedula, @edad, @contrasena, @esadmin)";
+                                   VALUES (@nombre, @correo, @cedula, @edad, @contrasena, @esadmin);
+                                   SELECT LAST_INSERT_ID();";
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.Add("@nombre", MySqlDbType.VarChar, 200).Value = usuario.Nombre ?? string.Empty;
-                        cmd.Parameters.Add("@correo", MySqlDbType.VarChar, 200).Value = usuario.Correo ?? string.Empty;
-                        cmd.Parameters.Add("@cedula", MySqlDbType.VarChar, 50).Value = usuario.Cedula ?? string.Empty;
-                        cmd.Parameters.Add("@edad", MySqlDbType.Int32).Value = usuario.Edad;
-                        cmd.Parameters.Add("@contrasena", MySqlDbType.VarChar, 255).Value = contrasenaHash;
-                        cmd.Parameters.Add("@esadmin", MySqlDbType.Bit).Value = usuario.esadmin;
+                        cmd.Parameters.AddWithValue("@nombre", usuario.Nombre);
+                        cmd.Parameters.AddWithValue("@correo", usuario.Correo);
+                        cmd.Parameters.AddWithValue("@cedula", usuario.Cedula);
+                        cmd.Parameters.AddWithValue("@edad", usuario.Edad);
+                        cmd.Parameters.AddWithValue("@contrasena", contrasenaHash);
+                        cmd.Parameters.AddWithValue("@esadmin", usuario.esadmin);
 
-                        cmd.ExecuteNonQuery();
+                        // ✅ CAPTURAR ID GENERADO
+                        object resultado = cmd.ExecuteScalar();
+                        if (resultado != null)
+                        {
+                            usuario.id = Convert.ToInt32(resultado);
+                            Console.WriteLine($"✅ Usuario creado con ID: {usuario.id}");
+                        }
+
                         MessageBox.Show("Usuario creado con éxito", "Éxito",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -62,16 +70,16 @@ namespace proyectoEventos.Modelo
 
                     string query = @"UPDATE usuarios SET nombre = @nombre, correo = @correo, 
                                    cedula = @cedula, edad = @edad, esadmin = @esadmin 
-                                   WHERE cedula = @cedulaBuscar";
+                                   WHERE id = @id";
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.Add("@nombre", MySqlDbType.VarChar, 200).Value = usuario.Nombre ?? string.Empty;
-                        cmd.Parameters.Add("@correo", MySqlDbType.VarChar, 200).Value = usuario.Correo ?? string.Empty;
-                        cmd.Parameters.Add("@cedula", MySqlDbType.VarChar, 50).Value = usuario.Cedula ?? string.Empty;
-                        cmd.Parameters.Add("@edad", MySqlDbType.Int32).Value = usuario.Edad;
-                        cmd.Parameters.Add("@esadmin", MySqlDbType.Bit).Value = usuario.esadmin;
-                        cmd.Parameters.Add("@cedulaBuscar", MySqlDbType.VarChar, 50).Value = usuario.Cedula ?? string.Empty;
+                        cmd.Parameters.AddWithValue("@id", usuario.id);
+                        cmd.Parameters.AddWithValue("@nombre", usuario.Nombre);
+                        cmd.Parameters.AddWithValue("@correo", usuario.Correo);
+                        cmd.Parameters.AddWithValue("@cedula", usuario.Cedula);
+                        cmd.Parameters.AddWithValue("@edad", usuario.Edad);
+                        cmd.Parameters.AddWithValue("@esadmin", usuario.esadmin);
 
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("Usuario actualizado con éxito", "Éxito",
@@ -99,7 +107,7 @@ namespace proyectoEventos.Modelo
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.Add("@cedula", MySqlDbType.VarChar, 50).Value = cedula ?? string.Empty;
+                        cmd.Parameters.AddWithValue("@cedula", cedula);
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("Usuario eliminado con éxito", "Éxito",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -116,7 +124,6 @@ namespace proyectoEventos.Modelo
         // MÉTODO VER HISTORIAL COMPRA
         public void verHistorialcompra(string cedula)
         {
-            // Implementación básica - puedes expandir esto
             try
             {
                 using (var conexion = MySQLConexion.ObtenerConexion())
@@ -127,11 +134,9 @@ namespace proyectoEventos.Modelo
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.Add("@cedula", MySqlDbType.VarChar, 50).Value = cedula ?? string.Empty;
+                        cmd.Parameters.AddWithValue("@cedula", cedula);
                         var reader = cmd.ExecuteReader();
 
-                        // Aquí procesarías los resultados del historial
-                        // Por ahora solo mostramos un mensaje
                         MessageBox.Show($"Mostrando historial para cédula: {cedula}", "Historial",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -144,7 +149,7 @@ namespace proyectoEventos.Modelo
             }
         }
 
-        // MÉTODO VALIDAR USUARIO DIRECTO (CORREGIDO)
+        // MÉTODO VALIDAR USUARIO DIRECTO
         public bool ValidarUsuarioDirecto(string correo, string contrasena)
         {
             try
@@ -157,7 +162,7 @@ namespace proyectoEventos.Modelo
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.Add("@correo", MySqlDbType.VarChar, 200).Value = correo ?? string.Empty;
+                        cmd.Parameters.AddWithValue("@correo", correo);
 
                         string hashedPassword = cmd.ExecuteScalar()?.ToString();
 
@@ -189,9 +194,9 @@ namespace proyectoEventos.Modelo
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.Add("@correo", MySqlDbType.VarChar, 200).Value = correo ?? string.Empty;
-                        cmd.Parameters.Add("@nombre", MySqlDbType.VarChar, 200).Value = nombre ?? string.Empty;
-                        cmd.Parameters.Add("@cedula", MySqlDbType.VarChar, 50).Value = cedula ?? string.Empty;
+                        cmd.Parameters.AddWithValue("@correo", correo);
+                        cmd.Parameters.AddWithValue("@nombre", nombre);
+                        cmd.Parameters.AddWithValue("@cedula", cedula);
 
                         int count = Convert.ToInt32(cmd.ExecuteScalar());
                         return count > 0;
@@ -217,19 +222,21 @@ namespace proyectoEventos.Modelo
                 {
                     if (conexion == null) return usuarios;
 
-                    string query = "SELECT nombre, correo, cedula, edad, esadmin FROM usuarios";
+                    string query = "SELECT id, nombre, correo, cedula, edad, esadmin FROM usuarios";
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
+                            // ✅ CONSTRUCTOR CON ID
                             usuarios.Add(new Usuario(
+                                Convert.ToInt32(reader["id"]),
                                 reader["nombre"].ToString(),
                                 reader["correo"].ToString(),
                                 reader["cedula"].ToString(),
                                 Convert.ToInt32(reader["edad"]),
-                                "", // Contraseña no se devuelve por seguridad
+                                "", // Contraseña no se devuelve
                                 Convert.ToBoolean(reader["esadmin"])
                             ));
                         }
@@ -254,11 +261,11 @@ namespace proyectoEventos.Modelo
                 {
                     if (conexion == null) return null;
 
-                    string query = "SELECT nombre, correo, cedula, edad, esadmin, contrasena FROM usuarios WHERE correo = @correo";
+                    string query = "SELECT id, nombre, correo, cedula, edad, contrasena, esadmin FROM usuarios WHERE correo = @correo";
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.Add("@correo", MySqlDbType.VarChar, 200).Value = correo ?? string.Empty;
+                        cmd.Parameters.AddWithValue("@correo", correo);
 
                         using (var reader = cmd.ExecuteReader())
                         {
@@ -266,10 +273,11 @@ namespace proyectoEventos.Modelo
                             {
                                 string storedPassword = reader["contrasena"].ToString();
 
-                                // Verificar contraseña
                                 if (PasswordHasher.VerifyPassword(contrasena, storedPassword))
                                 {
+                                    // ✅ CONSTRUCTOR CON ID
                                     return new Usuario(
+                                        Convert.ToInt32(reader["id"]),
                                         reader["nombre"].ToString(),
                                         reader["correo"].ToString(),
                                         reader["cedula"].ToString(),
@@ -292,7 +300,7 @@ namespace proyectoEventos.Modelo
             return null;
         }
 
-        // MÉTODO CAMBIAR CONTRASEÑA (YA EXISTENTE)
+        // MÉTODO CAMBIAR CONTRASEÑA
         public bool CambiarContraseña(string correo, string nuevaContraseña)
         {
             try
@@ -306,8 +314,8 @@ namespace proyectoEventos.Modelo
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.Add("@contrasena", MySqlDbType.VarChar, 255).Value = nuevaContrasenaHash;
-                        cmd.Parameters.Add("@correo", MySqlDbType.VarChar, 200).Value = correo ?? string.Empty;
+                        cmd.Parameters.AddWithValue("@contrasena", nuevaContrasenaHash);
+                        cmd.Parameters.AddWithValue("@correo", correo);
 
                         int filasAfectadas = cmd.ExecuteNonQuery();
                         return filasAfectadas > 0;
@@ -337,13 +345,12 @@ namespace proyectoEventos.Modelo
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.Add("@usuarioId", MySqlDbType.Int32).Value = usuarioId;
+                        cmd.Parameters.AddWithValue("@usuarioId", usuarioId);
 
                         using (var reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                // Crear objeto Ticket con los datos - ajusta según tu clase Ticket
                                 var ticket = new Ticket
                                 {
                                     id = Convert.ToInt32(reader["id"]),
