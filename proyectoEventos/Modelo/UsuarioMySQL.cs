@@ -22,8 +22,7 @@ namespace proyectoEventos.Modelo
                     string contrasenaHash = PasswordHasher.HashPassword(usuario.Contrasena);
 
                     string query = @"INSERT INTO usuarios (nombre, correo, cedula, edad, contrasena, esadmin) 
-                                   VALUES (@nombre, @correo, @cedula, @edad, @contrasena, @esadmin);
-                                   SELECT LAST_INSERT_ID();";
+                                   VALUES (@nombre, @correo, @cedula, @edad, @contrasena, @esadmin)";
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
@@ -34,11 +33,14 @@ namespace proyectoEventos.Modelo
                         cmd.Parameters.AddWithValue("@contrasena", contrasenaHash);
                         cmd.Parameters.AddWithValue("@esadmin", usuario.esadmin);
 
-                        // ✅ CAPTURAR ID GENERADO
-                        object resultado = cmd.ExecuteScalar();
-                        if (resultado != null)
+                        // Ejecutar INSERT
+                        cmd.ExecuteNonQuery();
+
+                        // Obtener el ID generado de forma segura
+                        long lastId = cmd.LastInsertedId;
+                        if (lastId > 0)
                         {
-                            usuario.id = Convert.ToInt32(resultado);
+                            usuario.id = Convert.ToInt32(lastId);
                             Console.WriteLine($"✅ Usuario creado con ID: {usuario.id}");
                         }
 
@@ -49,11 +51,23 @@ namespace proyectoEventos.Modelo
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show($"Error de base de datos: {ex.Message}", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorLogger.LogException(ex, "AgregarUsuario MySQL");
+
+                // Manejo de errores comunes de MySQL
+                if (ex.Number == 1062) // Duplicate entry
+                {
+                    MessageBox.Show($"Error de base de datos: Registro duplicado. Detalle: {ex.Message}", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    MessageBox.Show($"Error de base de datos: {ex.Message}", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             catch (Exception ex)
             {
+                ErrorLogger.LogException(ex, "AgregarUsuario General");
                 MessageBox.Show($"Error inesperado: {ex.Message}", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

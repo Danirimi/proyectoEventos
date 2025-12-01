@@ -34,8 +34,15 @@ namespace proyectoEventos.Modelo
                 Console.WriteLine($"✅ Sesión BD creada - Token: {token}");
                 return token;
             }
+            catch (MySqlException mex)
+            {
+                ErrorLogger.LogException(mex, "CrearSesion MySQL");
+                Console.WriteLine($"❌ Error al crear sesión BD: {mex.Message}");
+                return null;
+            }
             catch (Exception ex)
             {
+                ErrorLogger.LogException(ex, "CrearSesion General");
                 Console.WriteLine($"❌ Error al crear sesión BD: {ex.Message}");
                 return null;
             }
@@ -69,6 +76,7 @@ namespace proyectoEventos.Modelo
             }
             catch (Exception ex)
             {
+                ErrorLogger.LogException(ex, "ValidarSesion");
                 Console.WriteLine($"❌ Error al validar sesión BD: {ex.Message}");
                 return false;
             }
@@ -94,6 +102,7 @@ namespace proyectoEventos.Modelo
             }
             catch (Exception ex)
             {
+                ErrorLogger.LogException(ex, "CerrarSesion");
                 Console.WriteLine($"❌ Error al cerrar sesión BD: {ex.Message}");
             }
         }
@@ -118,6 +127,7 @@ namespace proyectoEventos.Modelo
             }
             catch (Exception ex)
             {
+                ErrorLogger.LogException(ex, "LimpiarSesionesExpiradas");
                 Console.WriteLine($"❌ Error al limpiar sesiones BD: {ex.Message}");
             }
         }
@@ -145,6 +155,7 @@ namespace proyectoEventos.Modelo
             }
             catch (Exception ex)
             {
+                ErrorLogger.LogException(ex, "ObtenerCorreoDesdeToken");
                 Console.WriteLine($"❌ Error al obtener correo desde token: {ex.Message}");
                 return null;
             }
