@@ -1,38 +1,46 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace proyectoEventos.Modelo
 {
     public static class SesionService
     {
+        // Clave secreta para HMAC (debería almacenarse en configuración segura en producción)
+        private static readonly byte[] SecretKey = Encoding.UTF8.GetBytes("c9f1b2a7-SECRET-CHANGE-2025-please-change");
+
         public static string CrearSesion(Usuario usuario, int minutosExpiracion = 1)
         {
             try
             {
                 LimpiarSesionesExpiradas();
-                string token = Guid.NewGuid().ToString();
+                string rawToken = Guid.NewGuid().ToString();
+                string tokenHash = ComputeHmac(rawToken);
                 DateTime expiracion = DateTime.Now.AddMinutes(minutosExpiracion);
 
                 using (var conexion = MySQLConexion.ObtenerConexion())
                 {
                     if (conexion == null) return null;
 
-                    // ✅ USAR usuario_id en lugar de usuario_correo
+                    // Usar usuario_id en lugar de usuario_correo
                     string query = @"INSERT INTO sesiones (token, usuario_id, fecha_expiracion) 
                            VALUES (@token, @usuario_id, @expiracion)";
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.AddWithValue("@token", token);
-                        cmd.Parameters.AddWithValue("@usuario_id", usuario.id); // ← NECESITA usuario.id
+                        // Guardamos el hash del token en BD, no el token en claro
+                        cmd.Parameters.AddWithValue("@token", tokenHash);
+                        cmd.Parameters.AddWithValue("@usuario_id", usuario.id);
                         cmd.Parameters.AddWithValue("@expiracion", expiracion);
 
                         cmd.ExecuteNonQuery();
                     }
                 }
 
-                Console.WriteLine($"✅ Sesión BD creada - Token: {token}");
-                return token;
+                Console.WriteLine($"✅ Sesión BD creada - Token (raw): {rawToken}");
+                // Devolver el token en claro al cliente; en BD sólo queda el hash
+                return rawToken;
             }
             catch (MySqlException mex)
             {
@@ -59,13 +67,15 @@ namespace proyectoEventos.Modelo
                 {
                     if (conexion == null) return false;
 
+                    string tokenHash = ComputeHmac(token);
+
                     string query = @"SELECT COUNT(*) FROM sesiones 
                                    WHERE token = @token AND activa = 1 
                                    AND fecha_expiracion > NOW()";
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.AddWithValue("@token", token);
+                        cmd.Parameters.AddWithValue("@token", tokenHash);
                         int count = Convert.ToInt32(cmd.ExecuteScalar());
                         bool valida = count > 0;
 
@@ -90,11 +100,13 @@ namespace proyectoEventos.Modelo
                 {
                     if (conexion == null) return;
 
+                    string tokenHash = ComputeHmac(token);
+
                     string query = "UPDATE sesiones SET activa = 0 WHERE token = @token";
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.AddWithValue("@token", token);
+                        cmd.Parameters.AddWithValue("@token", tokenHash);
                         int afectadas = cmd.ExecuteNonQuery();
                         Console.WriteLine($"🔒 Sesiones cerradas: {afectadas}");
                     }
@@ -132,7 +144,7 @@ namespace proyectoEventos.Modelo
             }
         }
 
-        // Obtener correo del usuario desde token
+        // Obtener correo del usuario desde token (token en claro proporcionado por cliente)
         public static string ObtenerCorreoDesdeToken(string token)
         {
             try
@@ -141,13 +153,17 @@ namespace proyectoEventos.Modelo
                 {
                     if (conexion == null) return null;
 
-                    string query = @"SELECT usuario_correo FROM sesiones 
-                                   WHERE token = @token AND activa = 1 
-                                   AND fecha_expiracion > NOW()";
+                    string tokenHash = ComputeHmac(token);
+
+                    // Unir con la tabla usuarios para obtener el correo
+                    string query = @"SELECT u.correo FROM sesiones s 
+                                   JOIN usuarios u ON s.usuario_id = u.id
+                                   WHERE s.token = @token AND s.activa = 1 
+                                   AND s.fecha_expiracion > NOW()";
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.AddWithValue("@token", token);
+                        cmd.Parameters.AddWithValue("@token", tokenHash);
                         var result = cmd.ExecuteScalar();
                         return result?.ToString();
                     }
@@ -158,6 +174,19 @@ namespace proyectoEventos.Modelo
                 ErrorLogger.LogException(ex, "ObtenerCorreoDesdeToken");
                 Console.WriteLine($"❌ Error al obtener correo desde token: {ex.Message}");
                 return null;
+            }
+        }
+
+        // Helper: calcular HMAC-SHA256 del token con la clave secreta
+        private static string ComputeHmac(string token)
+        {
+            if (string.IsNullOrEmpty(token)) return string.Empty;
+
+            using (var hmac = new HMACSHA256(SecretKey))
+            {
+                byte[] data = Encoding.UTF8.GetBytes(token);
+                byte[] hash = hmac.ComputeHash(data);
+                return Convert.ToBase64String(hash);
             }
         }
     }
