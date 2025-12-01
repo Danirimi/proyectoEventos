@@ -62,7 +62,8 @@ namespace proyectoEventos.Controlador
             {
                 _repoUsuarios = new UsuarioMySQL();
                 _repoEventos = new IEventoMySQL();
-                _repoTickets = new ITicketMySQL();
+                // No existe ITicketMySQL en el proyecto; usar implementación en memoria existente
+                _repoTickets = new ITicketmemoria();
             }
             catch (Exception ex)
             {
