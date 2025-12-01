@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.Json;
 using System.IO;
+using proyectoEventos.Modelo; // Asegúrate de que JsonDataManager esté en este namespace o ajusta según corresponda
 
 namespace proyectoEventos.Modelo
 {
@@ -18,8 +19,8 @@ namespace proyectoEventos.Modelo
 
         public InterfazEventoMemoria()
         {
-            // Cargar eventos desde el archivo JSON
-            _eventos = JsonDataManager.CargarDatos<Evento>(_nombreArchivoJson);
+            // Inicialización en memoria (sin JSON)
+            _eventos = new List<Evento>();
             
             // Calcular el siguiente ID basado en los eventos existentes
             _siguenteId = _eventos.Any() ? _eventos.Max(e => e.Id) + 1 : 1;
@@ -62,8 +63,7 @@ namespace proyectoEventos.Modelo
             evento.Id = _siguenteId++;
             _eventos.Add(evento);
             
-            // Guardar en JSON
-            JsonDataManager.GuardarDatos(_eventos, _nombreArchivoJson);
+            // Persistencia deshabilitada: almacenamiento en memoria
         }
         
         public void actualizarEvento(Evento evento)
@@ -91,8 +91,7 @@ namespace proyectoEventos.Modelo
             eventoExistente.entradastotales = evento.entradastotales;
             eventoExistente.entradasdisponibles = evento.entradasdisponibles;
 
-            // Guardar cambios en JSON
-            JsonDataManager.GuardarDatos(_eventos, _nombreArchivoJson);
+            // Persistencia deshabilitada: almacenamiento en memoria
         }
         
         public void eliminarEvento(int id)
@@ -107,8 +106,7 @@ namespace proyectoEventos.Modelo
             
             _eventos.Remove(evento);
             
-            // Guardar cambios en JSON (eliminar del archivo)
-            JsonDataManager.GuardarDatos(_eventos, _nombreArchivoJson);
+            // Persistencia deshabilitada: almacenamiento en memoria
         }
     }
 }

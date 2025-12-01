@@ -123,10 +123,9 @@
     <Compile Include="Modelo\ITicketMySQL.cs" />
     <Compile Include="Modelo\IUsuario.cs" />
     <Compile Include="Modelo\IUsuarioMemoria.cs" />
-    <Compile Include="Modelo\IUsuarioMySQL.cs" />
-    <Compile Include="Modelo\JsonDataManager.cs" />
-    <Compile Include="Modelo\MigradorDatos.cs" />
     <Compile Include="Modelo\MySQLConexion.cs" />
+    <Compile Include="Modelo\PasswordHasher.cs" />
+    <Compile Include="Modelo\UsuarioMySQL.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Modelo\Usuario.cs" />
@@ -245,7 +244,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bin\Debug\Modelo\Datos\" />
+    <Folder Include="bin\Debug\Modelo\" />
     <Folder Include="Datos\" />
   </ItemGroup>
   <ItemGroup>
