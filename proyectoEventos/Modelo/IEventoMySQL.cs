@@ -1,4 +1,4 @@
-using MySqlConnector;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -22,13 +22,21 @@ namespace proyectoEventos.Modelo
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.AddWithValue("@nombre", evento.NombreEvento);
-                        cmd.Parameters.AddWithValue("@fecha", DateTime.Parse(evento.FechaEvento));
-                        cmd.Parameters.AddWithValue("@lugar", evento.LugarEvento);
-                        cmd.Parameters.AddWithValue("@descripcion", evento.DescripcionEvento);
-                        cmd.Parameters.AddWithValue("@totales", evento.entradastotales);
-                        cmd.Parameters.AddWithValue("@disponibles", evento.entradasdisponibles);
-                        cmd.Parameters.AddWithValue("@precio", evento.PrecioEntrada);
+                        cmd.Parameters.Add("@nombre", MySqlDbType.VarChar, 200).Value = evento.NombreEvento ?? string.Empty;
+
+                        DateTime fecha;
+                        if (!DateTime.TryParse(evento.FechaEvento, out fecha))
+                        {
+                            MessageBox.Show("Fecha de evento inválida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        cmd.Parameters.Add("@fecha", MySqlDbType.DateTime).Value = fecha;
+
+                        cmd.Parameters.Add("@lugar", MySqlDbType.VarChar, 200).Value = evento.LugarEvento ?? string.Empty;
+                        cmd.Parameters.Add("@descripcion", MySqlDbType.Text).Value = evento.DescripcionEvento ?? string.Empty;
+                        cmd.Parameters.Add("@totales", MySqlDbType.Int32).Value = evento.entradastotales;
+                        cmd.Parameters.Add("@disponibles", MySqlDbType.Int32).Value = evento.entradasdisponibles;
+                        cmd.Parameters.Add("@precio", MySqlDbType.Decimal).Value = evento.PrecioEntrada;
 
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("Evento agregado exitosamente", "Éxito",
@@ -59,14 +67,22 @@ namespace proyectoEventos.Modelo
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.AddWithValue("@id", evento.Id);
-                        cmd.Parameters.AddWithValue("@nombre", evento.NombreEvento);
-                        cmd.Parameters.AddWithValue("@fecha", DateTime.Parse(evento.FechaEvento));
-                        cmd.Parameters.AddWithValue("@lugar", evento.LugarEvento);
-                        cmd.Parameters.AddWithValue("@descripcion", evento.DescripcionEvento);
-                        cmd.Parameters.AddWithValue("@totales", evento.entradastotales);
-                        cmd.Parameters.AddWithValue("@disponibles", evento.entradasdisponibles);
-                        cmd.Parameters.AddWithValue("@precio", evento.PrecioEntrada);
+                        cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = evento.Id;
+                        cmd.Parameters.Add("@nombre", MySqlDbType.VarChar, 200).Value = evento.NombreEvento ?? string.Empty;
+
+                        DateTime fecha;
+                        if (!DateTime.TryParse(evento.FechaEvento, out fecha))
+                        {
+                            MessageBox.Show("Fecha de evento inválida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        cmd.Parameters.Add("@fecha", MySqlDbType.DateTime).Value = fecha;
+
+                        cmd.Parameters.Add("@lugar", MySqlDbType.VarChar, 200).Value = evento.LugarEvento ?? string.Empty;
+                        cmd.Parameters.Add("@descripcion", MySqlDbType.Text).Value = evento.DescripcionEvento ?? string.Empty;
+                        cmd.Parameters.Add("@totales", MySqlDbType.Int32).Value = evento.entradastotales;
+                        cmd.Parameters.Add("@disponibles", MySqlDbType.Int32).Value = evento.entradasdisponibles;
+                        cmd.Parameters.Add("@precio", MySqlDbType.Decimal).Value = evento.PrecioEntrada;
 
                         int filasAfectadas = cmd.ExecuteNonQuery();
                         if (filasAfectadas > 0)
@@ -103,7 +119,7 @@ namespace proyectoEventos.Modelo
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.AddWithValue("@id", id);
+                        cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = id;
 
                         using (var reader = cmd.ExecuteReader())
                         {
@@ -144,7 +160,7 @@ namespace proyectoEventos.Modelo
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.AddWithValue("@id", id);
+                        cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = id;
 
                         int filasAfectadas = cmd.ExecuteNonQuery();
                         if (filasAfectadas > 0)

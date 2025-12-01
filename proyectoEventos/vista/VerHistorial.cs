@@ -1,4 +1,4 @@
-﻿using MySqlConnector;
+﻿using MySql.Data.MySqlClient;
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -28,6 +28,13 @@ namespace proyectoEventos.vista
                 return;
             }
 
+            // Validación adicional: limitar longitud para evitar inputs excesivos
+            if (usuario.Length > 200)
+            {
+                MessageBox.Show("El nombre de usuario es demasiado largo.");
+                return;
+            }
+
             try
             {
                 using (var conexion = MySQLConexion.ObtenerConexion())
@@ -44,7 +51,8 @@ namespace proyectoEventos.vista
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.AddWithValue("@usuario", usuario);
+                        // Parámetro con tipo explícito
+                        cmd.Parameters.Add("@usuario", MySqlDbType.VarChar, 200).Value = usuario;
 
                         using (var reader = cmd.ExecuteReader())
                         {
@@ -107,7 +115,8 @@ namespace proyectoEventos.vista
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.AddWithValue("@id", idTicket);
+                        // Parámetro con tipo explícito
+                        cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = idTicket;
 
                         using (var reader = cmd.ExecuteReader())
                         {
