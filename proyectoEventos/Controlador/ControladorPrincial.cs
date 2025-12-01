@@ -45,7 +45,7 @@ namespace proyectoEventos.Controlador
                     "Error de Conexión",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
-                
+
                 Application.Exit();
                 return;
             }
@@ -57,12 +57,31 @@ namespace proyectoEventos.Controlador
             _vistaCambiarContraseña = new cambiarContraseña();
             _vistaVerHistorial = new vista.VerHistorial();
 
-            // 2. Crear repositorios MySQL (CAMBIO AQUÍ)
-            _repoUsuarios = new IUsuarioMySQL();
-            _repoEventos = new IEventoMySQL();
-            
+            // 2. Crear repositorios MySQL (usar solo implementaciones MySQL)
+            try
+            {
+                _repoUsuarios = new UsuarioMySQL();
+                _repoEventos = new IEventoMySQL();
+                _repoTickets = new ITicketMySQL();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al inicializar repositorios MySQL: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+                return;
+            }
 
-            // 3. Crear controladores y pasar dependencias
+            // Validar que las instancias se hayan creado correctamente
+            if (_repoUsuarios == null || _repoEventos == null || _repoTickets == null)
+            {
+                MessageBox.Show("No se pudieron inicializar los repositorios MySQL.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+                return;
+            }
+
+            // 3. Crear controladores y pasar dependencias (siempre con repositorios MySQL)
             _controladorUsuario = new ControladorUsuario(
                 _vistaCrearUsuario,
                 _repoUsuarios,

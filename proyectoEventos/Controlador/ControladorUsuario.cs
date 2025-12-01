@@ -26,8 +26,14 @@ namespace proyectoEventos.Controlador
 
         public ControladorUsuario(CrearUsuario Vista, IUsuario repo, PaginaInicial paginaInicial, InterfaceEvento repoEventos, ITicket repoTickets, cambiarContraseña vistaCambiarContrasena)
         {
+            
+            if (repo == null)
+            {
+                throw new ArgumentNullException(nameof(repo), "El repositorio de usuarios no puede ser null");
+            }
+
             _VistaCrearUsuario = Vista;
-            _repo = repo;
+            _repo = repo;  // ✅ Ahora sabemos que no es null
             _PaginaInicial = paginaInicial;
             _repoEventos = repoEventos;
             _repoTickets = repoTickets;
@@ -41,7 +47,7 @@ namespace proyectoEventos.Controlador
                 _vistaCambiarContraseña.CambiarContraseñaE += OnCambiarContraseña;
             }
         }
-        
+
         private void LogicaSesion(object sender, ArgumentoIniciarSesion e) 
         {
             bool valido = _repo.ValidarUsuarioDirecto(e.Correo, e.Contrasena);
@@ -168,15 +174,41 @@ namespace proyectoEventos.Controlador
 
         public bool crearUsuarioM(string nombre, string correo, string cedula, int edad, string contrasena, bool esadmin)
         {
-            if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(correo))
-                throw new ArgumentException("El nombre y el correo no pueden estar vacíos.");
+            try
+            {
+                MessageBox.Show("DEBUG 1: Iniciando crearUsuarioM", "DEBUG");
 
-            if (edad <= 0)
-                throw new ArgumentException("La edad debe ser un número positivo.");
+                // ✅ VALIDAR que el repositorio esté inicializado
+                if (_repo == null)
+                {
+                    MessageBox.Show("ERROR: Repositorio no inicializado", "ERROR");
+                    return false;
+                }
 
-            Modelo.Usuario nuevoUsuario = new Modelo.Usuario(nombre, correo, cedula, edad, contrasena, esadmin);
-            _repo.AgregarUsuario(nuevoUsuario);
-            return true;
+                MessageBox.Show("DEBUG 2: Repositorio OK", "DEBUG");
+
+                if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(correo))
+                    throw new ArgumentException("El nombre y el correo no pueden estar vacíos.");
+
+                if (edad <= 0)
+                    throw new ArgumentException("La edad debe ser un número positivo.");
+
+                MessageBox.Show($"DEBUG 3: Creando usuario - Nombre: {nombre}, Correo: {correo}", "DEBUG");
+
+                Modelo.Usuario nuevoUsuario = new Modelo.Usuario(nombre, correo, cedula, edad, contrasena, esadmin);
+
+                MessageBox.Show("DEBUG 4: Usuario creado, llamando a AgregarUsuario...", "DEBUG");
+
+                _repo.AgregarUsuario(nuevoUsuario);
+
+                MessageBox.Show("DEBUG 5: AgregarUsuario completado", "DEBUG");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error en crearUsuarioM: {ex.Message}\n\nStack Trace: {ex.StackTrace}", "Error Detallado");
+                return false;
+            }
         }
 
         public void MostrarVentanaCrearUsuario()

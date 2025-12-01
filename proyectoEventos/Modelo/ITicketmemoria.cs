@@ -15,9 +15,9 @@ namespace proyectoEventos.Modelo
 
         public ITicketmemoria()
         {
-            // Cargar tickets desde el archivo JSON
-            _tickets = JsonDataManager.CargarDatos<Ticket>(_nombreArchivoJson);
-
+            // Antes: se cargaban tickets desde JsonDataManager
+            // Ahora: almacenamiento solo en memoria; si necesita persistencia,
+            // implemente aquí la carga manual o use otro componente.
             // Calcular el siguiente ID basado en los tickets existentes
             _siguienteId = _tickets.Any() ? _tickets.Max(t => t.id) + 1 : 1;
         }
@@ -39,9 +39,7 @@ namespace proyectoEventos.Modelo
 
             _tickets.Add(ticket);
 
-            // Guardar en JSON
-            JsonDataManager.GuardarDatos(_tickets, _nombreArchivoJson);
-
+            // Persistencia removida: ya no se usa JsonDataManager.
             MessageBox.Show("Ticket generado exitosamente", "Éxito",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -67,7 +65,7 @@ namespace proyectoEventos.Modelo
             if (ticket != null)
             {
                 _tickets.Remove(ticket);
-                JsonDataManager.GuardarDatos(_tickets, _nombreArchivoJson);
+                // Persistencia removida: ya no se usa JsonDataManager.
 
                 MessageBox.Show("Ticket eliminado exitosamente", "Éxito",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
