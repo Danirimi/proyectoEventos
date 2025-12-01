@@ -26,12 +26,12 @@ namespace proyectoEventos.Modelo
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.AddWithValue("@nombre", usuario.Nombre);
-                        cmd.Parameters.AddWithValue("@correo", usuario.Correo);
-                        cmd.Parameters.AddWithValue("@cedula", usuario.Cedula);
-                        cmd.Parameters.AddWithValue("@edad", usuario.Edad);
-                        cmd.Parameters.AddWithValue("@contrasena", contrasenaHash);
-                        cmd.Parameters.AddWithValue("@esadmin", usuario.esadmin);
+                        cmd.Parameters.Add("@nombre", MySqlDbType.VarChar, 200).Value = usuario.Nombre ?? string.Empty;
+                        cmd.Parameters.Add("@correo", MySqlDbType.VarChar, 200).Value = usuario.Correo ?? string.Empty;
+                        cmd.Parameters.Add("@cedula", MySqlDbType.VarChar, 50).Value = usuario.Cedula ?? string.Empty;
+                        cmd.Parameters.Add("@edad", MySqlDbType.Int32).Value = usuario.Edad;
+                        cmd.Parameters.Add("@contrasena", MySqlDbType.VarChar, 255).Value = contrasenaHash;
+                        cmd.Parameters.Add("@esadmin", MySqlDbType.Bit).Value = usuario.esadmin;
 
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("Usuario creado con éxito", "Éxito",
@@ -66,12 +66,12 @@ namespace proyectoEventos.Modelo
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.AddWithValue("@nombre", usuario.Nombre);
-                        cmd.Parameters.AddWithValue("@correo", usuario.Correo);
-                        cmd.Parameters.AddWithValue("@cedula", usuario.Cedula);
-                        cmd.Parameters.AddWithValue("@edad", usuario.Edad);
-                        cmd.Parameters.AddWithValue("@esadmin", usuario.esadmin);
-                        cmd.Parameters.AddWithValue("@cedulaBuscar", usuario.Cedula);
+                        cmd.Parameters.Add("@nombre", MySqlDbType.VarChar, 200).Value = usuario.Nombre ?? string.Empty;
+                        cmd.Parameters.Add("@correo", MySqlDbType.VarChar, 200).Value = usuario.Correo ?? string.Empty;
+                        cmd.Parameters.Add("@cedula", MySqlDbType.VarChar, 50).Value = usuario.Cedula ?? string.Empty;
+                        cmd.Parameters.Add("@edad", MySqlDbType.Int32).Value = usuario.Edad;
+                        cmd.Parameters.Add("@esadmin", MySqlDbType.Bit).Value = usuario.esadmin;
+                        cmd.Parameters.Add("@cedulaBuscar", MySqlDbType.VarChar, 50).Value = usuario.Cedula ?? string.Empty;
 
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("Usuario actualizado con éxito", "Éxito",
@@ -99,7 +99,7 @@ namespace proyectoEventos.Modelo
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.AddWithValue("@cedula", cedula);
+                        cmd.Parameters.Add("@cedula", MySqlDbType.VarChar, 50).Value = cedula ?? string.Empty;
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("Usuario eliminado con éxito", "Éxito",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -127,7 +127,7 @@ namespace proyectoEventos.Modelo
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.AddWithValue("@cedula", cedula);
+                        cmd.Parameters.Add("@cedula", MySqlDbType.VarChar, 50).Value = cedula ?? string.Empty;
                         var reader = cmd.ExecuteReader();
 
                         // Aquí procesarías los resultados del historial
@@ -157,7 +157,7 @@ namespace proyectoEventos.Modelo
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.AddWithValue("@correo", correo);
+                        cmd.Parameters.Add("@correo", MySqlDbType.VarChar, 200).Value = correo ?? string.Empty;
 
                         string hashedPassword = cmd.ExecuteScalar()?.ToString();
 
@@ -189,9 +189,9 @@ namespace proyectoEventos.Modelo
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.AddWithValue("@correo", correo);
-                        cmd.Parameters.AddWithValue("@nombre", nombre);
-                        cmd.Parameters.AddWithValue("@cedula", cedula);
+                        cmd.Parameters.Add("@correo", MySqlDbType.VarChar, 200).Value = correo ?? string.Empty;
+                        cmd.Parameters.Add("@nombre", MySqlDbType.VarChar, 200).Value = nombre ?? string.Empty;
+                        cmd.Parameters.Add("@cedula", MySqlDbType.VarChar, 50).Value = cedula ?? string.Empty;
 
                         int count = Convert.ToInt32(cmd.ExecuteScalar());
                         return count > 0;
@@ -258,7 +258,7 @@ namespace proyectoEventos.Modelo
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.AddWithValue("@correo", correo);
+                        cmd.Parameters.Add("@correo", MySqlDbType.VarChar, 200).Value = correo ?? string.Empty;
 
                         using (var reader = cmd.ExecuteReader())
                         {
@@ -306,8 +306,8 @@ namespace proyectoEventos.Modelo
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.AddWithValue("@contrasena", nuevaContrasenaHash);
-                        cmd.Parameters.AddWithValue("@correo", correo);
+                        cmd.Parameters.Add("@contrasena", MySqlDbType.VarChar, 255).Value = nuevaContrasenaHash;
+                        cmd.Parameters.Add("@correo", MySqlDbType.VarChar, 200).Value = correo ?? string.Empty;
 
                         int filasAfectadas = cmd.ExecuteNonQuery();
                         return filasAfectadas > 0;
@@ -337,7 +337,7 @@ namespace proyectoEventos.Modelo
 
                     using (var cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.AddWithValue("@usuarioId", usuarioId);
+                        cmd.Parameters.Add("@usuarioId", MySqlDbType.Int32).Value = usuarioId;
 
                         using (var reader = cmd.ExecuteReader())
                         {
