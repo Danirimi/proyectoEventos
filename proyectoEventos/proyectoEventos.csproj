@@ -140,11 +140,13 @@
     <Compile Include="Modelo\SesionManager.cs" />
     <Compile Include="Modelo\SesionService.cs" />
     <Compile Include="Modelo\SesionUsuario.cs" />
+    <Compile Include="Modelo\TicketMySQL.cs" />
     <Compile Include="Modelo\UsuarioMySQL.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Modelo\Usuario.cs" />
     <Compile Include="Modelo\Ticket.cs" />
+    <Compile Include="Util\EncoderHelper.cs" />
     <Compile Include="vista\AgregarEvento.cs">
       <SubType>Form</SubType>
     </Compile>
