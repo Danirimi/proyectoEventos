@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using proyectoEventos.Util;
 
 namespace proyectoEventos.Controlador
 {
@@ -62,7 +63,7 @@ namespace proyectoEventos.Controlador
             {
                 _repoUsuarios = new UsuarioMySQL();
                 _repoEventos = new IEventoMySQL(); // USAR IMPLEMENTACIÓN MySQL para eventos
-                _repoTickets = new ITicketmemoria();
+                _repoTickets = new TicketMySQL();
             }
             catch (Exception ex)
             {
