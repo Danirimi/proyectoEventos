@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using proyectoEventos.Modelo; // <-- Asegúrate de que esta línea esté presente
 
 namespace proyectoEventos.vista
 {
@@ -34,9 +35,9 @@ namespace proyectoEventos.vista
 
     public class EventoSeleccionadoArgs : EventArgs
     {
-        public Modelo.Evento EventoSeleccionado { get; }
+        public Evento EventoSeleccionado { get; }
 
-        public EventoSeleccionadoArgs(Modelo.Evento evento)
+        public EventoSeleccionadoArgs(Evento evento)
         {
             EventoSeleccionado = evento;
         }
@@ -44,12 +45,12 @@ namespace proyectoEventos.vista
 
     public class CompraEventoArgs : EventArgs
     {
-        public Modelo.Evento Evento { get; }
+        public Evento Evento { get; }
         public int Cantidad { get; }
-        public Modelo.Usuario Usuario { get; }
+        public Usuario Usuario { get; }
         public string MetodoPago { get; }
 
-        public CompraEventoArgs(Modelo.Evento evento, int cantidad, Modelo.Usuario usuario, string metodoPago)
+        public CompraEventoArgs(Evento evento, int cantidad, Usuario usuario, string metodoPago)
         {
             Evento = evento;
             Cantidad = cantidad;
