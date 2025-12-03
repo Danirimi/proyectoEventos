@@ -108,6 +108,9 @@ namespace proyectoEventos.Controlador
                         {
                             _vistaEventos = new VistaEventos();
                             _controladorEvento = new ControladorEvento(_vistaEventos, _repoEventos);
+
+                            // ✅ SUSCRIBIR EL EVENTO DE CERRAR SESIÓN PARA ADMIN
+                            _vistaEventos.CerrarSesionE += OnCerrarSesion;
                         }
                         _vistaEventos.Show();
                     }
@@ -176,14 +179,21 @@ namespace proyectoEventos.Controlador
                     _sessionTimer = null;
                 }
 
-                // ✅ NUEVO: Cerrar sesión usando SesionManager
+                // ✅ Cerrar sesión usando SesionManager
                 SesionManager.CerrarSesion();
 
-                // Ocultar vista de usuario si está abierta
+                // ✅ Ocultar vista de usuario si está abierta
                 if (_vistaEventosUsuario != null && !_vistaEventosUsuario.IsDisposed)
                 {
                     _vistaEventosUsuario.Hide();
                     _vistaEventosUsuario = null;
+                }
+
+                // ✅ NUEVO: Ocultar vista de admin si está abierta
+                if (_vistaEventos != null && !_vistaEventos.IsDisposed)
+                {
+                    _vistaEventos.Hide();
+                    _vistaEventos = null;
                 }
 
                 // Limpiar campos de login y mostrar inicio
@@ -232,11 +242,33 @@ namespace proyectoEventos.Controlador
         {
             try
             {
-                // ✅ NUEVO: Validar sesión usando SesionManager
-                if (!SesionManager.SesionActiva)
+                // ✅ SOLUCIÓN RÁPIDA: No validar sesión para cambiar contraseña
+                // (igual que OnUsuarioCrear que no valida sesión)
+
+                // Solo validar que los campos no estén vacíos
+                if (string.IsNullOrWhiteSpace(e.Correo))
                 {
-                    MessageBox.Show("Sesión expirada. Por favor, inicie sesión nuevamente.", "Sesión Expirada",
+                    MessageBox.Show("El correo es obligatorio", "Validación",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(e.Contraseña))
+                {
+                    MessageBox.Show("La nueva contraseña es obligatoria", "Validación",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Mostrar mensaje de confirmación
+                DialogResult resultado = MessageBox.Show(
+                    $"¿Está seguro de cambiar la contraseña para el correo: {e.Correo}?",
+                    "Confirmar cambio de contraseña",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (resultado != DialogResult.Yes)
+                {
                     return;
                 }
 
@@ -286,6 +318,28 @@ namespace proyectoEventos.Controlador
             {
                 MessageBox.Show($"Error en crearUsuarioM: {ex.Message}", "Error Detallado");
                 return false;
+            }
+        }
+
+        // ✅ MÉTODO TEMPORAL PARA PRUEBAS - Puedes llamarlo desde algún botón
+        public void ProbarSesionActual()
+        {
+            try
+            {
+                string token = SesionManager.TokenActual;
+                bool activa = SesionManager.SesionActiva;
+
+                string info = $"Token: {token}\n" +
+                             $"¿Token vacío/nulo?: {string.IsNullOrEmpty(token)}\n" +
+                             $"Sesión activa: {activa}";
+
+                MessageBox.Show(info, "Estado de Sesión",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al verificar sesión: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

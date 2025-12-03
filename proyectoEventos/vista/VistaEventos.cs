@@ -21,6 +21,7 @@ namespace proyectoEventos.vista
         public event EventHandler EditarEventoE;
         public event EventHandler EliminarEventoE;
         public event EventHandler<EventoSeleccionadoArgs> EventoSeleccionadoE;
+        public event EventHandler CerrarSesionE;  // ✅ NUEVO: Evento para cerrar sesión
 
         public VistaEventos()
         {
@@ -258,6 +259,12 @@ namespace proyectoEventos.vista
         private void btnEliminar_Click(object sender, EventArgs e)
         {
             EliminarEventoE?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+        
+            CerrarSesionE?.Invoke(this, EventArgs.Empty);
         }
     }
 }
